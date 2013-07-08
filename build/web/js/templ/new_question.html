@@ -1,0 +1,63 @@
+
+<p id="form_validation_tip">All form fields are required.</p>
+<form>
+	  <fieldset id="question_details">
+	  <legend>Question Details:</legend>
+	  <ol>
+	  	<li>
+		    <label for="question_text">Question:</label>
+		    <input type="text" id="question_text" name="question_text" class="text ui-widget-content ui-corner-all" />
+	    </li>
+	    <li>
+	    <!--TODO:  Download and then cache Levels from the server -->
+		    <label for="scqf_level">SCQF Level:</label>
+		    <select name="scqf_level" id="scqf_level" class="text ui-widget-content ui-corner-all">
+		    	<option>SCQF Level 3</option>
+		    	<option>SCQF Level 4</option>
+		    	<option>SCQF Level 5</option>
+		    	<option>SCQF Level 6</option>
+		    </select>
+	    </li>
+	    <li>
+	    <!-- TODO: Download and then cache categories from the server -->
+		    <label for="category">Category:</label>
+		    <select name="category" id="category" class="text ui-widget-content ui-corner-all">
+		    	<option>Category 1</option>
+		    	<option>Category 2</option>
+		    	<option>Category 3</option>
+		    	<option>Category 4</option>
+		    </select>
+	    </li>
+	    <li>
+		    <label for="mark">Mark:</label>
+		    <input type="number" name="mark" value="1" id="mark" class="text ui-widget-content ui-corner-all" />
+	    </li>
+	    </ol>
+	  </fieldset>
+	  
+	  <fieldset id="answer_options">
+	  <legend>Options:</legend>
+	  <ol>
+	  	<li>
+		  	<label for="option1correct">Option 1</label>
+		  	<input type="checkbox" id="option1correct" />
+		  	<input type="text" class="qoption" name="option1" class="text ui-widget-content ui-corner-all" />
+	  	</li>
+	  	<li>
+		  	<label for="option2correct">Option 2</label>
+		  	<input type="checkbox" id="option2correct" />
+		  	<input type="text" class="qoption" name="option2" class="text ui-widget-content ui-corner-all" />
+		</li>
+		<li> 	
+			<label for="option3correct">Option 3</label>
+			<input type="checkbox" id="option3correct" />
+			<input type="text" class="qoption" name="option3" class="text ui-widget-content ui-corner-all" />
+		</li>
+		<li>
+			<label for="option4correct">Option 4</label>
+			<input type="checkbox" id="option4correct" />
+			<input type="text" class="qoption" name="option4" class="text ui-widget-content ui-corner-all" />
+		</li>
+	</ol>
+</fieldset>
+</form>

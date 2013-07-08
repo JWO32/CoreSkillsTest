@@ -1,0 +1,155 @@
+
+html, body{
+	height: 100%;
+}
+
+body{
+	font-family: Tahoma, 'PT Sans', Arial, sans-serif;
+	font-size: 16pt;
+	margin: 0;
+	padding: 0;
+}
+
+#mainbody{
+	width: 70%;
+	margin: 10px auto;
+	position: relative;
+	height: 100%;
+}
+
+header{
+	text-align: center;
+	background: #38BBC7;
+	border: 1px solid #000000;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+header h1{
+	font-family: 'PT Sans', Arial, sans-serif;
+	font-size: 200%;
+	color: #FFFFFF;
+	padding: 0;
+}
+
+
+fieldset{
+	margin-bottom: 10px;
+}
+
+fieldset legend{
+	padding: 0 2px;
+	font-weight: bold;
+}
+
+fieldset ol{
+	margin: 0;
+	padding: 0;
+}
+
+fieldset li{
+	padding: 5px;
+	list-style: none;
+	margin: 0;
+}
+
+fieldset label{
+	display: block;
+}
+
+#QuizConfiguration{
+	margin: 10px;
+	padding: 5px;
+}
+
+#quiz_details{
+	
+}
+
+#quiz_details legend{
+	font-size: 110%;
+	
+}
+
+#quiz_details_leftcolumn{
+	width: 49%;
+	float: left;
+}
+
+#quiz_details_rightcolumn{
+	width: 49%;
+	float: right;
+}
+
+#quiz_buttons{
+	width: 70%;
+	clear: both;
+	margin: 0 auto;
+}
+
+#QuestionList{	
+	list-style-type: none;
+}
+
+#QuestionList li { 
+	list-style-type: none;
+	background: #FFFFFF;
+	position: relative;
+	padding:2px;
+	margin: 5px;
+	border: 2px solid gray;
+}
+
+#QuestionList .question_content li {
+	border: 0;
+}
+
+#QuestionList li .handle { 
+	background: #f8f8f8; 
+	position: absolute; 
+	left: 0; 
+	top: 0; 
+	bottom: 0; 
+	padding:2px; 
+}
+
+.question {
+	display:block;
+}
+
+.question ul{
+	list-style-type: none;
+}
+
+.question_select{
+	width: 5%;
+	float: left;
+}
+
+.correct_answer{
+	
+}
+
+/* Override some jQuery default styling */
+
+.ui-widget
+{
+	font-size: 0.9em;
+}
+
+.ui-button .ui-button-text
+{
+	line-height: 1.0;
+	
+}
+
+footer{
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	font-size: 12pt;
+	background: #38BBC7;
+	border: 1px solid #000000;
+	width: 100%;
+	height: 2em;
+}

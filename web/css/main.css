@@ -1,0 +1,39 @@
+/* 
+    Document   : main.css
+    Created on : Jul 7, 2013, 8:13:17 PM
+    Author     : JWO
+    Description:
+        This is the main stylesheet for use on all pages in the project.  Classes and Ids for use with the 
+        main project will use capital letters.  Styles for specific pages will start with a small letter
+*/
+
+#MainHeading
+{
+    
+}
+
+#Navigation
+{
+    
+}
+
+#TabbedLinks
+{
+    list-style-type: none;
+    
+}
+
+#TabbedLinks li
+{
+    margin-left: 3em;
+    
+}
+
+#MainFooter
+{
+    
+    
+}
+
+
+
