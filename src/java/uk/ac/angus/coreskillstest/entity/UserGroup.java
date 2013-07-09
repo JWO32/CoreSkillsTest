@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 
@@ -23,6 +25,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JWO
  */
 @Entity(name="QUIZ_GROUP")
+
+@NamedQueries({
+
+    @NamedQuery(name="Groups.findall", 
+        query="SELECT g from QUIZ_GROUP g"),
+
+    @NamedQuery(name="Groups.findGroupById",
+        query="SELECT g from QUIZ_GROUP g WHERE g.group_id = :id")
+    })
+
 @XmlRootElement(name="UserGroup")
 public class UserGroup implements Serializable
 {

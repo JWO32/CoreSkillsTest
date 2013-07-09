@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,6 +22,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity (name="QUIZ_USER")
+@NamedQueries({
+
+    @NamedQuery(name="Users.findall", 
+        query="SELECT u from QUIZ_USER u"),
+
+    @NamedQuery(name="Users.findUserById",
+        query="SELECT u from QUIZ_USER u WHERE u.user_id = :id"),
+    
+    @NamedQuery(name="Users.deleteUserById",
+        query="DELETE u from QUIZ_USER u WHERE u.user_id =: id")
+    })
+
+
 @XmlRootElement
 public class QuizUser implements Serializable
 { 

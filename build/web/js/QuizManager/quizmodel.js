@@ -131,7 +131,7 @@ Quiz.prototype.generateXML = function()
 			
 			xml += '<option';
 			
-			if(currentOption.getCorrectOption() == true)
+			if(currentOption.getCorrectOption() === true)
 				xml += ' correct="true">';
 			else
 				xml += '>';
@@ -205,23 +205,23 @@ var QuestionOption = function()
 	return {
 		setOptionText: function(newText)
 		{
-			
+                    OptionText = newText;
 		},
 		getOptionText: function()
 		{
-			return this.OptionText;
+                    return OptionText;
 		},
 		setOptionCorrect: function()
 		{
-			this.CorrectOption = true;
+                    CorrectOption = true;
 		},
 		setOptionWrong: function()
 		{
-			this.CorrectOption = false;
+                    CorrectOption = false;
 		},
 		getCorrectOption: function()
 		{
-			return this.CorrectOption;
+                    return CorrectOption;
 		}
 	};
 };
@@ -234,22 +234,15 @@ var QuestionOption = function()
  */
 var MultipleChoiceQuestion = new Question();
 
-MultipleChoiceQuestion.constructor = function() 
+MultipleChoiceQuestion = function() 
 {
-	this.Score = 0;
-	this.QuestionOptions =  [];
-	this.NumberOfCorrectOptions = 0;
-};
-
-
-/**
- * Define a gapfill question
- */
-var GapFillQuestion = new Question();
-
-GapFillQuestion.constructor = function()
-{
-	
+	var Score = 0;
+	var QuestionOptions =  {};
+	var NumberOfCorrectOptions = 0;
+        
+        return {
+            
+        };
 };
 	
 /**

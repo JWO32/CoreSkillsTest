@@ -5,15 +5,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
-/*import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;*/
+import uk.ac.angus.coreskillstest.DataManagement.UserDataAccessObject;
 
-import uk.ac.angus.coreskillstest.entity.UserGroup;
-import uk.ac.angus.coreskillstest.entity.QuizUser;
-import com.google.gson.*;
 
 /**
  * Servlet implementation class UserReceiverController
@@ -33,6 +28,8 @@ import com.google.gson.*;
  * 
  * /get/user
  * /get/group
+ * /get/allusers
+ * /get/allgroups
  * 
  * /delete/user/
  * /delete/users/
@@ -58,9 +55,37 @@ public class UserReceiverController extends HttpServlet
          * Get Requests will be used to fetch data from the server...
 	 */
         @Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
+            String path = req.getRequestURI();
+            String[] pathComponents = path.split("/");
+            String json;
             
+            if(pathComponents[3].equals("get"))
+            {
+                switch (pathComponents[4]) 
+                {
+                    case "allusers":                
+                        UserDataAccessObject uDAO = new UserDataAccessObject();
+                        
+                        json = uDAO.fetchAllUsers();
+                        
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        PrintWriter output = resp.getWriter();
+                        output.write(json);             
+                        break;
+                    case "allgroups":
+                        
+                        break;
+                    case "user":
+
+                        
+                        break;
+                    case "group":
+                        
+                        break;               
+                }
+            }
 
 	}
 
@@ -98,6 +123,15 @@ public class UserReceiverController extends HttpServlet
             if(pathComponents[3].equals("edit"))
             {
                 
+                switch(pathComponents[4])
+                {
+                    case "user":
+                        
+                        break;
+                    case "group":
+                        
+                        break;        
+                }  
             }
 	}
         
