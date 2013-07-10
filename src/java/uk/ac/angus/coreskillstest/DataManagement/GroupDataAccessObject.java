@@ -47,14 +47,14 @@ public class GroupDataAccessObject
     
     public String fetchGroupById(int groupId)
     {
-        String json;
+        String json = "";
         
         return json;
     }
     
     public String fetchAllGroups()
     {
-        String json;
+        String json = "";
         
         
         return json;

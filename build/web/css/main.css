@@ -11,14 +11,19 @@
 html
 {
     font-family: Verdana, Tahoma, Helvetica, sans-serif;
-    font-size: 15pt;
+    font-size: 12pt;
     margin: 0;
     padding: 0;
 }
 
 #MainHeading
 {
-    
+    text-align: center;
+    font-size: 150%;
+    width: 70%;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
 }
 
 #Navigation
@@ -28,14 +33,26 @@ html
 
 #TabbedLinks
 {
-    list-style-type: none;
     
+}
+
+#TabbedLinks ul
+{
+    list-style-type: none;
 }
 
 #TabbedLinks li
 {
-    margin-left: 3em;
-    
+    margin-left: 1em;
+    display: inline;
+}
+
+#MainContent
+{
+    width: 70%;
+    margin: 10px auto;
+    position: relative;
+    height: 100%;
 }
 
 #MainFooter

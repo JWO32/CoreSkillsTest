@@ -30,11 +30,15 @@
 <title>Quiz Management: User Management</title>
 </head>
 <body>
-    <section id="header">        
-        <!-- Include page header here -->      
+    <div id="MainContent">
+    <section id="MainHeading">        
+        <!-- Include page header here --> 
+        <header>
+            <h1>Quiz User Management</h1>
+        </header>
     </section>
-    <section id="navgiation">
-        <nav id="tabbed_links">
+    <section id="Navigation">
+        <nav id="TabbedLinks">
             <ul>
                 <li>Create a New Quiz</li>
                 <li>Manage Quizzes</li>
@@ -62,9 +66,8 @@
                 
                 
             </ol>
-        </section>
-        
-        
+        </section>  
     </section>
+    </div>
 </body>
 </html>
