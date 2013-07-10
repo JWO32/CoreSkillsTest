@@ -27,12 +27,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity(name="QUIZ_GROUP")
 
 @NamedQueries({
-
     @NamedQuery(name="Groups.findall", 
         query="SELECT g from QUIZ_GROUP g"),
 
     @NamedQuery(name="Groups.findGroupById",
-        query="SELECT g from QUIZ_GROUP g WHERE g.group_id = :id")
+        query="SELECT g from QUIZ_GROUP g WHERE g.GroupID = :id"),
+    
+    @NamedQuery(name="Groups.deleteGroupById",
+        query="DELETE FROM QUIZ_GROUP g WHERE g.GroupID = :id")
     })
 
 @XmlRootElement(name="UserGroup")

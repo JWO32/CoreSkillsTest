@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 import uk.ac.angus.coreskillstest.DataManagement.UserDataAccessObject;
+import uk.ac.angus.coreskillstest.DataManagement.GroupDataAccessObject;
 
 
 /**
@@ -23,17 +24,17 @@ import uk.ac.angus.coreskillstest.DataManagement.UserDataAccessObject;
  * /add/group
  * /add/groupwithusers
  * 
- * /edit/user/
- * /edit/group/
+ * /edit/user/ <POST PARAMETER>
+ * /edit/group/ <POST PARAMETER>
  * 
- * /get/user
- * /get/group
+ * /get/user/<USERID>
+ * /get/group/<GROUPID>
  * /get/allusers
  * /get/allgroups
  * 
- * /delete/user/
+ * /delete/user/<USERID>
  * /delete/users/
- * /delete/group/
+ * /delete/group/<GROUPID>
  */
 
 public class UserReceiverController extends HttpServlet 
@@ -59,34 +60,57 @@ public class UserReceiverController extends HttpServlet
 	{
             String path = req.getRequestURI();
             String[] pathComponents = path.split("/");
+            PrintWriter output;
+            UserDataAccessObject uDAO;
+            GroupDataAccessObject gDAO;
             String json;
-            
+         
             if(pathComponents[3].equals("get"))
             {
                 switch (pathComponents[4]) 
                 {
                     case "allusers":                
-                        UserDataAccessObject uDAO = new UserDataAccessObject();
+                        uDAO = new UserDataAccessObject();
                         
                         json = uDAO.fetchAllUsers();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
-                        PrintWriter output = resp.getWriter();
+                        output = resp.getWriter();
                         output.write(json);             
                         break;
                     case "allgroups":
+                         gDAO = new GroupDataAccessObject();
                         
+                        json = gDAO.fetchAllGroups();
+                        
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        output = resp.getWriter();
+                        output.write(json);         
                         break;
                     case "user":
-
+                        uDAO = new UserDataAccessObject();
                         
+                        String userId = req.getParameter("userid");
+                        
+                        json = uDAO.fetchSingleUser(Integer.valueOf(userId));
+                        
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        output = resp.getWriter();
+                        output.write(json);                    
                         break;
                     case "group":
+                        gDAO = new GroupDataAccessObject();
                         
+                        String groupId = req.getParameter("groupid");
+                        
+                        json = gDAO.fetchGroupById(Integer.valueOf(groupId));
+                        
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        output = resp.getWriter();
+                        output.write(json);                   
                         break;               
                 }
             }
-
 	}
 
 	/**

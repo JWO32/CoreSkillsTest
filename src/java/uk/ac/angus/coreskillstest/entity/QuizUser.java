@@ -21,19 +21,22 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author JWO
+ */
 @Entity (name="QUIZ_USER")
 @NamedQueries({
 
     @NamedQuery(name="Users.findall", 
-        query="SELECT u from QUIZ_USER u"),
+        query="SELECT u FROM QUIZ_USER u"),
 
     @NamedQuery(name="Users.findUserById",
-        query="SELECT u from QUIZ_USER u WHERE u.user_id = :id"),
+        query="SELECT u FROM QUIZ_USER u WHERE u.UserId = :id"),
     
     @NamedQuery(name="Users.deleteUserById",
-        query="DELETE u from QUIZ_USER u WHERE u.user_id =: id")
+        query="DELETE FROM QUIZ_USER u WHERE u.UserId = :id")
     })
-
 
 @XmlRootElement
 public class QuizUser implements Serializable

@@ -2,10 +2,19 @@
     Document   : main.css
     Created on : Jul 7, 2013, 8:13:17 PM
     Author     : JWO
+
     Description:
         This is the main stylesheet for use on all pages in the project.  Classes and Ids for use with the 
         main project will use capital letters.  Styles for specific pages will start with a small letter
 */
+
+html
+{
+    font-family: Verdana, Tahoma, Helvetica, sans-serif;
+    font-size: 15pt;
+    margin: 0;
+    padding: 0;
+}
 
 #MainHeading
 {
