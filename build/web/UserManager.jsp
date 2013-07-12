@@ -7,15 +7,18 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-
-<title>Create a Quiz</title>
-
 <!-- Stylesheets -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
 <link rel="stylesheet" href="css/quizcreate.css" type="text/css"/>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
 <!-- JavaScript Library Imports -->
+<script type="text/javascript" src="js/UserManager/group.js"></script>
+<script type="text/javascript" src="js/UserManager/user.js"></script>
+<script type="text/javascript" src="js/UserManager/usermanagercontroller.js"></script>
+<script type="text/javascript" src="js/UserManager/usermanagermodel.js"></script>
+<script type="text/javascript" src="js/UserManager/usermanagerview.js"></script>
+<script type="text/javascript" src="js/UserManager/userdialogue.js"></script>
 
 <!-- jQuery and JQuery UI Imports -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -26,6 +29,33 @@
 <!--Custom Scripts -->
 <script type="text/javascript" src="js/jquery.nestable.js"></script>
 <!--     -->
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+
+        //Fetch the dynamic group list component to send to the controller
+        var hierarchicalGroupList = $('#hierarchical_list');
+        var newGroupDialogueElem = $('#new_group_dialogue');
+        var newUserDialogueElem = $('#new_user_dialogue');
+
+        var controller = new UserManagerController(hierarchicalGroupList, newUserDialogueElem, newGroupDialogueElem);
+
+        $('#add_user_button').on('click', function()
+        {
+            controller.addUserEvent(controller.addUserCallback);
+        });
+        
+        $('#add_group_button').on('click', function()
+        {
+            controller.addGroupEvent(controller.addGroupCallback);
+        });
+
+
+
+        $('input[type="button"]').button();
+    });
+</script>
 
 <title>Quiz Management: User Management</title>
 </head>
@@ -61,6 +91,10 @@
             <option>No Users</option>
         </select>
         
+        <input type="button" id="add_user_button" value="Add User"></input>
+        <input type="button" id="add_group_button" value="Add Group"></input>
+        
+        <h3>Student and Group List</h3>
         <section id="hierarchical_list">
             <ol id="user_group_list">
                 
@@ -68,6 +102,12 @@
             </ol>
         </section>  
     </section>
+    </div>
+    <div id="new_user_dialogue" style="display: none;">
+        
+    </div>
+    <div id="new_group_dialogue" style="display: none;">
+        
     </div>
 </body>
 </html>

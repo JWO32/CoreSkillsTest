@@ -1,11 +1,25 @@
-UserManagerController = function()
+UserManagerController = function(hierarchicalComponent, userDialogue, groupDialogue)
 {
     var UserModel = new UserManagerModel();
     var UserView = new UserManagerView();
+    var UserDialogue = userDialogue;
+    var GroupDialogue = groupDialogue;
     
+    var UserBaseURL = 'User/';
     
     
     return {
+      init: function()
+      {
+          
+          UserView.init();
+          
+          $.ajaxSetup ({
+                        // Disable caching of AJAX responses
+                        cache: false
+                      });
+          
+      },
       fetchUsersFromServer: function(url)
       {
           
@@ -18,9 +32,9 @@ UserManagerController = function()
       {
           
       },
-      addUserEvent: function()
+      addUserEvent: function(addUserCallback)
       {
-          
+          UserView.displayNewUserDialogue(userDialogue, addUserCallback, false, 0);
       },
       deleteUserEvent: function()
       {
@@ -30,7 +44,7 @@ UserManagerController = function()
       {
           
       },
-      addGroupEvent: function()
+      addGroupEvent: function(addGroupCallback)
       {
           
       },
@@ -41,6 +55,18 @@ UserManagerController = function()
       editGroupEvent: function()
       {
           
+      },
+      addUserCallback: function(userDetails)
+      {
+          UserModel.addUser(userDetails);
+          
+          UserModel.sendUserToServer(userDetails);
+      },
+      addGroupCallback: function(groupDetails)
+      {
+          UserModel.addGroup(groupDetails);
+          
+          UserModel.sendGroupToServer(groupDetails);
       }
     };
     

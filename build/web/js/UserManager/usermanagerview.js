@@ -5,6 +5,11 @@ UserManagerView = function(ListWidget, AddGroupForm, AddUserForm)
     var AddUserDialogue = AddUserForm;
     
     return{
+        init: function()
+        {
+          //AddGroupDialogue.empty().load('js/templ/new_group.html');
+          //AddUserDialogue.empty().load('js/templ/new_user.html');
+        },
         render: function(GroupList)
         {
             
@@ -12,6 +17,12 @@ UserManagerView = function(ListWidget, AddGroupForm, AddUserForm)
         renderHierarchicalList: function(GroupList)
         {
             
+        },
+        displayNewUserDialogue: function(htmlElement, callback, edit, user)
+        {
+            htmlElement.empty().load('js/templ/new_user.html');
+            
+            UserDialogue(htmlElement, callback, edit, 0);
         }
     };
 };

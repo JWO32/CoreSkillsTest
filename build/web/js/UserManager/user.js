@@ -6,60 +6,63 @@
  */
 User = function()
 {
-    var UserId = 0;
-    var UserFirstName = "";
-    var UserLastName = "";
-    var UserEmail = "";
-    var UserDescription = "";
+    this.Id = 0;
+    this.FirstName = "";
+    this.LastName = "";
+    this.Email = "";
+    this.Description = "";
+    this.DateAdded = new Date();
+    this.Group = 0;
     
     return {
-        init: function(Id, FirstName, LastName, Email, Description)
+        init: function(id, firstName, lastName, email, description, groupId)
         {
-            UserId = Id;
-            UserFirstName = FirstName;
-            UserLastName = LastName;
-            UserEmail = Email;
-            UserDescription = Description;
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Description = description;
+            GroupId = groupId;
         },
         setUserID: function(newUserId)
         {
-            UserId = newUserId;
+            Id = newUserId;
         },
         getUserID: function()
         {
-            return UserId;
+            return Id;
         },
-        setUserFirstName: function(newFirstName)
+        setFirstName: function(newFirstName)
         {
-            UserFirstName = newFirstName;
+            FirstName = newFirstName;
         },
-        getUserFirstName: function()
+        getFirstName: function()
         {
-            return UserFirstName;
+            return FirstName;
         },
-        setUserLastName: function(newLastName)
+        setLastName: function(newLastName)
         {
-            UserLastName = newLastName;
+            LastName = newLastName;
         },
-        getUserLastName: function()
+        getLastName: function()
         {
-            return UserLastName;
+            return LastName;
         },
-        setUserEmail: function(newEmail)
+        setEmail: function(newEmail)
         {
-            UserEmail = newEmail;
+            Email = newEmail;
         },
-        getUserEmail: function()
+        getEmail: function()
         {
-            return UserEmail;
+            return Email;
         },
-        setUserDescription: function(newDescription)
+        setDescription: function(newDescription)
         {
-            UserDescription = newDescription;
+            Description = newDescription;
         },
-        getUserDescription: function()
+        getDescription: function()
         {
-            return UserDescription;
+            return Description;
         }
     }; 
 };

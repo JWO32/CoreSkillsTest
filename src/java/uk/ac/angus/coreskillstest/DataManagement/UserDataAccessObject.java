@@ -36,8 +36,35 @@ public class UserDataAccessObject
         
     }
     
-    public boolean addSingleUser()
+    /**
+     * add a single user to the system.
+     * The user will be added to the default group, user can reassign as necessary
+     * @param userJson
+     * @return 
+     */
+    public boolean addSingleUser(String userJson)
     {
+        QuizUser newUser = (QuizUser) gsn.fromJson(userJson, QuizUser.class);
+              
+        UserGroup defaultGroup = GroupDataAccessObject.getDefaultGroup();
+        
+        if(defaultGroup == null)
+        {
+            GroupDataAccessObject.createDefaultGroup();
+            return false;
+        }
+        
+        newUser.setGroup(defaultGroup);
+        
+        defaultGroup.getUserList().add(newUser);
+        
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        
+        em.persist(newUser);
+        
+        em.getTransaction().commit();
+        em.close();
         
         return true;
     }
@@ -62,6 +89,7 @@ public class UserDataAccessObject
         List <QuizUser> users = userQuery.getResultList();
         
         json = gsn.toJson(users);
+        em.close();
         
         return json;
     }
@@ -77,6 +105,8 @@ public class UserDataAccessObject
         List <QuizUser> users  = userQuery.getResultList();
         
         json = gsn.toJson(users);
+        
+        em.close();
         
         return json;     
     }

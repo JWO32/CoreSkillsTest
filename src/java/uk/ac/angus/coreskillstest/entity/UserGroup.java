@@ -1,12 +1,14 @@
 package uk.ac.angus.coreskillstest.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
@@ -25,7 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author JWO
  */
 @Entity(name="QUIZ_GROUP")
-
 @NamedQueries({
     @NamedQuery(name="Groups.findall", 
         query="SELECT g from QUIZ_GROUP g"),
@@ -36,7 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name="Groups.deleteGroupById",
         query="DELETE FROM QUIZ_GROUP g WHERE g.GroupID = :id")
     })
-
 @XmlRootElement(name="UserGroup")
 public class UserGroup implements Serializable
 {
@@ -51,13 +51,18 @@ public class UserGroup implements Serializable
     @Column(name="group_description")
     private String GroupDescription;
     
-    @OneToMany (mappedBy = "UserGroup", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
-   
-    private ArrayList<QuizUser> UserList = new ArrayList<>();
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
+    private List<QuizUser> UserList = new ArrayList<>();
     
     public UserGroup()
     {
 
+    }
+    
+    public UserGroup (String groupName, String groupDescription)
+    {
+        GroupName = groupName;
+        GroupDescription = groupDescription;
     }
     
     @XmlAttribute
@@ -94,12 +99,12 @@ public class UserGroup implements Serializable
     }
     
     @XmlElement(name="User")
-    public void setUserList(ArrayList<QuizUser> newUserList)
+    public void setUserList(List<QuizUser> newUserList)
     {
         UserList = newUserList;
     }
     
-    public ArrayList<QuizUser> getUserList()
+    public List<QuizUser> getUserList()
     {
         return UserList;
     }    

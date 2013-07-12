@@ -3,6 +3,7 @@ package uk.ac.angus.coreskillstest.entity;
 import java.io.Serializable;
 
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,7 +45,7 @@ public class QuizUser implements Serializable
 { 
     @Id
     @Column(name="user_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserId;
     
     @Column(name="first_name")
@@ -52,20 +54,23 @@ public class QuizUser implements Serializable
     @Column(name="last_name")
     private String LastName;
     
-    @Column (name="user_description")
-    private String UserDescription;
+    @Column (name="description")
+    private String Description;
     
-    @Column (name="user_email")
-    private String UserEmail;
+    @Column (name="email")
+    private String Email;
+    
+    @Transient
+    private int GroupId;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @Column (name="user_date_added")
-    private Calendar UserDateAdded = Calendar.getInstance();
+    @Column (name="date_added")
+    private Calendar DateAdded = Calendar.getInstance();
     
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=false, targetEntity=UserGroup.class, cascade=CascadeType.PERSIST)
     @JoinColumn(name="group_id", referencedColumnName="group_id")
     @XmlTransient
-    private UserGroup UserGroup;
+    private UserGroup Group;
     
     private static final long serialVersionUID = 1L;
 
@@ -110,43 +115,53 @@ public class QuizUser implements Serializable
     @XmlElement
     public void setUserDescription(String newUserDescription)
     {
-        UserDescription = newUserDescription;
+        Description = newUserDescription;
     }
     
     public String getUserDescription()
     {
-        return UserDescription;
+        return Description;
     }
     
     @XmlElement
     public void setUserEmail(String newUserEmail)
     {
-        UserEmail = newUserEmail;
+        Email = newUserEmail;
     }
     
     public String getUserEmail()
     {
-        return UserEmail;
+        return Email;
     }
     
     @XmlElement
     public void setUserDateAdded(Calendar dateAdded)
     {
-        UserDateAdded = dateAdded;
+        DateAdded = dateAdded;
     }
     
     public Calendar getUserDateAdded()
     {
-        return UserDateAdded;
+        return DateAdded;
     }
     
-    public void setUserGroup(UserGroup newUserGroup)
+    public void setUserGroup(int newUserGroupId)
     {
-        UserGroup = newUserGroup;
+        GroupId = newUserGroupId;
     }
     
-    public UserGroup getUserGroup()
+    public int getUserGroup()
     {
-        return UserGroup;
+        return GroupId;
+    }
+    
+    public void setGroup(UserGroup newGroup)
+    {
+        Group = newGroup;
+    }
+    
+    public UserGroup getGroup()
+    {
+        return Group;
     }
 }

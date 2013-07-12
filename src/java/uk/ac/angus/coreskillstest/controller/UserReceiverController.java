@@ -124,6 +124,8 @@ public class UserReceiverController extends HttpServlet
 	{
             String path = req.getRequestURI();
             String[] pathComponents = path.split("/");
+            UserDataAccessObject uDAO = new UserDataAccessObject();
+            GroupDataAccessObject gDAO = new GroupDataAccessObject();
             
             if(!pathComponents[2].equals("User"))
             {
@@ -135,12 +137,23 @@ public class UserReceiverController extends HttpServlet
             
             if(pathComponents[3].equals("add"))
             {
-                // Indicates that there will be more than one user
-                //
-                if(pathComponents[4].equals("users"))
-                {
-                    
-                }
+                  switch(pathComponents[4])
+                  {
+                      case "user":
+                          String userJson = req.getParameter("user");
+                          uDAO.addSingleUser(userJson);
+                          
+                          resp.setStatus(HttpServletResponse.SC_OK);
+                          resp.setContentType("text");
+                          resp.setContentLength(0);
+                      break;
+                          
+                      case "users":
+                          
+                          
+                      break;
+                          
+                  }
             }   
             
             if(pathComponents[3].equals("edit"))
