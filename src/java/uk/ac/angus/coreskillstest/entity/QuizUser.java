@@ -67,7 +67,10 @@ public class QuizUser implements Serializable
     @Column (name="date_added")
     private Calendar DateAdded = Calendar.getInstance();
     
-    @ManyToOne(optional=false, targetEntity=UserGroup.class, cascade=CascadeType.PERSIST)
+    
+    //cascade=CascadeType.PERSIST
+    
+    @ManyToOne(optional=false, targetEntity=UserGroup.class)
     @JoinColumn(name="group_id", referencedColumnName="group_id")
     @XmlTransient
     private UserGroup Group;

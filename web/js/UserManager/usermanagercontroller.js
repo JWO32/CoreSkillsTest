@@ -46,7 +46,7 @@ UserManagerController = function(hierarchicalComponent, userDialogue, groupDialo
       },
       addGroupEvent: function(addGroupCallback)
       {
-          
+          UserView.displayNewGroupDialogue(groupDialogue, addGroupCallback, false, 0);
       },
       deleteGroupEvent: function()
       {

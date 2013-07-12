@@ -19,11 +19,13 @@
 <script type="text/javascript" src="js/UserManager/usermanagermodel.js"></script>
 <script type="text/javascript" src="js/UserManager/usermanagerview.js"></script>
 <script type="text/javascript" src="js/UserManager/userdialogue.js"></script>
+<script type="text/javascript" src="js/UserManager/groupdialogue.js"></script>
 
 <!-- jQuery and JQuery UI Imports -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script type="text/javascript"  src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.nestable.js"></script>
 <!--    -->
 
 <!--Custom Scripts -->
@@ -54,6 +56,7 @@
 
 
         $('input[type="button"]').button();
+        $('.dd').nestable();
     });
 </script>
 
@@ -70,6 +73,7 @@
     <section id="Navigation">
         <nav id="TabbedLinks">
             <ul>
+                <li>Home Page</li>
                 <li>Create a New Quiz</li>
                 <li>Manage Quizzes</li>
                 <li>Manage Users</li>
@@ -81,7 +85,7 @@
     <section id="content_body">
         <h1>Manage Users and Groups</h1>
         
-        <h3>Current List of Groups</h3>
+        <!-- <h3>Current List of Groups</h3>
         <select id="main_group_list">
             <option>No Groups</option>
         </select>
@@ -89,16 +93,26 @@
         <h3>Current List of Users</h3>
         <select id="main_user_list">
             <option>No Users</option>
-        </select>
+        </select> -->
         
         <input type="button" id="add_user_button" value="Add User"></input>
         <input type="button" id="add_group_button" value="Add Group"></input>
         
         <h3>Student and Group List</h3>
-        <section id="hierarchical_list">
-            <ol id="user_group_list">
-                
-                
+        <section id="hierarchical_list" class="dd">
+            <ol id="user_group_list" class="dd-list">
+                <li class="dd-item" data-id="1">No Group</li>
+                <ol class="dd-list">
+                    <li class="dd-item" data-id="2">Bob McTavish</li>
+                    <li class="dd-item" data-id="3">Mary Smith</li>
+                    <li class="dd-item" data-id="4">James Oliver</li>
+                </ol>
+                <li class="dd-item" data-id="5">NC Computing</li>
+                <ol class="dd-list">    
+                    <li class="dd-item" data-id="6">Roger Roger</li>
+                    <li class="dd-item" data-id="7">Carol Smiley</li>
+                    <li class="dd-item" data-id="8">Andy Randomname</li>
+                </ol> 
             </ol>
         </section>  
     </section>

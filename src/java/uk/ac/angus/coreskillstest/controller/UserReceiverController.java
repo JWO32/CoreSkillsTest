@@ -143,6 +143,9 @@ public class UserReceiverController extends HttpServlet
                           String userJson = req.getParameter("user");
                           uDAO.addSingleUser(userJson);
                           
+                          //
+                          // TODO: Move this code into a function to avoid repetition
+                          //
                           resp.setStatus(HttpServletResponse.SC_OK);
                           resp.setContentType("text");
                           resp.setContentLength(0);
@@ -151,6 +154,17 @@ public class UserReceiverController extends HttpServlet
                       case "users":
                           
                           
+                      break;
+                      case "group":
+                          String groupJson = req.getParameter("group");
+                          gDAO.addSingleGroup(groupJson);
+                          
+                          //
+                          // TODO: Move this code into function to avoid repetition
+                          //
+                          resp.setStatus(HttpServletResponse.SC_OK);
+                          resp.setContentType("text");
+                          resp.setContentLength(0);                         
                       break;
                           
                   }

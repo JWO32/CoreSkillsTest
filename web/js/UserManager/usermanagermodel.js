@@ -39,7 +39,7 @@ UserManagerModel = function()
                 url: url,
                 data: data,
                 dataType: 'json',
-                success: function()
+                success: function(data)
                 {
                     alert('User Added');
                 },
@@ -48,7 +48,28 @@ UserManagerModel = function()
                     alert('Server Error: User could not be added');
                 }
             });
-        }
+        },
+        sendGroupToServer: function(group)
+        {
+            var url = 'User/add/group';
+            var data = JSON.stringify(group);
+            data = 'group='+data;
+            
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                dataType: 'json',
+                success: function()
+                {
+                    alert('Group Added');
+                },
+                error: function()
+                {
+                    alert('Error: group coould not be added to server');
+                }
+            });
+         }
     };
 };
 

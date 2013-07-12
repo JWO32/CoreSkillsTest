@@ -56,7 +56,7 @@ public class UserDataAccessObject
         
         newUser.setGroup(defaultGroup);
         
-        defaultGroup.getUserList().add(newUser);
+        //defaultGroup.getUserList().add(newUser);
         
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();

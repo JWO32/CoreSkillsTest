@@ -1,13 +1,14 @@
 var GroupDialogue = function(htmlElement, callback, edit, group)
 {
+    
   edit = typeof(edit==='undefined')? false: edit;
   
   htmlElement
     .dialog(
     {
         autoOpen: false,
-        height: 800,
-        width: 800,
+        height: 'auto',
+        width: 'auto',
         modal: true,
         title:'Add/Edit a Group',
         show:'blind',
@@ -25,7 +26,8 @@ var GroupDialogue = function(htmlElement, callback, edit, group)
                 var groupName = $('#group_name').val();
                 var groupDescription = $('#group_desription').val();
                 
-                groupDetails.
+                groupDetails.GroupName = groupName;
+                groupDetails.GroupDescription = groupDescription;
               
                 callback(groupDetails);
             },
