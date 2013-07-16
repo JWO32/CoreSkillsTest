@@ -7,10 +7,15 @@ package uk.ac.angus.coreskillstest.DataManagement;
 import uk.ac.angus.coreskillstest.entity.UserGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
  
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,8 +23,8 @@ import javax.persistence.Persistence;
  */
 public class GroupDataAccessObject 
 {
-    private EntityManagerFactory groupDataFactory;
-    private Gson jsonSerialiser;
+    private EntityManagerFactory GroupDataFactory;
+    private Gson JsonSerialiser;
     
     // This should be moved out to suitable defaults file in due course.
     private static final int DEFAULT_GROUP_ID = 1;
@@ -27,8 +32,8 @@ public class GroupDataAccessObject
     
     public GroupDataAccessObject()
     {
-        groupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
-        jsonSerialiser = new Gson();
+        GroupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
+        JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
     
     public static UserGroup getDefaultGroup()
@@ -92,6 +97,13 @@ public class GroupDataAccessObject
     {
         String json = "";
         
+        EntityManager em =  GroupDataFactory.createEntityManager();
+        
+        Query q = em.createNamedQuery("Groups.getAllGroupsAndUsers");
+        
+        List<UserGroup> queryResults = q.getResultList();
+        
+        json = JsonSerialiser.toJson(queryResults);
         
         return json;
     }    

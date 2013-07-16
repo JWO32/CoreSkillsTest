@@ -83,6 +83,7 @@ public class UserReceiverController extends HttpServlet
                         json = gDAO.fetchAllGroups();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
+                        resp.setContentType("application/json");
                         output = resp.getWriter();
                         output.write(json);         
                         break;

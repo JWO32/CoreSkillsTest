@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.UserGroup;
@@ -32,8 +33,7 @@ public class UserDataAccessObject
     public UserDataAccessObject()
     {
         factory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
-        gsn = new Gson();
-        
+        gsn = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();        
     }
     
     /**

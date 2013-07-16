@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author JWO
@@ -43,20 +45,25 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class QuizUser implements Serializable
 { 
+    @Expose
     @Id
     @Column(name="user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserId;
     
+    @Expose
     @Column(name="first_name")
     private String FirstName;
    
+    @Expose
     @Column(name="last_name")
     private String LastName;
     
+    @Expose
     @Column (name="description")
     private String Description;
     
+    @Expose
     @Column (name="email")
     private String Email;
     
@@ -68,11 +75,10 @@ public class QuizUser implements Serializable
     private Calendar DateAdded = Calendar.getInstance();
     
     
-    //cascade=CascadeType.PERSIST
     
     @ManyToOne(optional=false, targetEntity=UserGroup.class)
     @JoinColumn(name="group_id", referencedColumnName="group_id")
-    @XmlTransient
+//    @XmlTransient
     private UserGroup Group;
     
     private static final long serialVersionUID = 1L;
@@ -82,7 +88,7 @@ public class QuizUser implements Serializable
        
     }
     
-    @XmlAttribute
+//    @XmlAttribute
     public void setUserId(int newID)
     {
         UserId = newID;
@@ -93,7 +99,7 @@ public class QuizUser implements Serializable
         return UserId;
     }
     
-    @XmlElement
+//    @XmlElement
     public void setFirstName(String newUserName)
     {
         FirstName = newUserName;
@@ -104,7 +110,7 @@ public class QuizUser implements Serializable
         return FirstName;
     }
     
-    @XmlElement
+//    @XmlElement
     public void setLastName(String newLastName)
     {
         LastName = newLastName;
@@ -115,7 +121,7 @@ public class QuizUser implements Serializable
         return LastName;
     }
     
-    @XmlElement
+//    @XmlElement
     public void setUserDescription(String newUserDescription)
     {
         Description = newUserDescription;
@@ -126,7 +132,7 @@ public class QuizUser implements Serializable
         return Description;
     }
     
-    @XmlElement
+//    @XmlElement
     public void setUserEmail(String newUserEmail)
     {
         Email = newUserEmail;
@@ -137,7 +143,7 @@ public class QuizUser implements Serializable
         return Email;
     }
     
-    @XmlElement
+//    @XmlElement
     public void setUserDateAdded(Calendar dateAdded)
     {
         DateAdded = dateAdded;

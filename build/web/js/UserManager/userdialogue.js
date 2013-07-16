@@ -7,8 +7,8 @@ var UserDialogue = function(htmlElement, callback, edit, user)
         .dialog(
         {
                 autoOpen: false,
-                height: 800,
-                width: 800,
+                height: 'auto',
+                width: '600',
                 modal: true,
                 title: 'Create/Edit User Details',
                 show: 'blind',

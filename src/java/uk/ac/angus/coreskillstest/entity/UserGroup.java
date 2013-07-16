@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -15,10 +14,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.google.gson.annotations.Expose;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlAttribute;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class UserGroup
@@ -28,7 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity(name="QUIZ_GROUP")
 @NamedQueries({
-    @NamedQuery(name="Groups.findall", 
+    @NamedQuery(name="Groups.getAllGroupsAndUsers", 
+        query="SELECT g from QUIZ_GROUP g INNER JOIN g.UserList u"),
+    
+    @NamedQuery(name="Groups.getAllGroups", 
         query="SELECT g from QUIZ_GROUP g"),
 
     @NamedQuery(name="Groups.findGroupById",
@@ -37,22 +40,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name="Groups.deleteGroupById",
         query="DELETE FROM QUIZ_GROUP g WHERE g.GroupID = :id")
     })
-@XmlRootElement(name="UserGroup")
+
+//@XmlRootElement(name="UserGroup")
 public class UserGroup implements Serializable
 {
+    @Expose
     @Id
     @Column(name="group_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int GroupID;
     
+    @Expose
     @Column(name="group_name")
     private String GroupName;
     
+    @Expose
     @Column(name="group_description")
     private String GroupDescription;
     
+    @Expose
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
-    private List<QuizUser> UserList = new ArrayList<>();
+    private ArrayList<QuizUser> UserList = new ArrayList<>();
     
     public UserGroup()
     {
@@ -65,7 +73,7 @@ public class UserGroup implements Serializable
         GroupDescription = groupDescription;
     }
     
-    @XmlAttribute
+   // @XmlAttribute
     public void setGroupID(int newGroupID)
     {
         GroupID = newGroupID;
@@ -76,7 +84,7 @@ public class UserGroup implements Serializable
         return GroupID;
     }
     
-    @XmlElement
+   // @XmlElement
     public void setGroupName(String newGroupName)
     {
         GroupName = newGroupName;
@@ -87,7 +95,7 @@ public class UserGroup implements Serializable
         return GroupName;
     }
     
-    @XmlElement
+   // @XmlElement
     public void setGroupDescription(String newGroupDescription)
     {
         GroupDescription = newGroupDescription;
@@ -98,13 +106,13 @@ public class UserGroup implements Serializable
         return GroupDescription;
     }
     
-    @XmlElement(name="User")
-    public void setUserList(List<QuizUser> newUserList)
+  //  @XmlElement(name="User")
+    public void setUserList(ArrayList<QuizUser> newUserList)
     {
         UserList = newUserList;
     }
     
-    public List<QuizUser> getUserList()
+    public ArrayList<QuizUser> getUserList()
     {
         return UserList;
     }    
