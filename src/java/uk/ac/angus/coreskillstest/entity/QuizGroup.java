@@ -16,20 +16,25 @@ import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
 
-//import javax.xml.bind.annotation.XmlAttribute;
-//import javax.xml.bind.annotation.XmlElement;
-//import javax.xml.bind.annotation.XmlRootElement;
-
 /**
- * Class UserGroup
+ * Class QuizGroup
  * 
  * Manages a collection of users that form a class or group in the quiz system
  * @author JWO
+ * 
+ * REMEMBER: Use SELECT DISTINCT in join queries to avoid return of duplicate data
+ * 
+ * Removed XML annotations - moving to json for data transfer, means less server
+ * load when dealing with large numbers of connections.
+ * 
+ * @Expose annotation required for fields that do NOT link to external objects
+ * (to avoid infinite recursion when serialising to JSON string).
  */
+
 @Entity(name="QUIZ_GROUP")
 @NamedQueries({
     @NamedQuery(name="Groups.getAllGroupsAndUsers", 
-        query="SELECT g from QUIZ_GROUP g INNER JOIN g.UserList u"),
+        query="SELECT DISTINCT g from QUIZ_GROUP g LEFT JOIN FETCH g.UserList"),
     
     @NamedQuery(name="Groups.getAllGroups", 
         query="SELECT g from QUIZ_GROUP g"),
@@ -40,9 +45,7 @@ import com.google.gson.annotations.Expose;
     @NamedQuery(name="Groups.deleteGroupById",
         query="DELETE FROM QUIZ_GROUP g WHERE g.GroupID = :id")
     })
-
-//@XmlRootElement(name="UserGroup")
-public class UserGroup implements Serializable
+public class QuizGroup implements Serializable
 {
     @Expose
     @Id
@@ -62,18 +65,17 @@ public class UserGroup implements Serializable
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
     private ArrayList<QuizUser> UserList = new ArrayList<>();
     
-    public UserGroup()
+    public QuizGroup()
     {
 
     }
     
-    public UserGroup (String groupName, String groupDescription)
+    public QuizGroup (String groupName, String groupDescription)
     {
         GroupName = groupName;
         GroupDescription = groupDescription;
     }
-    
-   // @XmlAttribute
+
     public void setGroupID(int newGroupID)
     {
         GroupID = newGroupID;
@@ -84,7 +86,6 @@ public class UserGroup implements Serializable
         return GroupID;
     }
     
-   // @XmlElement
     public void setGroupName(String newGroupName)
     {
         GroupName = newGroupName;
@@ -95,7 +96,6 @@ public class UserGroup implements Serializable
         return GroupName;
     }
     
-   // @XmlElement
     public void setGroupDescription(String newGroupDescription)
     {
         GroupDescription = newGroupDescription;
@@ -105,8 +105,7 @@ public class UserGroup implements Serializable
     {
         return GroupDescription;
     }
-    
-  //  @XmlElement(name="User")
+
     public void setUserList(ArrayList<QuizUser> newUserList)
     {
         UserList = newUserList;

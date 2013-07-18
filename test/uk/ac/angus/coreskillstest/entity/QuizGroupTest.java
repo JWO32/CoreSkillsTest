@@ -15,11 +15,11 @@ import static org.junit.Assert.*;
  *
  * @author JWO
  */
-public class UserGroupTest 
+public class QuizGroupTest 
 {
-    private UserGroup group;
+    private QuizGroup group;
     
-    public UserGroupTest() 
+    public QuizGroupTest() 
     {
     
     }
@@ -39,7 +39,7 @@ public class UserGroupTest
     @Before
     public void setUp() 
     {
-        group = new UserGroup();
+        group = new QuizGroup();
     }
     
     @After
@@ -49,7 +49,7 @@ public class UserGroupTest
     }
 
     /**
-     * Test of setGroupName method, of class UserGroup.
+     * Test of setGroupName method, of class QuizGroup.
      */
     @Test
     public void testGetSetGroupName()
@@ -62,7 +62,7 @@ public class UserGroupTest
     }
     
     /**
-     * Test of setGroupID method, of class UserGroup.
+     * Test of setGroupID method, of class QuizGroup.
      */
     @Test
     public void testGetSetGroupID() 
@@ -76,7 +76,7 @@ public class UserGroupTest
     }
 
     /**
-     * Test of setGroupDescription method, of class UserGroup.
+     * Test of setGroupDescription method, of class QuizGroup.
      */
     @Test
     public void testGetSetGroupDescription() 

@@ -33,14 +33,20 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
+        $.ajaxSetup ({
+            // Disable caching of AJAX responses
+            cache: false
+          });
         //Move this code to separate file.
 
         //Fetch the dynamic group list component to send to the controller
-        var hierarchicalGroupList = $('#hierarchical_list');
-        var newGroupDialogueElem = $('#new_group_dialogue');
-        var newUserDialogueElem = $('#new_user_dialogue');
+        var $treeList = $('#hierarchical_list');
+        var $newGroupDialogueElem = $('#new_group_dialogue');
+        var $newUserDialogueElem = $('#new_user_dialogue');
 
-        var controller = new UserManagerController(hierarchicalGroupList, newUserDialogueElem, newGroupDialogueElem);
+        var controller = new UserManagerController($treeList, $newUserDialogueElem, $newGroupDialogueElem);
+        
+        controller.init();
 
         $('#add_user_button').on('click', function()
         {
@@ -62,21 +68,12 @@
             alert('Warning: Current behaviour is to delete group and ALL users.'); 
         });
 
-
-
         $('input[type="button"]').button();
         
-        $('#hierarchical_list').jstree({
-            "plugins":["ui", "themes", "html_data"],
-            "themes": {
-                "theme": "default",
-                "dots": true,
-                "icons": false
-            }
-        });  
+        controller.downloadGroupsandUsersEvent();
+        
     });
 </script>
-
 <title>Quiz Management: User Management</title>
 </head>
 
@@ -91,11 +88,11 @@
     <section id="Navigation">
         <nav id="TabbedLinks">
             <ul>
-                <li>Home Page</li>
-                <li>Create a New Quiz</li>
-                <li>Manage Quizzes</li>
-                <li>Manage Users</li>
-                <li>Create a Quiz Event</li>
+                <li><a href="#">Home Page</a></li>
+                <li><a href="#">Create a New Quiz</a></li>
+                <li><a href="#">Manage Quizzes</a></li>
+                <li><a href="#">Manage Users</a></li>
+                <li><a href="#">Create a Quiz Event</a></li>
             </ul>  
         </nav>
     </section>
@@ -112,35 +109,16 @@
         
         
         <div id="hierarchical_list">
-            <ul>
-                <li>
-                    <a href="#">No Group</a>
-                    <ul>
-                        <li><a href="#">Bob McTavish</a></li>
-                        <li><a href="#">Mary Smith</a></li>
-                        <li><a href="#">James Oliver</a></li>
-                    </ul>                 
-                </li>
-                <li>
-                    <a href="#">NC Computing</a>
-                    <ul>    
-                        <li><a href="#">Roger Roger</a></li>
-                        <li><a href="#">Carol Smiley</a></li>
-                        <li><a href="#">Andy Randomname</a></li>
-                    </ul>
-                </li>
-           </ul>
+
         </div>
     
     </section>
     </div>
-    
-    
-    <div id="new_user_dialogue" style="display: none;">
-        
+   
+    <!--jQuery Dialogues for use on the page -- inline style to hide-->
+    <div id="new_user_dialogue" style="display: none;">       
     </div>
-    <div id="new_group_dialogue" style="display: none;">
-        
+    <div id="new_group_dialogue" style="display: none;">       
     </div>
 </body>
 </html>

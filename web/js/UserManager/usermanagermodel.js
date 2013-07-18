@@ -29,6 +29,19 @@ UserManagerModel = function()
         {
             return AllUsers;
         },
+        getUsersandGroups: function()
+        {
+            return UsersAndGroups;
+        },
+        setUsersandGroups: function(newGroups)
+        {
+            UsersAndGroups = newGroups;
+        },
+        parseGroupsandUsers: function(data)
+        {
+           // Assign all users and groups to 
+           UsersAndGroups = data;
+        },
         sendUserToServer: function(user)
         {
             var url = 'User/add/user';

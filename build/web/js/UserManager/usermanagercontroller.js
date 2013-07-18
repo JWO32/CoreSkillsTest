@@ -1,9 +1,11 @@
-UserManagerController = function(hierarchicalComponent, userDialogue, groupDialogue)
+UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
 {
+    var $TreeWidget = $treeWidget;
+    var $UserDialogue = $userDialogue;
+    var $GroupDialogue = $groupDialogue;
+    
     var UserModel = new UserManagerModel();
-    var UserView = new UserManagerView();
-    var UserDialogue = userDialogue;
-    var GroupDialogue = groupDialogue;
+    var UserView = new UserManagerView($TreeWidget, $GroupDialogue, $UserDialogue);
     
     var UserBaseURL = 'User/';
     
@@ -12,13 +14,7 @@ UserManagerController = function(hierarchicalComponent, userDialogue, groupDialo
       init: function()
       {
           
-          UserView.init();
-          
-          $.ajaxSetup ({
-                        // Disable caching of AJAX responses
-                        cache: false
-                      });
-          
+          UserView.init($TreeWidget);   
       },
       fetchUsersFromServer: function(url)
       {
@@ -34,7 +30,7 @@ UserManagerController = function(hierarchicalComponent, userDialogue, groupDialo
       },
       addUserEvent: function(addUserCallback)
       {
-          UserView.displayNewUserDialogue(userDialogue, addUserCallback, false, 0);
+          UserView.displayNewUserDialogue($userDialogue, addUserCallback, false, 0);
       },
       deleteUserEvent: function()
       {
@@ -46,13 +42,32 @@ UserManagerController = function(hierarchicalComponent, userDialogue, groupDialo
       },
       addGroupEvent: function(addGroupCallback)
       {
-          UserView.displayNewGroupDialogue(groupDialogue, addGroupCallback, false, 0);
+          UserView.displayNewGroupDialogue($groupDialogue, addGroupCallback, false, 0);
       },
       deleteGroupEvent: function()
       {
           
       },
       editGroupEvent: function()
+      {
+          
+      },
+      downloadGroupsandUsersEvent: function()
+      {
+        $.ajax({
+           type: 'GET',
+           url: 'User/get/allgroupsandusers',
+           dataType:'json',
+           success: function(data, status, jqXHR)
+           {
+               UserModel.parseGroupsandUsers(data);
+               UserView.renderUserGroupList(UserModel.getUsersandGroups());
+           }
+        });   
+        
+        
+      },
+      downloadGroups: function()
       {
           
       },

@@ -74,8 +74,19 @@ public class UserReceiverController extends HttpServlet
                         json = uDAO.fetchAllUsers();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
+                        resp.setContentType("application/json");
                         output = resp.getWriter();
                         output.write(json);             
+                        break;
+                    case "allgroupsandusers":
+                        gDAO = new GroupDataAccessObject();
+                        
+                        json = gDAO.fetchAllGroupsandUsers();
+                        
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        resp.setContentType("application/json");
+                        output = resp.getWriter();
+                        output.write(json);                       
                         break;
                     case "allgroups":
                          gDAO = new GroupDataAccessObject();
@@ -166,8 +177,7 @@ public class UserReceiverController extends HttpServlet
                           resp.setStatus(HttpServletResponse.SC_OK);
                           resp.setContentType("text");
                           resp.setContentLength(0);                         
-                      break;
-                          
+                      break;                         
                   }
             }   
             

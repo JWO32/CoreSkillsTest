@@ -24,12 +24,13 @@ var GroupDialogue = function(htmlElement, callback, edit, group)
                 groupDetails = new Group();
                 
                 var groupName = $('#group_name').val();
-                var groupDescription = $('#group_desription').val();
+                var groupDescription = $('#group_description').val();
                 
                 groupDetails.GroupName = groupName;
                 groupDetails.GroupDescription = groupDescription;
               
                 callback(groupDetails);
+                $(this).dialog('destroy');
             },
             "Cancel": function()
             {

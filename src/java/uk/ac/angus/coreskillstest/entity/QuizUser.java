@@ -3,7 +3,6 @@ package uk.ac.angus.coreskillstest.entity;
 import java.io.Serializable;
 
 import java.util.Calendar;
-import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.gson.annotations.Expose;
 
@@ -42,7 +36,6 @@ import com.google.gson.annotations.Expose;
         query="DELETE FROM QUIZ_USER u WHERE u.UserId = :id")
     })
 
-@XmlRootElement
 public class QuizUser implements Serializable
 { 
     @Expose
@@ -74,12 +67,10 @@ public class QuizUser implements Serializable
     @Column (name="date_added")
     private Calendar DateAdded = Calendar.getInstance();
     
-    
-    
-    @ManyToOne(optional=false, targetEntity=UserGroup.class)
+    @ManyToOne(optional=false, targetEntity=QuizGroup.class)
     @JoinColumn(name="group_id", referencedColumnName="group_id")
 //    @XmlTransient
-    private UserGroup Group;
+    private QuizGroup Group;
     
     private static final long serialVersionUID = 1L;
 
@@ -164,12 +155,12 @@ public class QuizUser implements Serializable
         return GroupId;
     }
     
-    public void setGroup(UserGroup newGroup)
+    public void setGroup(QuizGroup newGroup)
     {
         Group = newGroup;
     }
     
-    public UserGroup getGroup()
+    public QuizGroup getGroup()
     {
         return Group;
     }

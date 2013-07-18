@@ -11,10 +11,10 @@
 
 Group = function()
 {
-    var GroupID = 0;
+    this.GroupID = 0;
     this.GroupName = "";
     this.GroupDescription = "";
-    this.Users = [];
+    this.UserList = [];
     
     return {
         init: function(id, newGroupName, newGroupDescription, newUsers)
@@ -22,7 +22,7 @@ Group = function()
             GroupID = id;
             GroupName = newGroupName;
             GroupDescription = newGroupDescription;
-            Users = newUsers;
+            UserList = newUsers;
         },
         setGroupId: function(newId)
         {
@@ -50,11 +50,11 @@ Group = function()
         },
         setUsers: function(userlist)
         {
-            Users = userlist;
+            UserList = userlist;
         },
         getUsers: function()
         {
-            return Users;
+            return UserList;
         } 
     };  
 };

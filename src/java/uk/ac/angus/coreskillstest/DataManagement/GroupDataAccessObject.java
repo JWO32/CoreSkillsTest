@@ -4,10 +4,12 @@
  */
 package uk.ac.angus.coreskillstest.DataManagement;
 
-import uk.ac.angus.coreskillstest.entity.UserGroup;
+import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +38,15 @@ public class GroupDataAccessObject
         JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
     
-    public static UserGroup getDefaultGroup()
+    //TODO: Remove this method and replace with a defaults object to create essential data.
+    public static QuizGroup getDefaultGroup()
     {
-        UserGroup ug;
+        QuizGroup ug;
         EntityManagerFactory DataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         
         EntityManager em = DataFactory.createEntityManager();
         
-        ug = (UserGroup) em.find(UserGroup.class, GroupDataAccessObject.DEFAULT_GROUP_ID);
+        ug = (QuizGroup) em.find(QuizGroup.class, GroupDataAccessObject.DEFAULT_GROUP_ID);
         
         em.close();
         
@@ -53,9 +56,10 @@ public class GroupDataAccessObject
             return ug;
     }
     
+    //Encompass this in a test case  
     public static void createDefaultGroup()
     {
-        UserGroup ug = new UserGroup("Default Group", "This is the default group for users who are not otherwise assigned to a group");
+        QuizGroup ug = new QuizGroup("Default Group", "This is the default group for users who are not otherwise assigned to a group");
         EntityManagerFactory DataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         
         EntityManager em = DataFactory.createEntityManager();
@@ -68,7 +72,15 @@ public class GroupDataAccessObject
     
     public void addSingleGroup(String singleGroupJson)
     {
+        EntityManager em = GroupDataFactory.createEntityManager();
+        QuizGroup ug = null;
+    
+        ug = (QuizGroup) JsonSerialiser.fromJson(singleGroupJson, QuizGroup.class);
         
+        em.getTransaction().begin();
+        em.persist(ug);
+        em.getTransaction().commit();
+        em.close();
     }
     
     public void addMultipleGroups(String multipleGroupJson)
@@ -93,18 +105,39 @@ public class GroupDataAccessObject
         return json;
     }
     
+    public String fetchAllGroupsandUsers()
+    {
+        String json;
+        
+        EntityManager em =  GroupDataFactory.createEntityManager();
+             
+        Query q = em.createNamedQuery("Groups.getAllGroupsAndUsers");
+        
+        Type groupList = new TypeToken<List<QuizGroup>>(){}.getType();
+        
+        List<QuizGroup> queryResults = q.getResultList();
+        
+        json = JsonSerialiser.toJson(queryResults, groupList);
+        
+        em.close();
+       
+        return json;
+    }    
+    
     public String fetchAllGroups()
     {
-        String json = "";
+        String json;
         
         EntityManager em =  GroupDataFactory.createEntityManager();
         
-        Query q = em.createNamedQuery("Groups.getAllGroupsAndUsers");
+        Query q = em.createNamedQuery("Groups.getAllGroups");
         
-        List<UserGroup> queryResults = q.getResultList();
+        Type groupList = new TypeToken<List<QuizGroup>>(){}.getType();
         
-        json = JsonSerialiser.toJson(queryResults);
+        List<QuizGroup> queryResults = q.getResultList();
+        
+        json = JsonSerialiser.toJson(queryResults, groupList);
         
         return json;
-    }    
+    }
 }

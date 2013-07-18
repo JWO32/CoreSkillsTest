@@ -19,7 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.UserGroup;
+import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
 
 /**
@@ -55,7 +55,7 @@ public class QuizReceiverController extends HttpServlet
 
             objEntityManager.getTransaction().begin();
 
-            UserGroup ug = new UserGroup();
+            QuizGroup ug = new QuizGroup();
 
             ug.setGroupName("NC Computing");
             ug.setGroupDescription("This is the computing group");
@@ -101,9 +101,9 @@ public class QuizReceiverController extends HttpServlet
             
             Query q = objEntityManager.createQuery("SELECT p FROM QUIZ_GROUP p");
             
-            List <UserGroup> list = q.getResultList();
+            List <QuizGroup> list = q.getResultList();
 
-            for(UserGroup group:list)
+            for(QuizGroup group:list)
             {
                 System.out.println("Group ID: " + group.getGroupID());
                 System.out.println("Group Name: " + group.getGroupName());
@@ -113,7 +113,7 @@ public class QuizReceiverController extends HttpServlet
 
 
             try {
-               JAXBContext jaxbContext = JAXBContext.newInstance(UserGroup.class);
+               JAXBContext jaxbContext = JAXBContext.newInstance(QuizGroup.class);
                Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
                jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

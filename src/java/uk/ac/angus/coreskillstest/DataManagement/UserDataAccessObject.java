@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.UserGroup;
+import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
 /**
  *
@@ -46,7 +46,7 @@ public class UserDataAccessObject
     {
         QuizUser newUser = (QuizUser) gsn.fromJson(userJson, QuizUser.class);
               
-        UserGroup defaultGroup = GroupDataAccessObject.getDefaultGroup();
+        QuizGroup defaultGroup = GroupDataAccessObject.getDefaultGroup();
         
         if(defaultGroup == null)
         {
