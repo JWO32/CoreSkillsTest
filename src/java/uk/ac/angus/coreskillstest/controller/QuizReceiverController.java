@@ -34,8 +34,6 @@ import uk.ac.angus.coreskillstest.entity.QuizGroup;
 public class QuizReceiverController extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
-        private EntityManagerFactory factory;
-        private static final String p_unit_name = "CoreSkillsTestPU";
        
         /**
          * @see HttpServlet#HttpServlet()
@@ -50,79 +48,7 @@ public class QuizReceiverController extends HttpServlet
          */
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
         {
-            factory = Persistence.createEntityManagerFactory(p_unit_name);
-            EntityManager objEntityManager = factory.createEntityManager();
 
-            objEntityManager.getTransaction().begin();
-
-            QuizGroup ug = new QuizGroup();
-
-            ug.setGroupName("NC Computing");
-            ug.setGroupDescription("This is the computing group");
-
-            QuizUser newUser1 = new QuizUser();
-
-            newUser1.setFirstName("Alistair");
-            newUser1.setLastName("Keys");
-            newUser1.setUserDescription("This is a new user");
-            newUser1.setUserEmail("akeys@angus.ac.uk");
-            java.util.Calendar dob = java.util.Calendar.getInstance();
-            dob.set(1980, 3, 18);
-            newUser1.setUserDateAdded(dob);        
-            objEntityManager.persist(newUser1);
-
-            QuizUser newUser2 = new QuizUser();
-            newUser2.setFirstName("Bob");
-            newUser2.setLastName("Pickering");
-            newUser2.setUserDescription("Here is another new user");
-            newUser2.setUserEmail("james@james.com");
-            newUser2.setUserDateAdded(dob);
-            objEntityManager.persist(newUser2);
-
-            QuizUser qu3 = new QuizUser();
-            qu3.setFirstName("Moron");
-            qu3.setLastName("The Moron");
-            qu3.setUserDescription("This is the next user");
-            qu3.setUserEmail("mo@ron.com");
-            qu3.setUserDateAdded(dob);       
-            objEntityManager.persist(qu3);
-            
-            ug.getUserList().add(newUser1);
-            ug.getUserList().add(newUser2);
-            ug.getUserList().add(qu3);
-            
-            
-            objEntityManager.persist(ug);
-
-            objEntityManager.getTransaction().commit();
-            objEntityManager.close();
-
-            objEntityManager = factory.createEntityManager();
-            
-            Query q = objEntityManager.createQuery("SELECT p FROM QUIZ_GROUP p");
-            
-            List <QuizGroup> list = q.getResultList();
-
-            for(QuizGroup group:list)
-            {
-                System.out.println("Group ID: " + group.getGroupID());
-                System.out.println("Group Name: " + group.getGroupName());
-                System.out.println("Group Description: " + group.getGroupDescription());
-                
-            }
-
-
-            try {
-               JAXBContext jaxbContext = JAXBContext.newInstance(QuizGroup.class);
-               Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-               jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-               jaxbMarshaller.marshal(ug, System.out);
-
-           } catch (JAXBException ex) {
-               Logger.getLogger(QuizReceiverController.class.getName()).log(Level.SEVERE, null, ex);
-           }
         }
 
 	/**
