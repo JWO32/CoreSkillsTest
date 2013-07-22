@@ -62,7 +62,6 @@ public class QuizGroup implements Serializable
     private String GroupDescription;
     
     @Expose
-    @Column(name="question_id")
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
     private ArrayList<QuizUser> UserList = new ArrayList<>();
     

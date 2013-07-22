@@ -69,7 +69,6 @@ public class QuizUser implements Serializable
     
     @ManyToOne(optional=false, targetEntity=QuizGroup.class)
     @JoinColumn(name="group_id", referencedColumnName="group_id")
-//    @XmlTransient
     private QuizGroup Group;
     
     private static final long serialVersionUID = 1L;
@@ -78,8 +77,7 @@ public class QuizUser implements Serializable
     {
        
     }
-    
-//    @XmlAttribute
+
     public void setUserId(int newID)
     {
         UserId = newID;
@@ -90,7 +88,6 @@ public class QuizUser implements Serializable
         return UserId;
     }
     
-//    @XmlElement
     public void setFirstName(String newUserName)
     {
         FirstName = newUserName;
@@ -101,7 +98,6 @@ public class QuizUser implements Serializable
         return FirstName;
     }
     
-//    @XmlElement
     public void setLastName(String newLastName)
     {
         LastName = newLastName;
@@ -112,7 +108,6 @@ public class QuizUser implements Serializable
         return LastName;
     }
     
-//    @XmlElement
     public void setUserDescription(String newUserDescription)
     {
         Description = newUserDescription;
@@ -123,7 +118,6 @@ public class QuizUser implements Serializable
         return Description;
     }
     
-//    @XmlElement
     public void setUserEmail(String newUserEmail)
     {
         Email = newUserEmail;

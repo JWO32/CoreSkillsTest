@@ -13,8 +13,12 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.google.gson.annotations.Expose;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 
 @Entity(name="QUIZ")
 
@@ -44,11 +48,11 @@ public class Quiz implements Serializable
     @Column(name="total_marks")
     private int TotalMarks;
     
-    @Expose
-    @Column(name="category")
-    private Category QuizCategory;
+    @ManyToOne(optional=false, targetEntity=QuizCategory.class)
+    @JoinColumn(name="quiz_category_id", referencedColumnName="quiz_category_id")
+    private QuizCategory QCategory;
     
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="Quiz", targetEntity=Question.class, fetch=FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.EAGER)
     private ArrayList<Question> Questions = new ArrayList<>();
     
     public Quiz()
@@ -104,5 +108,15 @@ public class Quiz implements Serializable
     public void setQuestions(ArrayList<Question> newQuestions)
     {
         Questions = newQuestions;
+    }
+    
+    public QuizCategory getQuizCategory()
+    {
+        return QCategory;
+    }
+    
+    public void setQuizCategory(QuizCategory newCategory)
+    {
+        QCategory = newCategory;
     }
 }

@@ -19,7 +19,20 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 
+
+/**
+ *
+ * @author JWO
+ */
+
 @Entity(name="QUESTIONS")
+@NamedQueries({
+    @NamedQuery(name="Question.getQuestionById",
+        query="SELECT q from QUESTIONS q WHERE q.QuestionId = :id"),
+    @NamedQuery(name="Question.deleteQuestionById",
+        query="DELETE FROM QUESTIONS q WHERE q.QuestionId=:id")
+})
+
 
 public class Question implements Serializable 
 {
@@ -36,20 +49,20 @@ public class Question implements Serializable
     private String QuestionText;
     
     @Expose
-    @Column(name="question_category")
-    private Category QuestionCategory;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionCategory.class, fetch=FetchType.EAGER)
+    //@JoinColumn(name="question_category_id", referencedColumnName="question_category_id")
+    private ArrayList<QuestionCategory> QCategory = new ArrayList<>();
     
     @Expose
     @Column(name="question_mark")
     private int QuestionMark;
     
     @Expose
-    @Column(name="question_optoins")
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="Question", targetEntity=QuestionOption.class, fetch=FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionOption.class, fetch=FetchType.EAGER)
     private ArrayList<QuestionOption> QuestionOptions = new ArrayList<>();
     
     @ManyToOne(optional=false, targetEntity=Quiz.class)
-    @JoinColumn(name="question_id", referencedColumnName="question_id")
+    @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
     
@@ -78,14 +91,14 @@ public class Question implements Serializable
         QuestionText = newQuestionText;
     }
     
-    public Category getCategory()
+    public ArrayList<QuestionCategory> getCategory()
     {
-        return QuestionCategory;
+        return QCategory;
     }
     
-    public void setCategory(Category newCat)
+    public void setCategory(ArrayList<QuestionCategory> newCat)
     {
-        QuestionCategory = newCat;
+        QCategory = newCat;
     }
     
     public int getMark()
