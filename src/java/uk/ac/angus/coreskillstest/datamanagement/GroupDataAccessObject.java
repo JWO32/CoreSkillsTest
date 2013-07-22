@@ -25,12 +25,11 @@ import javax.persistence.Query;
 public class GroupDataAccessObject 
 {
     private EntityManagerFactory GroupDataFactory;
-   // private Gson JsonSerialiser;
+   // private Gson JsonSerialiser; // Using one object per class seems to cause errors
     
     // This should be moved out to suitable defaults file in due course.
     private static final int DEFAULT_GROUP_ID = 1;
-    
-    
+       
     public GroupDataAccessObject()
     {
         GroupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
@@ -157,8 +156,7 @@ public class GroupDataAccessObject
         List<QuizGroup> queryResults = q.getResultList();
         
         json = JsonSerialiser.toJson(queryResults, groupList);
-        
-        
+              
         em.close();
        
         return json;
