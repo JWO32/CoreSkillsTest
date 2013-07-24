@@ -1,0 +1,65 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package uk.ac.angus.coreskillstest.entity;
+
+/**
+ *
+ * @author JWO
+ */
+public class ResultRule 
+{
+    private String RuleName;
+    private int LowMarkBoundary;
+    private int HighMarkBoundary;
+    
+    private Quiz LinkedQuiz;
+    private Feedback LinkedFeedback;
+    
+    public ResultRule()
+    {
+        
+    }
+    
+    public int getLowMarkBoundary()
+    {
+        return LowMarkBoundary;
+    }
+    
+    public void setLowMarkBoundary(int newLowMarkBoundary)
+    {
+        LowMarkBoundary = newLowMarkBoundary;
+    }
+    
+    public int getHighMarkBoundary()
+    {
+        return HighMarkBoundary;
+    }
+    
+    public void setHighMarkBoundary(int newHighMarkBoundary)
+    {
+        HighMarkBoundary = newHighMarkBoundary;
+    }
+    
+    public Quiz getQuiz()
+    {
+        return LinkedQuiz;
+    }
+    
+    public void setQuiz(Quiz newQuiz)
+    {
+        LinkedQuiz = newQuiz;
+    }
+    
+    public Feedback getFeedback()
+    {
+        return LinkedFeedback;
+    }
+    
+    public void setFeedback(Feedback newFeedback)
+    {
+        LinkedFeedback = newFeedback;
+    }
+    
+}

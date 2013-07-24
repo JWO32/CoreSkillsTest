@@ -1,10 +1,7 @@
 package uk.ac.angus.coreskillstest.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,13 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
-import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.QuizGroup;
-
+import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 
 /**
  * Servlet implementation class QuizReceiver
@@ -56,10 +48,23 @@ public class QuizReceiverController extends HttpServlet
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		
-		
+            String path = req.getRequestURI();
+            String[] pathComponents = path.split("/");
+            PrintWriter output;
+            QuizDataAccessObject qDAO = new QuizDataAccessObject();          
+            String json;
+            
+            
+            switch(pathComponents[3])
+            {
+                case "add":  
+                    json = req.getParameter("quiz");         
+                    qDAO.addNewQuiz(json);
+                    
+                break;
+            }
 	}
         
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException

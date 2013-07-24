@@ -2,6 +2,8 @@ package uk.ac.angus.coreskillstest.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,21 +15,21 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import com.google.gson.annotations.Expose;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
+import com.google.gson.annotations.Expose;
+import javax.persistence.TemporalType;
 
 @Entity(name="QUIZ")
-
 @NamedQueries({
     @NamedQuery(name="Quiz.getAllQuizzes",
         query="SELECT DISTINCT q FROM QUIZ q LEFT JOIN FETCH q.Questions"),
     @NamedQuery(name="Quiz.getQuizById",
         query="SELECT q FROM QUIZ q WHERE q.QuizId = :id ")
 })
+
 public class Quiz implements Serializable
 {
     @Expose
@@ -38,22 +40,38 @@ public class Quiz implements Serializable
     
     @Expose
     @Column(name="quiz_title")
-    private String QuizName;
+    private String QuizTitle;
     
     @Expose
-    @Column(name="quiz_description")
-    private String QuizDescription;
+    @Column(name="quiz_subject")
+    private String QuizSubject;
+    
+    @Expose
+    @Column(name="quiz_duration")
+    private int QuizDuration;
     
     @Expose
     @Column(name="total_marks")
     private int TotalMarks;
     
+    //@Expose
+    @Column(name="date_added")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar DateAdded = Calendar.getInstance();
+      
+    //Replace this with a level object
+    //
+    @Expose
+    @Column(name="quiz_level")
+    private String QuizLevel;
+    
     @ManyToOne(optional=false, targetEntity=QuizCategory.class)
     @JoinColumn(name="quiz_category_id", referencedColumnName="quiz_category_id")
     private QuizCategory QCategory;
     
+    @Expose
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.EAGER)
-    private ArrayList<Question> Questions = new ArrayList<>();
+    private List<Question> Questions = new ArrayList<>();
     
     public Quiz()
     {
@@ -70,24 +88,34 @@ public class Quiz implements Serializable
         QuizId = newId;
     }
     
-    public String getQuizName()
+    public String getQuizLevel()
     {
-        return QuizName;
+        return QuizLevel;
+    }
+    
+    public void setQuizLevel(String newQuizLevel)
+    {
+        QuizLevel = newQuizLevel;
+    }
+    
+    public String getQuizTitle()
+    {
+        return QuizTitle;
     }
     
     public void setQuizName(String newName)
     {
-        QuizName = newName;
+        QuizTitle = newName;
     }
     
-    public String getQuizDescription()
+    public String getQuizSubject()
     {
-        return QuizDescription;
+        return QuizSubject;
     }
     
-    public void setQuizDescription(String newDescription)
+    public void setQuizSubject(String newDescription)
     {
-        QuizDescription = newDescription;
+        QuizSubject = newDescription;
     }
     
     public int getTotalMarks()
@@ -100,12 +128,12 @@ public class Quiz implements Serializable
         TotalMarks = newMarks;
     }
     
-    public ArrayList<Question> getQuestions()
+    public List<Question> getQuestions()
     {
         return Questions;
     }
     
-    public void setQuestions(ArrayList<Question> newQuestions)
+    public void setQuestions(List<Question> newQuestions)
     {
         Questions = newQuestions;
     }
@@ -118,5 +146,25 @@ public class Quiz implements Serializable
     public void setQuizCategory(QuizCategory newCategory)
     {
         QCategory = newCategory;
+    }
+    
+    public Calendar getDateAdded()
+    {
+        return DateAdded;
+    }
+    
+    public void setDateAdded(Calendar newDateAdded)
+    {
+        DateAdded = newDateAdded;
+    }
+    
+    public int getDuration()
+    {
+        return QuizDuration;
+    }
+    
+    public void setDuration(int newDuration)
+    {
+        QuizDuration = newDuration;
     }
 }

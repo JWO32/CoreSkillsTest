@@ -4,27 +4,25 @@
  */
 package uk.ac.angus.coreskillstest.entity;
 
+import java.util.List;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
-
-
 
 
 /**
@@ -44,10 +42,10 @@ public class QuestionCategory implements Serializable
     @Column(name="category_question")
     private String CategoryDescription;
     
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "QCategory", targetEntity=Question.class, fetch=FetchType.LAZY)
-    @ManyToOne(optional=false, targetEntity=Question.class)
-    @JoinColumn(name="question_id", referencedColumnName="question_id", insertable=false, updatable=false)
-    private Question LinkedQuestion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "QCategory", targetEntity=Question.class, fetch=FetchType.LAZY)
+    //@ManyToOne(optional=false, targetEntity=Question.class)
+    //@JoinColumn(name="question_id", referencedColumnName="question_id", insertable=false, updatable=false)
+    private List<Question> LinkedQuestion = new ArrayList<>();
     
     public QuestionCategory()
     {
@@ -74,12 +72,12 @@ public class QuestionCategory implements Serializable
         CategoryDescription = newDescription;
     }
     
-    public Question getQuiz()
+    public List<Question> getQuiz()
     {
         return LinkedQuestion;
     }
     
-    public void setQuiz(Question newQuestion)
+    public void setQuiz(List<Question> newQuestion)
     {
         LinkedQuestion = newQuestion;
     }   

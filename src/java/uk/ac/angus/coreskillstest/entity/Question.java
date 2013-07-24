@@ -1,6 +1,7 @@
 package uk.ac.angus.coreskillstest.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,6 @@ import javax.persistence.ManyToOne;
 import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
-
-
 /**
  *
  * @author JWO
@@ -30,9 +29,10 @@ import java.io.Serializable;
     @NamedQuery(name="Question.getQuestionById",
         query="SELECT q from QUESTIONS q WHERE q.QuestionId = :id"),
     @NamedQuery(name="Question.deleteQuestionById",
-        query="DELETE FROM QUESTIONS q WHERE q.QuestionId=:id")
+        query="DELETE FROM QUESTIONS q WHERE q.QuestionId=:id"),
+    @NamedQuery(name="Question.deleteAllQuestionsByQuiz",
+        query="DELETE FROM QUESTIONS q WHERE q.LinkedQuiz.QuizId=:id")
 })
-
 
 public class Question implements Serializable 
 {
@@ -49,26 +49,36 @@ public class Question implements Serializable
     private String QuestionText;
     
     @Expose
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionCategory.class, fetch=FetchType.EAGER)
-    //@JoinColumn(name="question_category_id", referencedColumnName="question_category_id")
-    private ArrayList<QuestionCategory> QCategory = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name="question_category_id", referencedColumnName="question_category_id")
+    private QuestionCategory QCategory;
+    
+    @Expose
+    @Column(name="question_level")
+    private String QuestionLevel;
     
     @Expose
     @Column(name="question_mark")
-    private int QuestionMark;
+    private int QuestionScore;
     
     @Expose
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionOption.class, fetch=FetchType.EAGER)
-    private ArrayList<QuestionOption> QuestionOptions = new ArrayList<>();
+    private List<QuestionOption> QuestionOptions = new ArrayList<>();
     
     @ManyToOne(optional=false, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
-    
     public Question()
     {
         
+    }
+    
+    public Question(String questionText, String questionLevel, int questionScore)
+    {
+        QuestionText = questionText;
+        QuestionLevel = questionLevel;
+        QuestionScore = questionScore;
     }
     
     public int getQuestionId()
@@ -81,6 +91,16 @@ public class Question implements Serializable
         QuestionId = newQuestionId;
     }
     
+    public void setQuestionLevel(String newLevel)
+    {
+        QuestionLevel = newLevel;
+    }
+    
+    public String getQuestionLevel()
+    {
+        return QuestionLevel;
+    }
+    
     public String getQuestionText()
     {
         return QuestionText;
@@ -91,32 +111,32 @@ public class Question implements Serializable
         QuestionText = newQuestionText;
     }
     
-    public ArrayList<QuestionCategory> getCategory()
+    public QuestionCategory getCategory()
     {
         return QCategory;
     }
     
-    public void setCategory(ArrayList<QuestionCategory> newCat)
+    public void setCategory(QuestionCategory newCat)
     {
         QCategory = newCat;
     }
     
     public int getMark()
     {
-        return QuestionMark;
+        return QuestionScore;
     }
     
     public void setMark(int mark)
     {
-        QuestionMark = mark;
+        QuestionScore = mark;
     }
     
-    public ArrayList<QuestionOption> getOptions()
+    public List<QuestionOption> getOptions()
     {
         return QuestionOptions;
     }
     
-    public void setOptions(ArrayList<QuestionOption> newOptions)
+    public void setOptions(List<QuestionOption> newOptions)
     {
         QuestionOptions = newOptions;
     }

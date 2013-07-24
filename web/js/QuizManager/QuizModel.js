@@ -19,6 +19,7 @@ var SCQFLevelDefinition = function()
         $.ajax(
             
         );
+    
 	Level: ["SCQF Level 3", "SCQF Level 4", "SCQF Level 5", "SCQF Level 6", "SCQF Level 7", "SCQF Level 8"]	
 };
 
@@ -26,9 +27,10 @@ var SCQFLevelDefinition = function()
 //Quiz constructor with all details
 Quiz = function(title, duration, subject, level)
 {
-	this.Title = title;
-	this.Duration =  duration; // Set default duration to 45 minutes
-	this.Subject = subject;
+	this.QuizName = title;
+	this.QuizDuration =  duration; // Set default duration to 45 minutes
+	this.QuizSubject = subject;
+        this.TotalMarks = 0;
 	this.Questions = {}; //Key-value store of questions
 	this.QuizLevel = level; //Quiz level, this might be set by taking an average of the level of the Questions in due course
 	this.NumberOfQuestions = 0;
@@ -42,25 +44,33 @@ Quiz.prototype.init = function()
 Quiz.prototype.calcMinutes = function(hours, minutes)
 {
 	var numberOfMins = 0;
+        
+        hours = parseInt(hours);
+        minutes = parseInt(minutes);
 	
 	numberOfMins = (hours * 60) + minutes;
 	
-	return numberOfMins;
+        this.setDuration(numberOfMins);
 };
+
+Quiz.prototype.setQuizLevel = function(level)
+{
+    this.QuizLevel = level;
+}
 
 Quiz.prototype.setTitle = function(title)
 {
-	this.Title = title;
+	this.QuizTitle = title;
 };
 
 Quiz.prototype.setDuration =  function(duration)
 {
-	this.Duration = duration;
+	this.QuizDuration = duration;
 };
 
 Quiz.prototype.setSubject= function(subject)
 {
-	this.Subject = subject;
+	this.QuizSubject = subject;
 };
 
 Quiz.prototype.getNextUIKey = function()
@@ -101,57 +111,57 @@ Quiz.prototype.generateJSON = function()
  * Return string containing XML
  * @returns {String}
  */
-Quiz.prototype.generateXML = function()
-{
-	var xml = '';
-	
-	xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
-	xml += '<quiz>';
-	xml +='<quiz-details>';
-	xml += '<title>'+this.Title+'</title>';
-	xml += '<duration>'+this.Duration+'</duration>';
-	xml += '<subject>'+this.Subject+'</subject>';
-	xml += '</quiz-details>';
-	
-	
-	xml += '<question-list number="'+this.NumberOfQuestions+'">';
-	
-	$.each(this.Questions, function(q_id, question)
-	{
-		var currentQuestion = question;
-		
-		xml += '<question>';
-		xml += '<question-text>'+currentQuestion.QuestionText+'</question-text>';
-		xml += '<level>'+currentQuestion.QuestionLevel+'</level>';
-		xml += '<option-list>';
-		
-		for(var i = 0; i < currentQuestion.QuestionOptions.length; i++)
-		{
-			currentOption = currentQuestion.QuestionOptions[i];
-			
-			xml += '<option';
-			
-			if(currentOption.getCorrectOption() === true)
-				xml += ' correct="true">';
-			else
-				xml += '>';
-			
-			xml += currentOption.getOptionText();
-			
-			xml += '</option>';
-		
-		}		
-		xml+='</option-list>';
-		
-		xml += '</question>';
-	});
-	
-	xml+='</question-list>';
-	
-	xml+='</quiz>';
-	
-	return xml;
-};
+//Quiz.prototype.generateXML = function()
+//{
+//	var xml = '';
+//	
+//	xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+//	xml += '<quiz>';
+//	xml +='<quiz-details>';
+//	xml += '<title>'+this.Title+'</title>';
+//	xml += '<duration>'+this.Duration+'</duration>';
+//	xml += '<subject>'+this.Subject+'</subject>';
+//	xml += '</quiz-details>';
+//	
+//	
+//	xml += '<question-list number="'+this.NumberOfQuestions+'">';
+//	
+//	$.each(this.Questions, function(q_id, question)
+//	{
+//		var currentQuestion = question;
+//		
+//		xml += '<question>';
+//		xml += '<question-text>'+currentQuestion.QuestionText+'</question-text>';
+//		xml += '<level>'+currentQuestion.QuestionLevel+'</level>';
+//		xml += '<option-list>';
+//		
+//		for(var i = 0; i < currentQuestion.QuestionOptions.length; i++)
+//		{
+//			currentOption = currentQuestion.QuestionOptions[i];
+//			
+//			xml += '<option';
+//			
+//			if(currentOption.getCorrectOption() === true)
+//				xml += ' correct="true">';
+//			else
+//				xml += '>';
+//			
+//			xml += currentOption.getOptionText();
+//			
+//			xml += '</option>';
+//		
+//		}		
+//		xml+='</option-list>';
+//		
+//		xml += '</question>';
+//	});
+//	
+//	xml+='</question-list>';
+//	
+//	xml+='</quiz>';
+//	
+//	return xml;
+//};
 
 
 /**
@@ -168,12 +178,13 @@ Quiz.prototype.generateXML = function()
 
 var Question = function()
 {
-	this.QuestionText = '';
-	this.QuestionLevel = '';
-	this.QuestionCategory = '';
-	this.QuestionScore = 0;
-	this.QuestionMedia = [];
-	this.QuestionOptions =  [];
+    this.QuestionId = '';
+    this.QuestionText = '';
+    this.QuestionLevel = '';
+    this.QuestionCategory = '';
+    this.QuestionScore = 0;
+    this.QuestionMedia = [];
+    this.QuestionOptions =  [];
 	
 };
 
@@ -189,7 +200,7 @@ Question.prototype.getQuestionText = function()
 
 Question.prototype.addOption = function(newOption)
 {
-		this.QuestionOptions.push(newOption);
+        this.QuestionOptions.push(newOption);
 };
 
 
@@ -199,31 +210,31 @@ Question.prototype.addOption = function(newOption)
  */
 var QuestionOption = function()
 {
-	var OptionText = '';
-	var CorrectOption = false;
-	
-	return {
-		setOptionText: function(newText)
-		{
-                    OptionText = newText;
-		},
-		getOptionText: function()
-		{
-                    return OptionText;
-		},
-		setOptionCorrect: function()
-		{
-                    CorrectOption = true;
-		},
-		setOptionWrong: function()
-		{
-                    CorrectOption = false;
-		},
-		getCorrectOption: function()
-		{
-                    return CorrectOption;
-		}
-	};
+    this.OptionText = '';
+    this.CorrectOption = false;
+
+    return {
+            setOptionText: function(newText)
+            {
+                this.OptionText = newText;
+            },
+            getOptionText: function()
+            {
+                return this.OptionText;
+            },
+            setOptionCorrect: function()
+            {
+                this.CorrectOption = true;
+            },
+            setOptionWrong: function()
+            {
+                this.CorrectOption = false;
+            },
+            getCorrectOption: function()
+            {
+                return this.CorrectOption;
+            }
+    };
 };
 
 
@@ -236,13 +247,13 @@ var MultipleChoiceQuestion = new Question();
 
 MultipleChoiceQuestion = function() 
 {
-	var Score = 0;
-	var QuestionOptions =  {};
-	var NumberOfCorrectOptions = 0;
-        
-        return {
-            
-        };
+    var Score = 0;
+    var QuestionOptions =  {};
+    var NumberOfCorrectOptions = 0;
+
+    return {
+
+    };
 };
 	
 /**

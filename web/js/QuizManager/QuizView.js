@@ -57,9 +57,9 @@ QuestionListManager = function(QListElement)
 					html+='<li>';
 					html+=currentOption.getOptionText();
 					
-					if(currentOption.getCorrectOption() == true)
+					if(currentOption.getCorrectOption() === true)
 					{
-						html+='<img src="../images/icons/icon_tick.jpg"/> ';
+						html+='<img src="images/icons/icon_tick.jpg"/> ';
 					}
 					
 					html+='</li>';

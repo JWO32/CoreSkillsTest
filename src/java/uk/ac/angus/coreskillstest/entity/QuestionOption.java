@@ -4,13 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 
 import com.google.gson.annotations.Expose;
@@ -27,11 +24,11 @@ public class QuestionOption implements Serializable
     
     @Expose
     @Column(name="option_text")
-    private String QuestionOptionText;
+    private String OptionText;
     
     @Expose
     @Column(name="option_correct")
-    private boolean OptionCorrect;
+    private boolean CorrectOption;
     
     @ManyToOne(optional=false, targetEntity=Question.class)
     @JoinColumn(name="question_id", referencedColumnName="question_id", insertable=false, updatable=false)
@@ -54,22 +51,22 @@ public class QuestionOption implements Serializable
     
     public String getOptionText()
     {
-        return QuestionOptionText;
+        return OptionText;
     }
     
     public void setOptionText(String newOptionText)
     {
-        QuestionOptionText = newOptionText;
+        OptionText = newOptionText;
     }
     
-    public boolean getOptionCorrect()
+    public boolean getCorrectOption()
     {
-        return OptionCorrect;
+        return CorrectOption;
     }
     
-    public void setOptionCorrect(boolean isCorrect)
+    public void setCorrectOption(boolean isCorrect)
     {
-        OptionCorrect = isCorrect;
+        CorrectOption = isCorrect;
     }
     
     public void setQuestion(Question newQuestion)

@@ -19,10 +19,10 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <!-- Custom Imports: TODO: Reduce for final version! -->
-<script type="text/javascript" src="../js/QuizManager/customlib.js"></script>
-<script type="text/javascript" src="../js/QuizManager/quizcontroller.js"></script>
-<script type="text/javascript" src="../js/QuizManager/quizmodel.js"></script>
-<script type="text/javascript" src="../js/QuizManager/quizview.js"></script>
+<script type="text/javascript" src="js/QuizManager/Customlib.js"></script>
+<script type="text/javascript" src="js/QuizManager/QuizController.js"></script>
+<script type="text/javascript" src="js/QuizManager/QuizModel.js"></script>
+<script type="text/javascript" src="js/QuizManager/QuizView.js"></script>
 
 <!-- Controller Class -->
 <script type="text/javascript">
@@ -57,7 +57,7 @@ $(document).ready(function()
 	
 	$('#quiz_save').on('click', function()
 	{
-		Controller.saveQuestionEvent();
+            Controller.saveQuizEvent();
 	});
 	
 	$('#QuestionList').sortable({
@@ -84,8 +84,8 @@ $(document).ready(function()
 <h1>Create a New Quiz</h1>
 </header>
 <section id="QuizConfiguration">
-<form>
-<fieldset id="quiz_details">
+<form id="quiz_details">
+<fieldset>
 <legend> Quiz Details:</legend>
 <div id="quiz_details_leftcolumn">
 <ol>

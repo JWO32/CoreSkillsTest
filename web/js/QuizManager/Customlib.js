@@ -171,14 +171,16 @@ var questionDialogue = function(callBack, edit, question)
 	                        if ($('#option1correct').is(":checked"))
 	                        {
 		                        Option1.setOptionCorrect();
-	                        }
+	                        }else
+                                    Option1.setOptionWrong();
 
 	                        var Option2 = new QuestionOption();
 
 	                        if ($('#option2correct').is(':checked'))
 	                        {
 		                        Option2.setOptionCorrect();
-	                        }
+	                        }else
+                                    Option2.setOptionWrong();
 
 	                        Option2.OptionText = AllQuestionOptions[1].value;
 
@@ -187,7 +189,8 @@ var questionDialogue = function(callBack, edit, question)
 	                        if ($('#option3correct').is(':checked'))
 	                        {
 		                        Option3.setOptionCorrect();
-	                        }
+	                        }else
+                                    Option3.setOptionWrong();
 
 	                        Option3.OptionText = AllQuestionOptions[2].value;
 
@@ -196,7 +199,8 @@ var questionDialogue = function(callBack, edit, question)
 	                        if ($('#option4correct').is(':checked'))
 	                        {
 		                        Option4.setOptionCorrect();
-	                        }
+	                        }else
+                                    Option4.setOptionWrong();
 
 	                        Option4.OptionText = AllQuestionOptions[3].value;
 

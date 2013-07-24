@@ -17,7 +17,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>QuizReceiverController</servlet-name>
-    <url-pattern>/UploadQuiz</url-pattern>
+    <url-pattern>/Quiz/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

@@ -1,0 +1,90 @@
+package uk.ac.angus.coreskillstest.entity;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Constructs a Quiz Object from JSON.
+ * 
+ * Sets QUIZ properties initially and then iterates into the Question list and
+ * question options for each question.
+ * @author JWO
+ */
+public class QuizTypeAdapter implements JsonDeserializer<Quiz>
+{
+    @Override
+    public Quiz deserialize(final JsonElement json, Type typeOf, JsonDeserializationContext context) throws JsonParseException
+    {
+        JsonObject QuizObject = json.getAsJsonObject();
+        
+        Quiz q = new Quiz();
+        
+        q.setQuizName(QuizObject.get("QuizTitle").getAsString());
+        q.setQuizSubject(QuizObject.get("QuizSubject").getAsString());
+        q.setQuizLevel(QuizObject.get("QuizLevel").getAsString());
+        q.setDuration(QuizObject.get("QuizDuration").getAsInt());
+        
+        processQuestions(q, QuizObject);
+             
+        return q;
+    }
+    
+    private void processQuestions(final Quiz quiz, final JsonObject jsonQuestion)
+    {
+        final List<Question> questions = new ArrayList<>();
+        final JsonArray questionArray = jsonQuestion.get("Questions").getAsJsonArray();
+        
+        for(int i = 0; i < questionArray.size(); i++)
+        {
+            JsonObject currentQuestion  = questionArray.get(i).getAsJsonObject();
+            
+            String questionText = currentQuestion.get("QuestionText").getAsString();
+            String questionLevel = currentQuestion.get("QuestionLevel").getAsString();
+            int questionScore = currentQuestion.get("QuestionScore").getAsInt();
+            
+            Question newQuestion = new Question();
+            
+            if(questionText != null)
+                newQuestion.setQuestiontext(questionText);
+            if(questionLevel != null)
+                newQuestion.setQuestionLevel(questionLevel);
+            
+            newQuestion.setMark(questionScore);
+           
+           processQuestionOptions(newQuestion, currentQuestion);
+           
+           questions.add(newQuestion);    
+        }       
+        quiz.setQuestions(questions);        
+    }
+   
+    private void processQuestionOptions(final Question question, final JsonObject jsonOptions)
+    {
+        final List<QuestionOption> options = new ArrayList<>();
+        final JsonArray optionArray = jsonOptions.get("QuestionOptions").getAsJsonArray();
+        
+        for(int i = 0; i < optionArray.size(); i++)
+        {
+            JsonObject currentOption = optionArray.get(i).getAsJsonObject();
+            QuestionOption newOption = new QuestionOption();
+            
+            String optionText = currentOption.get("OptionText").getAsString();
+            boolean optionCorrect = currentOption.get("CorrectOption").getAsBoolean();
+            
+            if(optionText!=null)
+                newOption.setOptionText(optionText);
+            
+            newOption.setCorrectOption(optionCorrect);
+            
+            options.add(newOption);
+        }        
+        question.setOptions(options);
+    }
+}
