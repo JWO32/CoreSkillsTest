@@ -2,6 +2,7 @@ package uk.ac.angus.coreskillstest.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,7 +64,7 @@ public class QuizGroup implements Serializable
     
     @Expose
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
-    private ArrayList<QuizUser> UserList = new ArrayList<>();
+    private List<QuizUser> UserList = new ArrayList<>();
     
     public QuizGroup()
     {
@@ -106,12 +107,12 @@ public class QuizGroup implements Serializable
         return GroupDescription;
     }
 
-    public void setUserList(ArrayList<QuizUser> newUserList)
+    public void setUserList(List<QuizUser> newUserList)
     {
         UserList = newUserList;
     }
     
-    public ArrayList<QuizUser> getUserList()
+    public List<QuizUser> getUserList()
     {
         return UserList;
     }    

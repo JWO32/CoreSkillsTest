@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-import uk.ac.angus.coreskillstest.DataManagement.UserDataAccessObject;
-import uk.ac.angus.coreskillstest.DataManagement.GroupDataAccessObject;
+import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
+import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
 
 
 /**

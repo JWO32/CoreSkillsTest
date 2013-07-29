@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.ac.angus.coreskillstest.DataManagement;
+package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.util.List;
 

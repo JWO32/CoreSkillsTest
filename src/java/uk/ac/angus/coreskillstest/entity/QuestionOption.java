@@ -18,7 +18,7 @@ public class QuestionOption implements Serializable
 {
     @Expose
     @Id
-    @Column(name="option_id")
+    @Column(name="option_id", nullable=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int QuestionOptionId;
     
@@ -31,7 +31,7 @@ public class QuestionOption implements Serializable
     private boolean CorrectOption;
     
     @ManyToOne(optional=false, targetEntity=Question.class)
-    @JoinColumn(name="question_id", referencedColumnName="question_id", insertable=false, updatable=false)
+    @JoinColumn(name="question_id", referencedColumnName="question_id")
     private Question LinkedQuestion;
     
     public QuestionOption()

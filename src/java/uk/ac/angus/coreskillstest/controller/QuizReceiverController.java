@@ -38,8 +38,23 @@ public class QuizReceiverController extends HttpServlet
         /**
          * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
          */
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
         {
+            String path = req.getRequestURI();
+            String[] pathComponents = path.split("/");
+            PrintWriter output;
+            QuizDataAccessObject qDAO = new QuizDataAccessObject();
+            
+            switch(pathComponents[3])
+            {
+                case "get":
+                    String json;
+                    int quizId = Integer.valueOf(pathComponents[4]);
+                    
+                    qDAO.getQuizById(quizId);
+                
+            }
+            
 
         }
 

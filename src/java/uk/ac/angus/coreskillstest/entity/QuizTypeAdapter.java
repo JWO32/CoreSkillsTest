@@ -25,7 +25,7 @@ public class QuizTypeAdapter implements JsonDeserializer<Quiz>
         JsonObject QuizObject = json.getAsJsonObject();
         
         Quiz q = new Quiz();
-        
+
         q.setQuizName(QuizObject.get("QuizTitle").getAsString());
         q.setQuizSubject(QuizObject.get("QuizSubject").getAsString());
         q.setQuizLevel(QuizObject.get("QuizLevel").getAsString());
@@ -57,6 +57,7 @@ public class QuizTypeAdapter implements JsonDeserializer<Quiz>
                 newQuestion.setQuestionLevel(questionLevel);
             
             newQuestion.setMark(questionScore);
+            newQuestion.setQuiz(quiz);
            
            processQuestionOptions(newQuestion, currentQuestion);
            
@@ -82,6 +83,7 @@ public class QuizTypeAdapter implements JsonDeserializer<Quiz>
                 newOption.setOptionText(optionText);
             
             newOption.setCorrectOption(optionCorrect);
+            newOption.setQuestion(question);
             
             options.add(newOption);
         }        

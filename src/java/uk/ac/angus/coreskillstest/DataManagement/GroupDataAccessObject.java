@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.ac.angus.coreskillstest.DataManagement;
+package uk.ac.angus.coreskillstest.datamanagement;
 
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
@@ -82,9 +82,8 @@ public class GroupDataAccessObject
     {
         Gson JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         EntityManager em = GroupDataFactory.createEntityManager();
-        QuizGroup ug = null;
-    
-        ug = (QuizGroup) JsonSerialiser.fromJson(singleGroupJson, QuizGroup.class);
+        
+        QuizGroup ug = (QuizGroup) JsonSerialiser.fromJson(singleGroupJson, QuizGroup.class);
         
         em.getTransaction().begin();
         em.persist(ug);

@@ -27,14 +27,14 @@ import javax.persistence.TemporalType;
     @NamedQuery(name="Quiz.getAllQuizzes",
         query="SELECT DISTINCT q FROM QUIZ q LEFT JOIN FETCH q.Questions"),
     @NamedQuery(name="Quiz.getQuizById",
-        query="SELECT q FROM QUIZ q WHERE q.QuizId = :id ")
+        query="SELECT q FROM QUIZ q LEFT JOIN FETCH q.Questions WHERE q.QuizId=:id")
 })
 
 public class Quiz implements Serializable
 {
     @Expose
     @Id
-    @Column(name="quiz_id")
+    @Column(name="quiz_id", nullable=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int QuizId;
     
@@ -54,7 +54,7 @@ public class Quiz implements Serializable
     @Column(name="total_marks")
     private int TotalMarks;
     
-    //@Expose
+    @Expose
     @Column(name="date_added")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar DateAdded = Calendar.getInstance();
@@ -70,7 +70,7 @@ public class Quiz implements Serializable
     private QuizCategory QCategory;
     
     @Expose
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.LAZY)
     private List<Question> Questions = new ArrayList<>();
     
     public Quiz()

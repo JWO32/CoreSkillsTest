@@ -40,7 +40,7 @@ public class Question implements Serializable
     
     @Expose
     @Id
-    @Column(name="question_id")
+    @Column(name="question_id", nullable=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int QuestionId;
     
@@ -62,7 +62,7 @@ public class Question implements Serializable
     private int QuestionScore;
     
     @Expose
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionOption.class, fetch=FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuestion", targetEntity=QuestionOption.class, fetch=FetchType.LAZY)
     private List<QuestionOption> QuestionOptions = new ArrayList<>();
     
     @ManyToOne(optional=false, targetEntity=Quiz.class)

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.angus.coreskillstest.entity;
 
 import java.io.Serializable;
@@ -30,6 +26,12 @@ public class Result implements Serializable
     @Column(name="result_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ResultId;
+    
+    private QuizUser LinkedUser;
+    
+    private Quiz LinkedQuiz;
+    
+    private Feedback LinkedFeedback;
     
     public Result()
     {

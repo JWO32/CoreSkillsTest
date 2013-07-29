@@ -4,13 +4,15 @@
  */
 package uk.ac.angus.coreskillstest.entity;
 
+
+import java.io.Serializable;
 /**
  *
  * @author JWO
  */
 
 
-public class Feedback 
+public class Feedback implements Serializable 
 {
     
     public Feedback()

@@ -22,8 +22,7 @@ public class QuestionTypeAdapter implements JsonDeserializer<Question>
     public Question deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
     {
         Question q = new Question();
-        
-        
+ 
         return q;
         
     }
