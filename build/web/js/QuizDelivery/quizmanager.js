@@ -3,14 +3,15 @@
         var Model = new QuizPlayerModel();
         var View = new QuizPlayerView();
 
-        var CurrentQuestion;
+        var CurrentQuestion = 0;
         
+        // Quiz Time
+        //
         var TotalTime = 0;
         var Hours = 0;
-        var Minutes = 0; //Quiz time in minutes
-        var Seconds = 0;
-        
-        var TimerId;
+        var Minutes = 0;
+        var Seconds = 0;        
+        var TimerId = 0;
 
         return {
             init: function (quizData, startData, endData)
@@ -55,33 +56,36 @@
                     return null; //Reached start of questions
                 }
             },
-            displayInstructions: function()
+            displayInstructions: function ()
             {
-                var instructions = Model.getQuizInstructions();
-                var title = Model.getQuizTitle();
-                var passCriteria = Model.getQuizPassCriteria();
+                var quizStartInstructions = Model.getQuizIntroductionObject();
                 
                 // Send copy of QuizManager object so that it is possible to callback
                 // to startQuiz from the view.  Bit of a kludge, but I can't find a design
                 // pattern that addresses this issue.  Reminder that I'm still quite inexperienced
                 // in Javascript!
-                View.renderStartMessage(title, instructions, passCriteria, this);
+                View.renderStartMessage(quizStartInstructions, this);
             },
-            startTimer: function()
+            startTimer: function ()
             {
                 TimerId = window.setInterval(this.updateTimeEvent, 1000);
             },
-            startQuiz: function()
+            startQuiz: function ()
             {
+                View.hideInfoDialogue();
                 View.renderQuestion(CurrentQuestion);
+                View.renderProgress(CurrentQuestion, Model.getNumberOfQuestions());
                 this.startTimer();
             },
             endQuiz: function()
             {
-                View.renderEndQuizMessage();
+                var endMessage = Model.getQuizEndObject();
+                
+                this.addResponseEvent(); // Record the current selections
+                View.renderEndQuizMessage(endMessage, this);
                 window.clearInterval(TimerId);            
             },
-            createQuizElements:function()
+            createQuizElements:function ()
             {
                 var questionList = Model.getQuestionList();
                 for(var i = 0; i < questionList.length; i++)
@@ -89,27 +93,76 @@
                     View.addQuestionTemplate(questionList[i]);
                 }
             },
-            nextQuestionEvent: function()
+            submitToServer: function ()
+            {
+                var userChoices = new UserSelection();
+                
+                userChoices.QuizId = Model.getQuizId();
+                userChoices.UserId = Model.getUserId();
+                
+                userChoices.Responses = Model.getResponses();
+                
+                var UserSelectionJson = JSON.stringify(userChoices);
+                
+                
+                // Send data asynchronously
+                //
+                $.ajax({
+                    url: 'Result/add',
+                    data: 'result='+UserSelectionJson,
+                    dataType: 'json',
+                    success: function(response)
+                    {
+                        
+                    },
+                    error: function()
+                    {
+                        
+                    }
+                });             
+            },
+            addResponseEvent: function ()
             {
                 //Get the ids of the user's responses and the current question
                 var response = View.getQuestionResponse();
                 var questionId = View.getQuestionId();
-                var nextQuestion = 0;
-                var nextQuestionResponse = 0;
                 
+                //Add the responses to the response object for this question
+
+                if(response !== null)
+                {
+                    Model.addResponse(CurrentQuestion, questionId, response);
+                    return true;
+                }else
+                {
+                    return false;
+                }
+            },
+            nextQuestionEvent: function ()
+            {
+                //Get the ids of the user's responses and the current question
+                /*var response = View.getQuestionResponse();
+                var questionId = View.getQuestionId();
                 //Add the responses to the response object for this question
                 
                 Model.addResponse(CurrentQuestion, questionId, response);
-
+                */
+               var nextQuestion = 0;
+               var nextQuestionResponse = 0;
+               var userResponse = this.addResponseEvent();
+               
                 // For the time being users must answer questions before proceeeding
                 // If there is already a response for the next question, fetch from the cache
                 // and send to the View so the response can be displayed.
-                if(response)
+                if(userResponse)
                 { 
                     nextQuestion = this.incrementQuestion();
                     
                     if(nextQuestion !== null)
+                    {
                         View.renderQuestion(nextQuestion);
+                        View.renderProgress(CurrentQuestion, Model.getNumberOfQuestions());
+                    }
                     else
                         alert('Reached end of Quiz'); // Blocks main thread!  Use jQuery dialogue
                                         
@@ -123,10 +176,9 @@
                 }else
                 {
                     //Display jQuery Dialogue asking user for an answer
-
                 }
             },
-            previousQuestionEvent: function()
+            previousQuestionEvent: function ()
             {
                 var response = View.getQuestionResponse();
                 var questionId = View.getQuestionId();
@@ -140,7 +192,10 @@
                     previousQuestion = this.decrementQuestion();
 
                     if(previousQuestion !== null)
+                    {
                         View.renderQuestion(CurrentQuestion);
+                        View.renderProgress(CurrentQuestion, Model.getNumberOfQuestions());
+                    }
                     else
                         alert('At the start of Quiz!'); // Blocks main thread! Use jQuery dialogue
                     
@@ -157,7 +212,7 @@
                 }
 
             },
-            updateTimeEvent: function()
+            updateTimeEvent: function ()
             {               
                 var SecondsRemaining = 0;
                 var MinutesRemaining = 0;

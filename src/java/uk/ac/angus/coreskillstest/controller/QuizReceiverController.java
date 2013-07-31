@@ -38,6 +38,7 @@ public class QuizReceiverController extends HttpServlet
         /**
          * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
          */
+        @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
         {
             String path = req.getRequestURI();
@@ -63,6 +64,7 @@ public class QuizReceiverController extends HttpServlet
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+        @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
             String path = req.getRequestURI();
@@ -82,6 +84,7 @@ public class QuizReceiverController extends HttpServlet
             }
 	}
         
+        @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
         {
             

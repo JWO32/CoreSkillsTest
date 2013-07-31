@@ -4,20 +4,36 @@ QuizPlayerModel = function()
   var QuizIntroduction = 0;
   var QuizEnd = 0;
   
+  var UserSelections = new UserSelection();
   
   var Responses = new Array();
   var NumberOfQuestions = 0;
+  var NumberOfMarks = 0;
   
-    return{
+    return {
       initModel: function()
       {
           NumberOfQuestions = Quiz.Questions.length;
+          
       },
       setQuizJson: function(newQuiz, startDetails, endDetails)
       {          
           Quiz = jQuery.parseJSON(newQuiz);
           QuizIntroduction = jQuery.parseJSON(startDetails);
           QuizEnd = jQuery.parseJSON(endDetails);
+      },
+      setSelectionDetails: function(quizId, userId)
+      {
+          UserSelections.QuizId = quizId;
+          UserSelections.UserId = userId;
+      },
+      getQuizId: function()
+      {
+        return Quiz.QuizId;  
+      },
+      getUserId: function()
+      {
+        return Quiz.UserId;  
       },
       setQuiz: function(newQuiz)
       {
@@ -62,6 +78,10 @@ QuizPlayerModel = function()
           else
             return null;
       },
+      getResponses: function()
+      {
+          return Responses;
+      },
       getDuration: function()
       {
           return Quiz.QuizDuration;
@@ -69,6 +89,18 @@ QuizPlayerModel = function()
       getNumberOfQuestions: function()
       {
           return Quiz.Questions.length;
+      },
+      getQuizEndObject: function()
+      {
+          return QuizEnd;
+      },
+      getQuizIntroductionObject: function()
+      {
+          return QuizIntroduction;  
+      },
+      getQuizIntroductionJSON: function()
+      {
+          return JSON.stringify(QuizIntroduction);
       },
       getQuizTitle: function()
       {

@@ -49,17 +49,42 @@ QuizPlayerView = function ()
                 $('#'+responses.SelectedResponse[i]).prop('checked', true);
             }
         },
-        renderStartMessage: function(quizStartDetails)
+        renderStartMessage: function(quizStartDetails, quizRef)
         {
-            var startTemplateSource = $('#start_quiz_template');
-            var template = Handlebars.compile(startTemplateSouce);
+            var startTemplateSource = $('#start_quiz_template').html();
+            var template = Handlebars.compile(startTemplateSource);
             
             var templateHTML = template(quizStartDetails);
+                  
+            $('#question_wrapper').hide();
+            $('#info_dialogue_wrapper').show();
+            $('#info_dialogue').html(templateHTML);  
+            $('#info_dialogue_button').on('click', function()
+            {
+                quizRef.startQuiz();
+            });
+        },
+        hideInfoDialogue: function()
+        {
+            $('#info_dialogue_wrapper').hide();
+            $('#question_wrapper').show();
+        },
+        showQuestion: function()
+        {
+            $('question_wrapper').show();
         },
         renderEndQuizMessage: function (endMessage, quizRef) 
         {
+            var endTemplateSource = $('#end_quiz_template').html();
+            var template = Handlebars.compile(endTemplateSource);
+            
+            var templateHTML = template(endMessage);
             
             
+            $('#info_dialogue').html(templateHTML);
+            $('#question_wrapper').hide();
+            $('#info_dialogue_wrapper').show();
+            $('#info_dialogue_button').empty(); // Delete the dialogue button -- user muse close the window to finish     
         },
         renderResultMessage: function (resultDetails) 
         {
@@ -68,6 +93,10 @@ QuizPlayerView = function ()
         renderTime: function (hours, minutes, seconds) 
         {
             $('#timer').html('<p>' + hours + ':' + minutes + ':' + seconds + '</p>');
+        },
+        renderProgress: function (currentQuestion, totalQuestions)
+        {
+            $('#progress').html('Question: <strong>'+(currentQuestion+1)+'</strong>/<strong>'+totalQuestions+'</strong>');
         }
     };
 

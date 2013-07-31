@@ -7,3 +7,45 @@
 */
 
 
+#question_wrapper
+{
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    border: 1px solid #000000;
+}
+
+#info_dialogue_wrapper
+{
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #000000;
+    
+}
+
+#question_text
+{
+    font-size: 14pt;
+}
+
+#quiz_title
+{
+    font-size: 22pt;
+    
+}
+
+#timer
+{
+    font-size: 14pt;
+}
+
+#progress
+{
+    font-size: 14pt;
+}
+
+#info_dialogue
+{
+    font-size: 14pt;
+}
+

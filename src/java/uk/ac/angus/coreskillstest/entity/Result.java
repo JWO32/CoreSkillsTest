@@ -27,10 +27,13 @@ public class Result implements Serializable
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ResultId;
     
+    @Column(name="user_id")
     private QuizUser LinkedUser;
     
+    @Column(name="quiz_id")
     private Quiz LinkedQuiz;
     
+    @Column(name="feedback_id")
     private Feedback LinkedFeedback;
     
     public Result()
@@ -46,6 +49,36 @@ public class Result implements Serializable
     public void setResultId(int newResultId)
     {
         ResultId = newResultId;
+    }
+    
+    public Quiz getLinkedQuiz()
+    {
+        return LinkedQuiz;
+    }
+    
+    public void setLinkedQuiz(Quiz newLinkedQuiz)
+    {
+        LinkedQuiz = newLinkedQuiz;
+    }
+    
+    public QuizUser getQuizUser()
+    {
+        return LinkedUser;
+    }
+    
+    public void setQuizUser(QuizUser newLinkedUser)
+    {
+        LinkedUser = newLinkedUser;
+    }
+    
+    public Feedback getLinkedFeedback()
+    {
+        return LinkedFeedback;
+    }
+    
+    public void setLinkedFeedback(Feedback newLinkedFeedback)
+    {
+        LinkedFeedback = newLinkedFeedback;
     }
     
 }
