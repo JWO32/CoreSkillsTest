@@ -33,7 +33,7 @@ public class GroupDataAccessObject
     public GroupDataAccessObject()
     {
         GroupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
-        //Gson JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        
     }
 
     /**

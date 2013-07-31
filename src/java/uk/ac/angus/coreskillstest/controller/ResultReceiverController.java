@@ -35,7 +35,16 @@ public class ResultReceiverController extends HttpServlet
         {
             case "add":
                 
-                quizResultJSON = req.getParameter("result");
+                quizResultJSON = req.getParameter("response");
+                
+                // Create response object
+                // load associated quiz object
+                // fetch questions and result rules
+                // match responses to question options
+                // calculate total score
+                // match total score to quiz result rules
+                // 
+                
                 
                 break;
         }

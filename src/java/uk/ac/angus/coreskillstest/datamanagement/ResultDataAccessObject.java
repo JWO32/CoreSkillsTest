@@ -4,6 +4,20 @@
  */
 package uk.ac.angus.coreskillstest.datamanagement;
 
+import uk.ac.angus.coreskillstest.entity.QuizGroup;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+
+import java.util.List;
+ 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 /**
  *
  * @author JWO
@@ -11,10 +25,26 @@ package uk.ac.angus.coreskillstest.datamanagement;
 public class ResultDataAccessObject 
 {
     
+    private EntityManagerFactory ResultManagerFactory;
+    
     public ResultDataAccessObject()
     {
-        
+        ResultManagerFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         
     }
     
+    public void addResult()
+    {
+        
+    }
+    
+    public void getResult()
+    {
+        
+    }
+    
+    public void deleteResult()
+    {
+        
+    }
 }

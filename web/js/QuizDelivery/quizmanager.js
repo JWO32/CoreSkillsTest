@@ -110,7 +110,7 @@
                 $.ajax({
                     type: 'POST',
                     url: 'Result/add',
-                    data: "result="+userSelections,
+                    data: "response="+userSelections,
                     dataType: 'json',
                     success: function(response)
                     {

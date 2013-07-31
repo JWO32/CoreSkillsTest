@@ -59,7 +59,11 @@ public class Quiz implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar DateAdded = Calendar.getInstance();
       
-    //Replace this with a level object
+    @Column(name="result_rules")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=ResultRule.class, fetch=FetchType.LAZY)
+    private List<ResultRule> LinkedResultRules = new ArrayList<>();
+    
+    //TODO: Eventually replace this with a level object
     //
     @Expose
     @Column(name="quiz_level")
@@ -166,5 +170,15 @@ public class Quiz implements Serializable
     public void setDuration(int newDuration)
     {
         QuizDuration = newDuration;
+    }
+    
+    public void setResultRules(List<ResultRule> newResultRules)
+    {
+        LinkedResultRules = newResultRules;
+    }
+    
+    public List<ResultRule> getResultRules()
+    {
+        return LinkedResultRules;
     }
 }

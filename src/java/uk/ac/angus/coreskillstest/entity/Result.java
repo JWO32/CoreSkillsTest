@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,6 +21,14 @@ import javax.persistence.OneToMany;
  */
 
 @Entity(name="QUIZ_RESULT")
+
+@NamedQueries({
+        @NamedQuery(name="Result.getResultById",
+        query="SELECT r from QUIZ_RESULT r WHERE r.ResultId=:id"),
+        @NamedQuery(name="Result.deleteResultById",
+        query="DELETE FROM QUIZ_RESULT r WHERE r.ResultId=:id")
+})
+
 public class Result implements Serializable
 {
 
@@ -28,12 +38,15 @@ public class Result implements Serializable
     private int ResultId;
     
     @Column(name="user_id")
+    @ManyToOne
     private QuizUser LinkedUser;
     
     @Column(name="quiz_id")
+    @OneToOne
     private Quiz LinkedQuiz;
     
     @Column(name="feedback_id")
+    @OneToOne
     private Feedback LinkedFeedback;
     
     public Result()
