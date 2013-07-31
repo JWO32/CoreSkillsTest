@@ -6,10 +6,7 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
     
     var UserModel = new UserManagerModel();
     var UserView = new UserManagerView($TreeWidget, $GroupDialogue, $UserDialogue);
-    
-    var UserBaseURL = 'User/';
-    
-    
+      
     return {
       init: function()
       {
@@ -62,10 +59,12 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
            {
                UserModel.parseGroupsandUsers(data);
                UserView.renderUserGroupList(UserModel.getUsersandGroups());
+           },
+           error: function(data, status, jqXHR)
+           {
+               
            }
-        });   
-        
-        
+        });      
       },
       downloadGroups: function()
       {

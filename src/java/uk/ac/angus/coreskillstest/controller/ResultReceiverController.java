@@ -29,6 +29,16 @@ public class ResultReceiverController extends HttpServlet
         String path = req.getRequestURI();
         
         String[] pathComponents = path.split("/");
+        String quizResultJSON;
+        
+        switch(pathComponents[3])
+        {
+            case "add":
+                
+                quizResultJSON = req.getParameter("result");
+                
+                break;
+        }
         
         
     }

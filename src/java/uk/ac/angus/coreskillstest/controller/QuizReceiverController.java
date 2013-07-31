@@ -2,10 +2,6 @@ package uk.ac.angus.coreskillstest.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,8 +51,6 @@ public class QuizReceiverController extends HttpServlet
                     qDAO.getQuizById(quizId);
                 
             }
-            
-
         }
 
 	/**
@@ -72,8 +66,7 @@ public class QuizReceiverController extends HttpServlet
             PrintWriter output;
             QuizDataAccessObject qDAO = new QuizDataAccessObject();          
             String json;
-            
-            
+ 
             switch(pathComponents[3])
             {
                 case "add":  
@@ -87,7 +80,17 @@ public class QuizReceiverController extends HttpServlet
         @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
         {
+            String path = req.getRequestURI();
+            String[] pathComponents = path.split("/");
+            PrintWriter output;
+            QuizDataAccessObject qDAO = new QuizDataAccessObject();
             
+            switch(pathComponents[3])
+            {
+                case "delete":
+                    
+                break;
+            }
         }
 
 }
