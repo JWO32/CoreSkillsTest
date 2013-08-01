@@ -20,12 +20,16 @@
     width: 50%;
     margin: 0 auto;
     border: 1px solid #000000;
-    
 }
 
 #question_text
 {
     font-size: 14pt;
+}
+
+#question_text ol
+{
+    list-style: none;
 }
 
 #quiz_title

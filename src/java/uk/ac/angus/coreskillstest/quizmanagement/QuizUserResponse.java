@@ -16,7 +16,7 @@ public class QuizUserResponse
     private int QuizId;
     private int UserId;
     
-    
+    private List<QuestionUserResponse> QuestionResponses = new ArrayList<>();
 
     public QuizUserResponse()
     {
@@ -43,4 +43,8 @@ public class QuizUserResponse
         UserId = newUserId;
     }
     
+    public List<QuestionUserResponse> getResponses()
+    {
+        return QuestionResponses;
+    }
 }
