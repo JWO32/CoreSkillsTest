@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 
+import uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceException;
 /**
  * Servlet implementation class QuizReceiver
  * 
@@ -63,16 +64,24 @@ public class QuizReceiverController extends HttpServlet
 	{
             String path = req.getRequestURI();
             String[] pathComponents = path.split("/");
-            PrintWriter output;
+            PrintWriter output = resp.getWriter();
             QuizDataAccessObject qDAO = new QuizDataAccessObject();          
             String json;
  
             switch(pathComponents[3])
             {
                 case "add":  
-                    json = req.getParameter("quiz");         
-                    qDAO.addNewQuiz(json);
-                    
+                    json = req.getParameter("quiz");
+                    try
+                    {
+                        qDAO.addNewQuizByJson(json);
+                    }catch(UnabletoAddResourceException ex)
+                    {
+                        String returnMessage = ex.getMessage();
+                        
+                        output.write(returnMessage);
+                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    }                  
                 break;
             }
 	}

@@ -71,7 +71,7 @@ public class UserReceiverController extends HttpServlet
                     case "allusers":                
                         uDAO = new UserDataAccessObject();
                         
-                        json = uDAO.fetchAllUsers();
+                        json = uDAO.fetchAllUsersJson();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
                         resp.setContentType("application/json");
@@ -103,7 +103,7 @@ public class UserReceiverController extends HttpServlet
                         
                         String userId = req.getParameter("userid");
                         
-                        json = uDAO.fetchSingleUser(Integer.valueOf(userId));
+                        json = uDAO.fetchSingleUserJson(Integer.valueOf(userId));
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
                         output = resp.getWriter();

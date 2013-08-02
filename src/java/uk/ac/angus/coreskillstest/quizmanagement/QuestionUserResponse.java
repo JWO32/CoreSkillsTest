@@ -4,6 +4,7 @@
  */
 package uk.ac.angus.coreskillstest.quizmanagement;
 
+import com.google.gson.annotations.Expose;
 
 /**
  *
@@ -11,7 +12,10 @@ package uk.ac.angus.coreskillstest.quizmanagement;
  */
 public class QuestionUserResponse 
 {
+    @Expose
     private int QuestionId;
+    
+    @Expose
     private int[] OptionIdArray;
     
     public QuestionUserResponse()

@@ -70,13 +70,34 @@ public class UserDataAccessObject
     }
     
     
-    public boolean addMultipleUsers()
+    public boolean addMultipleUsers(List<String> userList)
     {
         
         return true;
     }
     
-    public String fetchSingleUser(int userId)
+    public QuizUser fetchSingleUserObject(int userId)
+    {
+        QuizUser user;
+        EntityManager em = factory.createEntityManager();
+        try
+        {
+            TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findUserById", QuizUser.class);
+            userQuery.setParameter("id", userId);
+            user = userQuery.getSingleResult();
+        }catch (javax.persistence.NoResultException ex)
+        {
+            System.err.println("Unable to locate specified user");
+            user = null;
+        }finally
+        {
+             if(em.isOpen())
+                em.close();
+        }     
+        return user;
+    }
+    
+    public String fetchSingleUserJson(int userId)
     {
         String json;
         
@@ -94,7 +115,20 @@ public class UserDataAccessObject
         return json;
     }
     
-    public String fetchAllUsers()
+    public List<QuizUser> fetchAllUsersObject()
+    {
+        List<QuizUser> users;
+        
+        EntityManager em = factory.createEntityManager();
+        
+        TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findall", QuizUser.class);
+        
+        users  = userQuery.getResultList();
+        
+        return users;
+    }
+    
+    public String fetchAllUsersJson()
     {
         String json;
         

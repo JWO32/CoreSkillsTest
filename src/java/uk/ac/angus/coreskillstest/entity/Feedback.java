@@ -24,7 +24,7 @@ import javax.persistence.JoinColumn;
 public class Feedback implements Serializable 
 {
     @Id
-    @Column(name="feedback_id", insertable=false, updatable=false )
+    @Column(name="feedback_id")
     private int FeedbackId;
     
     @Column(name="feedback_text")

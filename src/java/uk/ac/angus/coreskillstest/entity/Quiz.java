@@ -27,7 +27,11 @@ import javax.persistence.TemporalType;
     @NamedQuery(name="Quiz.getAllQuizzes",
         query="SELECT DISTINCT q FROM QUIZ q LEFT JOIN FETCH q.Questions"),
     @NamedQuery(name="Quiz.getQuizById",
-        query="SELECT q FROM QUIZ q LEFT JOIN FETCH q.Questions WHERE q.QuizId=:id")
+        query="SELECT q FROM QUIZ q LEFT JOIN FETCH q.Questions WHERE q.QuizId=:id"),
+    @NamedQuery(name="Quiz.deleteQuizById",
+        query="DELETE FROM QUIZ q WHERE q.QuizId=:id"),
+    @NamedQuery(name="Quiz.getQuizResultRules",
+        query="SELECT q FROM QUIZ q LEFT JOIN FETCH q.ResultRules WHERE q.QuizId=:id")
 })
 
 public class Quiz implements Serializable
@@ -58,11 +62,7 @@ public class Quiz implements Serializable
     @Column(name="date_added")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar DateAdded = Calendar.getInstance();
-      
-    @Column(name="result_rules")
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=ResultRule.class, fetch=FetchType.LAZY)
-    private List<ResultRule> LinkedResultRules = new ArrayList<>();
-    
+   
     //TODO: Eventually replace this with a level object
     //
     @Expose
@@ -76,6 +76,9 @@ public class Quiz implements Serializable
     @Expose
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.LAZY)
     private List<Question> Questions = new ArrayList<>();
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=ResultRule.class, fetch=FetchType.LAZY)
+    private List<ResultRule> ResultRules = new ArrayList<>();
     
     public Quiz()
     {
@@ -174,11 +177,12 @@ public class Quiz implements Serializable
     
     public void setResultRules(List<ResultRule> newResultRules)
     {
-        LinkedResultRules = newResultRules;
+        ResultRules = newResultRules;
     }
     
     public List<ResultRule> getResultRules()
     {
-        return LinkedResultRules;
+        return ResultRules;
     }
+   
 }

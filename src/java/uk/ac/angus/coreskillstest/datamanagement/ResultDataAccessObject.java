@@ -23,8 +23,7 @@ import javax.persistence.Query;
  * @author JWO
  */
 public class ResultDataAccessObject 
-{
-    
+{  
     private EntityManagerFactory ResultManagerFactory;
     
     public ResultDataAccessObject()
@@ -38,12 +37,12 @@ public class ResultDataAccessObject
         
     }
     
-    public void getResult()
+    public void getResult(int resultId)
     {
         
     }
     
-    public void deleteResult()
+    public void deleteResult(int resultId)
     {
         
     }

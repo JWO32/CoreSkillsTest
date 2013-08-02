@@ -38,6 +38,7 @@ public class ResultRule implements Serializable
     private Quiz LinkedQuiz;
     
     @OneToOne
+    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
     private Feedback LinkedFeedback;
     
     public ResultRule()

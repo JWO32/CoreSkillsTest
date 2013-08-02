@@ -4,6 +4,8 @@
  */
 package uk.ac.angus.coreskillstest.quizmanagement;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,10 +15,14 @@ import java.util.ArrayList;
  */
 public class QuizUserResponse 
 {
+    @Expose
     private int QuizId;
+    
+    @Expose
     private int UserId;
     
-    private List<QuestionUserResponse> QuestionResponses = new ArrayList<>();
+    @Expose
+    private List<QuestionUserResponse> Responses = new ArrayList<>();
 
     public QuizUserResponse()
     {
@@ -43,8 +49,13 @@ public class QuizUserResponse
         UserId = newUserId;
     }
     
+    public void setResponses(List<QuestionUserResponse> responses)
+    {
+        Responses = responses;  
+    }
+    
     public List<QuestionUserResponse> getResponses()
     {
-        return QuestionResponses;
+        return Responses;
     }
 }
