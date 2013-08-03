@@ -135,6 +135,18 @@ public class Quiz implements Serializable
         TotalMarks = newMarks;
     }
     
+    public void calcTotalMarks()
+    {
+        int runningTotal = 0;
+        
+        for(Question currentQ : Questions)
+        {
+           runningTotal+= currentQ.getMark();
+        }
+        
+        setTotalMarks(runningTotal);
+    }
+    
     public List<Question> getQuestions()
     {
         return Questions;

@@ -33,6 +33,7 @@ public class ResultReceiverController extends HttpServlet
         String path;  
         path = req.getRequestURI();
         PrintWriter output;
+        output = resp.getWriter();
         ResultManager rm = new ResultManager();
         String[] pathComponents = path.split("/");
         String quizResultJSON;
@@ -51,16 +52,20 @@ public class ResultReceiverController extends HttpServlet
                 // 
                 try
                 {
-                    rm.getQuizResources(quizResultJSON); 
+                    rm.getQuizResources(quizResultJSON);
+                    rm.getQuizResult();
+                    
+                    output.write("Success: Your result has been processed and saved. You can close this window");
+                    resp.setStatus(HttpServletResponse.SC_OK);
                 }catch(QuizResourceNotFoundException ex)
                 {
                     String errorMessage = ex.getMessage();
-                    
-                    output = resp.getWriter();
                     output.write(errorMessage);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }finally
+                {
                     output.close();
-                }   
+                }
                 break;
         }  
     }

@@ -1,8 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package uk.ac.angus.coreskillstest.quizmanagement;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
 
@@ -16,7 +16,7 @@ public class QuestionUserResponse
     private int QuestionId;
     
     @Expose
-    private int[] OptionIdArray;
+    private List<Integer> SelectedResponse = new ArrayList<>();
     
     public QuestionUserResponse()
     {
@@ -33,13 +33,13 @@ public class QuestionUserResponse
         return QuestionId;
     }
     
-    public void setOptionIdArray(int[] optionId)
+    public void setOptionIdList(List<Integer> optionIdList)
     {
-        OptionIdArray = optionId;
+        SelectedResponse = optionIdList;
     }
     
-    public int[] getOptionIdArray()
+    public List<Integer> getOptionIdList()
     {
-        return OptionIdArray;
+        return SelectedResponse;
     }
 }

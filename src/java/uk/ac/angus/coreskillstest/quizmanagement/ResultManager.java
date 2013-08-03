@@ -3,11 +3,16 @@ package uk.ac.angus.coreskillstest.quizmanagement;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.Result;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
+import uk.ac.angus.coreskillstest.entity.Question;
 
 import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
 
 import com.google.gson.Gson;
+
+import java.util.List;
+
+
 
 /**
  *
@@ -112,16 +117,71 @@ public class ResultManager
         }
     }
     
-    public Result getQuizResult()
-    {
+    public Result getQuizResult() throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    { 
+        if(SelectedQuiz == null || SelectedUser == null)
+        {
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz or User resource not set call assignUser() and assignQuiz before attempting to calculate the quiz result");
+        }
+        
+        QuestionUserResponse currentResponse = null;
+        boolean questionIsCorrect = false;
+        
+        //Ensure that the Quiz has its total marks added...
+        SelectedQuiz.calcTotalMarks();
+        
         Result quizResult = new Result();
         
+        List<Question> questionList = SelectedQuiz.getQuestions();
         
+        for(Question currentQuestion : questionList)
+        {
+            int currentQuestionId = currentQuestion.getQuestionId();
+            
+            currentResponse = QuizResponse.getResponseByQuestionId(currentQuestionId);
+
+            List<Integer> correctOptionIds = currentQuestion.getCorrectOptions();
+            List<Integer> userSelectionIds = currentResponse.getOptionIdList();
+            questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
+         
+            if(questionIsCorrect)
+                Score++;
+        }
+      
         return quizResult;
     }
     
-    public void applyQuizRules(Quiz quiz)
+    private boolean checkResponseCorrect(List<Integer> correctQuestionOptions, List<Integer> userResponses)
+    {
+        boolean responseCorrect = false;
+        
+        if(correctQuestionOptions.size() != userResponses.size())
+        {
+            return responseCorrect;
+        }else
+        {
+            java.util.Collections.sort(userResponses);
+            java.util.Collections.sort(correctQuestionOptions);
+            
+            if(userResponses.equals(correctQuestionOptions))
+                responseCorrect = true;
+        }
+        
+        return responseCorrect;
+    }
+    
+    private void applyQuizRules()
     {
         
+    }
+    
+    public int getScore()
+    {
+        return Score;
+    }
+    
+    public void setScore(int newScore)
+    {
+        Score = newScore;
     }
 }

@@ -150,4 +150,26 @@ public class Question implements Serializable
     {
         LinkedQuiz = newQuiz;
     }
+    
+    /**
+     * Returns a List containing the correct options for the question
+     * @return 
+     */
+    public List<Integer> getCorrectOptions()
+    {
+        List<Integer> correctOptionIds = new ArrayList<>();
+        int currentOptionId;
+        
+        for(QuestionOption currentOption : QuestionOptions)
+        {
+            if(currentOption.getCorrectOption())
+            {
+                currentOptionId = currentOption.getOptionId();
+                
+                correctOptionIds.add(new Integer(currentOptionId));
+            }
+        }
+        
+        return correctOptionIds;
+    }
 }

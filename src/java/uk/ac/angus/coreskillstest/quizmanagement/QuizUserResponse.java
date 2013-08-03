@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package uk.ac.angus.coreskillstest.quizmanagement;
 
 import com.google.gson.annotations.Expose;
@@ -57,5 +54,20 @@ public class QuizUserResponse
     public List<QuestionUserResponse> getResponses()
     {
         return Responses;
+    }
+    
+    public QuestionUserResponse getResponseByQuestionId(int questionId)
+    {
+        QuestionUserResponse selectedResponse = null;
+        
+        for(QuestionUserResponse currentResponse : Responses)
+        {
+            if(currentResponse.getQuestionId() == questionId)
+            {
+                selectedResponse = currentResponse;
+            }
+        }
+        
+        return selectedResponse;
     }
 }
