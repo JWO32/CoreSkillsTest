@@ -24,7 +24,19 @@ public class ResultReceiverController extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
+        String path;
+        path = req.getRequestURI();
+        PrintWriter output;       
+        output = resp.getWriter();
+        ResultManager rm = new ResultManager();
+        String[] pathComponents = path.split("/");
         
+        switch(pathComponents[3])
+        {
+            case "get":
+                
+                break;
+        }
     }
     
     @Override
@@ -43,25 +55,22 @@ public class ResultReceiverController extends HttpServlet
             case "add":              
                 quizResultJSON = req.getParameter("response");
                 
-                // Create response object
-                // load associated quiz object
-                // fetch questions and result rules
-                // match responses to question options
-                // calculate total score
-                // match total score to quiz result rules
-                // 
                 try
                 {
                     rm.getQuizResources(quizResultJSON);
-                    rm.getQuizResult();
+                    rm.processQuizResult();
                     
-                    output.write("Success: Your result has been processed and saved. You can close this window");
+                    quizResultJSON = rm.getResultJson();
+                    
+                    output.write(quizResultJSON);
                     resp.setStatus(HttpServletResponse.SC_OK);
+                    resp.setContentType("text/json");
                 }catch(QuizResourceNotFoundException ex)
                 {
                     String errorMessage = ex.getMessage();
                     output.write(errorMessage);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    resp.setContentType("text");
                 }finally
                 {
                     output.close();
@@ -73,6 +82,20 @@ public class ResultReceiverController extends HttpServlet
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
+        String path;
         
+        path = req.getRequestURI();
+        PrintWriter output;
+        output = resp.getWriter();
+        ResultManager rm = new ResultManager();
+        String[] pathComponents = path.split("/");
+        
+        switch(pathComponents[3])
+        {
+            case "delete":
+                
+            break;
+        }
     }
+
 }

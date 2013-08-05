@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author JWO
@@ -29,25 +31,37 @@ import javax.persistence.JoinColumn;
 
 public class Result implements Serializable
 {
+    public static final String SUCCESS_RESULT_NOT_AVAILABLE = "Your result has been successfully stored. Due to the quiz configuration your result is not being shared at the moment";
+    public static final String SUCCESS_RESULT_AVAILABLE = "Your result has been successfully stored.";
+    public static final String FAILURE_RESULT_NOT_STORED = "Server Error: Your result has not been stored";
+
+    @Expose
     @Id
     @Column(name="result_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ResultId;
     
+    @Expose
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="user_id")
     private QuizUser LinkedUser;
     
-//    @Column(name="quiz_id")
-//    @OneToOne
-//    private Quiz LinkedQuiz;
-    
+    @Expose
     @OneToOne
     @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
     private Feedback LinkedFeedback;
     
+    @Expose
     @Column(name="quiz_score")
     private int QuizScore;
+    
+    @Expose
+    @Column(name="quiz_percentage")
+    private float QuizPercentage;
+    
+    @OneToOne
+    @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
+    private Quiz LinkedQuiz;
     
     public Result()
     {
@@ -64,15 +78,15 @@ public class Result implements Serializable
         ResultId = newResultId;
     }
     
-//    public Quiz getLinkedQuiz()
-//    {
-//        return LinkedQuiz;
-//    }
-//    
-//    public void setLinkedQuiz(Quiz newLinkedQuiz)
-//    {
-//        LinkedQuiz = newLinkedQuiz;
-//    }
+    public Quiz getLinkedQuiz()
+    {
+        return LinkedQuiz;
+    }
+    
+    public void setLinkedQuiz(Quiz newLinkedQuiz)
+    {
+        LinkedQuiz = newLinkedQuiz;
+    }
     
     public QuizUser getQuizUser()
     {
@@ -92,6 +106,23 @@ public class Result implements Serializable
     public void setLinkedFeedback(Feedback newLinkedFeedback)
     {
         LinkedFeedback = newLinkedFeedback;
+    }
+    
+    public void setScoreandPercentage(int quizScore, int numberOfQuestions)
+    {
+        QuizScore = quizScore;
+        
+        QuizPercentage = (float) quizScore / numberOfQuestions;
+    }
+    
+    public void setQuizPercentage(float newPercentage)
+    {
+        QuizPercentage = newPercentage ;
+    }
+    
+    public float getQuizPercentage()
+    {
+        return QuizPercentage;
     }
     
     public void setQuizScore(int newQuizScore)

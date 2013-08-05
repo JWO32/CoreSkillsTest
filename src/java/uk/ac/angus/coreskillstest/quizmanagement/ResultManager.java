@@ -4,13 +4,19 @@ import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.Result;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.Question;
+import uk.ac.angus.coreskillstest.entity.ResultRule;
 
 import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
+import uk.ac.angus.coreskillstest.datamanagement.QuizConfigurationDataAccessObject;
+
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
 
 import com.google.gson.Gson;
 
 import java.util.List;
+import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
+import uk.ac.angus.coreskillstest.entity.Feedback;
 
 
 
@@ -23,12 +29,13 @@ public class ResultManager
     private QuizUserResponse QuizResponse;
     private Quiz SelectedQuiz;
     private QuizUser SelectedUser;
+    private Result QuizResult;
     
     private int Score = 0;
     
     public ResultManager()
     {
-        
+        QuizResult = new Result();
     }
     
     public ResultManager(Quiz quiz, QuizUser quizUser)
@@ -104,6 +111,7 @@ public class ResultManager
         
         int userId = QuizResponse.getUserId();
         
+        
         user = uDAO.fetchSingleUserObject(userId);
         
         if(user == null)
@@ -117,20 +125,38 @@ public class ResultManager
         }
     }
     
-    public Result getQuizResult() throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    private boolean assignQuizConfiguration()
+    {
+        QuizConfiguration qc;
+        QuizConfigurationDataAccessObject qcDAO = new QuizConfigurationDataAccessObject();
+        
+        int quizConfigurationId = QuizResponse.getQuizConfigurationId();
+        
+        qc = qcDAO.
+    }
+    
+    /**
+     * Calculate the quiz result.
+     * 
+     * Fetch all questions from the quiz object and extract the database ids of the correct answers.
+     * 
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
+     */
+    public void processQuizResult() throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     { 
         if(SelectedQuiz == null || SelectedUser == null)
         {
-            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz or User resource not set call assignUser() and assignQuiz before attempting to calculate the quiz result");
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz or User resource not set call assignUser() and assignQuiz() before attempting to calculate the quiz result");
         }
         
-        QuestionUserResponse currentResponse = null;
-        boolean questionIsCorrect = false;
+        QuestionUserResponse currentResponse;
+        boolean questionIsCorrect;
+        int totalMarks;
         
         //Ensure that the Quiz has its total marks added...
         SelectedQuiz.calcTotalMarks();
         
-        Result quizResult = new Result();
+        totalMarks = SelectedQuiz.getTotalMarks();   
         
         List<Question> questionList = SelectedQuiz.getQuestions();
         
@@ -146,11 +172,25 @@ public class ResultManager
          
             if(questionIsCorrect)
                 Score++;
-        }
-      
-        return quizResult;
+        }     
+        QuizResult.setScoreandPercentage(Score, totalMarks);
+        
+        saveResult();
     }
     
+    public Result getResult()
+    {
+        return QuizResult;
+    }
+    
+    /**
+     * Takes the question ids of the correct answers for the current question and then compares with the user responses
+     * Since the ids are just integers, sort them into the correct order first.
+     * 
+     * @param correctQuestionOptions
+     * @param userResponses
+     * @return 
+     */
     private boolean checkResponseCorrect(List<Integer> correctQuestionOptions, List<Integer> userResponses)
     {
         boolean responseCorrect = false;
@@ -170,9 +210,41 @@ public class ResultManager
         return responseCorrect;
     }
     
+    /**
+     * Fetch the list of quiz rules from the quiz and 
+     */
     private void applyQuizRules()
     {
+        List<ResultRule> ResultRuleList = SelectedQuiz.getResultRules();
+        Feedback ruleFeedback = null;
         
+        for(ResultRule currentRule : ResultRuleList)
+        {
+            if(currentRule.appliesTo(Score))
+            {
+                ruleFeedback = currentRule.getFeedback();
+            }
+        }
+        
+        if(ruleFeedback != null)
+            QuizResult.setLinkedFeedback(ruleFeedback);
+    }
+    
+    public String getResultJson()
+    {
+        String json = ResultDataAccessObject.getResultObjectasJSON(QuizResult);
+        
+        return json;
+    }
+    
+    public void saveResult()
+    {
+        ResultDataAccessObject rDAO = new ResultDataAccessObject();
+        
+        QuizResult.setQuizUser(SelectedUser);
+        QuizResult.setLinkedQuiz(SelectedQuiz);
+        
+        rDAO.addResultObject(QuizResult);
     }
     
     public int getScore()

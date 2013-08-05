@@ -103,8 +103,7 @@
                 userChoices.Responses = Model.getResponses();
                 
                 var userSelections = JSON.stringify(userChoices);
-                
-                
+                             
                 // Send data asynchronously
                 //
                 $.ajax({
@@ -114,7 +113,7 @@
                     dataType: 'json',
                     success: function(data)
                     {
-                        alert(data);
+                        
                     },
                     error: function(data)
                     {

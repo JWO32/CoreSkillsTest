@@ -19,6 +19,9 @@ public class QuizUserResponse
     private int UserId;
     
     @Expose
+    private int QuizConfigurationId;
+    
+    @Expose
     private List<QuestionUserResponse> Responses = new ArrayList<>();
 
     public QuizUserResponse()
@@ -39,6 +42,16 @@ public class QuizUserResponse
     public int getUserId()
     {
         return UserId;
+    }
+    
+    public int getQuizConfigurationId()
+    {
+        return QuizConfigurationId;
+    }
+    
+    public void setQuizConfigurationId(int newConfigId)
+    {
+        QuizConfigurationId = newConfigId;
     }
     
     public void setUserId(int newUserId)

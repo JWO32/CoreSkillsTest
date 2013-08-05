@@ -30,8 +30,17 @@ public class ResultRule implements Serializable
     @Column(name="low_mark_boundary")
     private int LowMarkBoundary;
     
+    @Column(name="low_mark_gteq")
+    private boolean LowMarkGtEq;
+    
     @Column(name="high_mark_boundary")
     private int HighMarkBoundary;
+    
+    @Column(name="high_mark_gteq")
+    private boolean HighMarkGtEq;
+    
+    @Column(name="pass_fail_only")
+    private boolean PassFail;
     
     @ManyToOne(optional=false, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
@@ -104,6 +113,73 @@ public class ResultRule implements Serializable
     public void setFeedback(Feedback newFeedback)
     {
         LinkedFeedback = newFeedback;
+    }
+    
+    public void setHighMarkGtEq(boolean highMarkGtEq)
+    {
+        HighMarkGtEq = highMarkGtEq;
+    }
+    
+    public boolean getHighMarkGtEq()
+    {
+        return HighMarkGtEq;
+    }
+    
+    public void setLowMarkGtEq(boolean lowMarkGtEq)
+    {
+        LowMarkGtEq = lowMarkGtEq;
+    }
+    
+    public boolean getLowMarkGtEq()
+    {
+        return LowMarkGtEq;
+    }
+    
+    /**
+     * Take the user's score from a quiz attempt and run through
+     * rules to see if the score applies to this rule.
+     * 
+     * TODO: look at the possibility of using a regular expression instead of 
+     * if statements
+     * 
+     * @param Score
+     * @return 
+     */
+    public boolean appliesTo(int Score)
+    {
+        boolean applies = false;
+        
+        if(Score > LowMarkBoundary && PassFail == true)
+        {
+            applies = true;
+        }
+        
+        if(Score > LowMarkBoundary && Score < HighMarkBoundary)
+        {
+            applies = true;
+        }
+        
+        if(HighMarkGtEq == true)
+        {
+            if(Score > LowMarkBoundary && Score <=HighMarkBoundary)
+            {
+                applies = true;
+            }
+        }else if(LowMarkGtEq == true)
+        {
+            if(Score >= LowMarkBoundary && Score < HighMarkBoundary)
+            {
+                applies = true;
+            }
+        }else if(HighMarkGtEq == true && LowMarkGtEq == true)
+        {
+            if(Score >= LowMarkBoundary && Score <= HighMarkBoundary)
+            {
+                applies = true;
+            }
+        }
+        
+        return applies;
     }
     
 }
