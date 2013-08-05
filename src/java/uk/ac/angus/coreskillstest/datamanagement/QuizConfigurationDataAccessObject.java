@@ -24,6 +24,8 @@ public class QuizConfigurationDataAccessObject
         
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         
+        // Remember - returns null if no object is found - catch this!
+        // TODO: may prove unreliable, provide a named query to implement this functionality
         qc =  em.find(QuizConfiguration.class, quizConfigId);
         
         return qc;

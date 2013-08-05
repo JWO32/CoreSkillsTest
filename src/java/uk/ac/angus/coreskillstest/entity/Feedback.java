@@ -15,18 +15,22 @@ import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author JWO
  */
-
 @Entity(name="quiz_feedback_item")
 public class Feedback implements Serializable 
 {
+    @Expose
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="feedback_id")
     private int FeedbackId;
     
+    @Expose
     @Column(name="feedback_text")
     private String FeedbackText;
     
@@ -34,11 +38,27 @@ public class Feedback implements Serializable
     @JoinColumn(name="result_rule_id")
     private ResultRule LinkedResultRule;
     
+    /**
+     * Create a default feedback object if no feedback is provided by the Quiz
+     * 
+     * @return 
+     */
+    public static Feedback getDefaultFeedback()
+    {
+        Feedback defaultFeedback = new Feedback("No feedback was provided for this quiz.");
+        
+        return defaultFeedback;
+    }
+    
     public Feedback()
     {
         
     }
     
+    public Feedback(String feedbackText)
+    {
+        FeedbackText = feedbackText;
+    }
     public void setFeedbackId(int newId)
     {
         FeedbackId = newId;

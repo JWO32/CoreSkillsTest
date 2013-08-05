@@ -47,7 +47,7 @@ public class Result implements Serializable
     private QuizUser LinkedUser;
     
     @Expose
-    @OneToOne
+    @OneToOne(optional=true, targetEntity=Feedback.class)
     @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
     private Feedback LinkedFeedback;
     

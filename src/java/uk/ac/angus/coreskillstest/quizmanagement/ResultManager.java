@@ -18,8 +18,6 @@ import java.util.List;
 import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
 import uk.ac.angus.coreskillstest.entity.Feedback;
 
-
-
 /**
  *
  * @author JWO
@@ -29,8 +27,8 @@ public class ResultManager
     private QuizUserResponse QuizResponse;
     private Quiz SelectedQuiz;
     private QuizUser SelectedUser;
+    private QuizConfiguration SelectedQuizConfiguration;
     private Result QuizResult;
-    
     private int Score = 0;
     
     public ResultManager()
@@ -38,10 +36,11 @@ public class ResultManager
         QuizResult = new Result();
     }
     
-    public ResultManager(Quiz quiz, QuizUser quizUser)
+    public ResultManager(Quiz quiz, QuizUser quizUser, QuizConfiguration quizConfiguration)
     {
         SelectedQuiz = quiz;
         SelectedUser = quizUser;
+        SelectedQuizConfiguration = quizConfiguration;
     }
     
     /**
@@ -55,19 +54,23 @@ public class ResultManager
     public void getQuizResources(String resultJson) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         Gson gsn = new Gson();
-        boolean quizFound, userFound;
+        boolean quizFound, userFound, configFound;
         
         QuizResponse = gsn.fromJson(resultJson, QuizUserResponse.class);
         
         quizFound = assignQuiz();
         userFound = assignUser();
-     
+        configFound = assignQuizConfiguration();
+                
         if(quizFound == false)
         {
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Cannot process result: Unable to locate specified Quiz");
         }else if(userFound == false)
         {
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Cannot process result: Unable to locate specified User");
+        }else if(configFound == false)
+        {
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Cannot process result: Unable to locate quiz configuration");
         }
     }
     
@@ -132,7 +135,17 @@ public class ResultManager
         
         int quizConfigurationId = QuizResponse.getQuizConfigurationId();
         
-        qc = qcDAO.
+        qc = qcDAO.getQuizConfigurationById(quizConfigurationId);
+        
+        if(qc == null)
+        {
+            SelectedQuizConfiguration = null;
+            return false;
+        }else
+        {
+            SelectedQuizConfiguration = qc;
+            return true;
+        }
     }
     
     /**
@@ -173,8 +186,21 @@ public class ResultManager
             if(questionIsCorrect)
                 Score++;
         }     
+        
+        // If the quiz object has rules associated with it
+        // run the rules to determine the feedback to the student
+        if(SelectedQuiz.getResultRules().size() > 0)
+        {
+            applyQuizRules();
+        }else
+        {
+            //TODO: If there are no rules to apply - change this for a default feedback object.
+            QuizResult.setLinkedFeedback(Feedback.getDefaultFeedback());
+        }
+        
         QuizResult.setScoreandPercentage(Score, totalMarks);
         
+        // Quiz Result is complete - serialise to the database
         saveResult();
     }
     
@@ -211,7 +237,8 @@ public class ResultManager
     }
     
     /**
-     * Fetch the list of quiz rules from the quiz and 
+     * Fetch the list of quiz rules from the quiz and check if one of them applies
+     * to the score achieved by the user.
      */
     private void applyQuizRules()
     {
@@ -228,8 +255,17 @@ public class ResultManager
         
         if(ruleFeedback != null)
             QuizResult.setLinkedFeedback(ruleFeedback);
+        else
+        {
+            //Set default feedback
+        }
     }
     
+    /**
+     * Utility function to return the current result object as JSON for transmission back to the client
+     * 
+     * @return 
+     */
     public String getResultJson()
     {
         String json = ResultDataAccessObject.getResultObjectasJSON(QuizResult);
