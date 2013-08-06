@@ -5,21 +5,22 @@ import uk.ac.angus.coreskillstest.entity.Result;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.Question;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
-
 import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.QuizConfigurationDataAccessObject;
-
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
+import uk.ac.angus.coreskillstest.entity.Feedback;
 
 import com.google.gson.Gson;
 
 import java.util.List;
-import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
-import uk.ac.angus.coreskillstest.entity.Feedback;
+
 
 /**
  *
+ * Processes and returns results.  Links to quiz, user and quiz configuration to ensure that appropriate data is returned
+ * 
  * @author JWO
  */
 public class ResultManager 
@@ -204,8 +205,26 @@ public class ResultManager
         saveResult();
     }
     
-    public Result getResult()
+    /**
+     * Return the current instance of the QuizResult Object
+     * @return 
+     */
+    public Result getClientResult()
     {
+        // Check to see if the current quiz configuration allows the result to be returned.
+        // If it does, we need:
+        // Feedback (if any)
+        // Score
+        // Number of questions
+        // Percentage
+        if(SelectedQuizConfiguration.getReturnResult())
+        {
+            QuizResult.setResultStatus(Result.SUCCESS_RESULT_AVAILABLE);
+        }else
+        {
+            QuizResult.setResultStatus(Result.SUCCESS_RESULT_NOT_AVAILABLE);
+        }
+        
         return QuizResult;
     }
     
@@ -258,6 +277,7 @@ public class ResultManager
         else
         {
             //Set default feedback
+            QuizResult.setLinkedFeedback(Feedback.getDefaultFeedback());
         }
     }
     
@@ -273,6 +293,9 @@ public class ResultManager
         return json;
     }
     
+    /**
+     * Serialises the instance of QuizResult
+     */
     public void saveResult()
     {
         ResultDataAccessObject rDAO = new ResultDataAccessObject();

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +19,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.TemporalType;
+
 
 @Entity(name="QUIZ")
 @NamedQueries({
@@ -79,6 +81,9 @@ public class Quiz implements Serializable
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=ResultRule.class, fetch=FetchType.LAZY)
     private List<ResultRule> ResultRules = new ArrayList<>();
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=QuizConfiguration.class, fetch=FetchType.LAZY)
+    private List<QuizConfiguration> QuizConfigurations = new ArrayList<>();
     
     public Quiz()
     {
@@ -196,5 +201,14 @@ public class Quiz implements Serializable
     {
         return ResultRules;
     }
-   
+    
+    public void setQuizConfiguration(List<QuizConfiguration> qcList)
+    {
+        QuizConfigurations = qcList;
+    }
+    
+    public List<QuizConfiguration> getQuizConfiguration()
+    {
+        return QuizConfigurations;
+    }   
 }

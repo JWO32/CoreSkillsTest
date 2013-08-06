@@ -5,13 +5,15 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-02T16:26:48")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-05T21:25:02")
 @StaticMetamodel(QuizGroup.class)
 public class QuizGroup_ { 
 
     public static volatile SingularAttribute<QuizGroup, String> GroupName;
     public static volatile ListAttribute<QuizGroup, QuizUser> UserList;
+    public static volatile ListAttribute<QuizGroup, QuizConfiguration> QuizConfigurationList;
     public static volatile SingularAttribute<QuizGroup, String> GroupDescription;
     public static volatile SingularAttribute<QuizGroup, Integer> GroupID;
 

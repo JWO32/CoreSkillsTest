@@ -21,7 +21,6 @@ import com.google.gson.annotations.Expose;
  */
 
 @Entity(name="QUIZ_RESULT")
-
 @NamedQueries({
         @NamedQuery(name="Result.getResultById",
         query="SELECT r from QUIZ_RESULT r WHERE r.ResultId=:id"),
@@ -59,6 +58,10 @@ public class Result implements Serializable
     @Column(name="quiz_percentage")
     private float QuizPercentage;
     
+    @Expose
+    @Column(name="process_status")
+    private String ResultStatus;
+    
     @OneToOne
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
@@ -76,6 +79,16 @@ public class Result implements Serializable
     public void setResultId(int newResultId)
     {
         ResultId = newResultId;
+    }
+    
+    public void setResultStatus(String resultStatus)
+    {
+        ResultStatus = resultStatus;
+    }
+    
+    public String getResultStatus()
+    {
+        return ResultStatus;
     }
     
     public Quiz getLinkedQuiz()

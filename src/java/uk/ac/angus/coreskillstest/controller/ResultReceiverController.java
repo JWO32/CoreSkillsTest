@@ -34,8 +34,12 @@ public class ResultReceiverController extends HttpServlet
         switch(pathComponents[3])
         {
             case "get":
+                String resultIdParam = pathComponents[4];
+                int resultId = Integer.parseInt(resultIdParam);
                 
-                break;
+                
+                
+            break;
         }
     }
     
@@ -53,8 +57,7 @@ public class ResultReceiverController extends HttpServlet
         switch(pathComponents[3])
         {
             case "add":              
-                quizResultJSON = req.getParameter("response");
-                
+                quizResultJSON = req.getParameter("response");               
                 try
                 {
                     rm.getQuizResources(quizResultJSON);

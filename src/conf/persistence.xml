@@ -3,8 +3,6 @@
   <persistence-unit name="CoreSkillsTestPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/cstdb</jta-data-source>
-    <class>uk.ac.angus.coreskillstest.entity.QuizGroup</class>
-    <class>uk.ac.angus.coreskillstest.entity.QuizUser</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>

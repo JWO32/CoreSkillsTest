@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration;
+
+import java.io.Serializable;
 
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
@@ -16,47 +14,57 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.Calendar;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author JWO
  */
-public class QuizConfiguration 
+@Entity(name="QUIZ_CONFIGURATION")
+public class QuizConfiguration implements Serializable
 {
-    
+    @Expose
     @Id
-    @Column(name="quiz_config_id")
+    @Column(name="quiz_config_id", nullable=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int QuizConfigId;
     
+    @Expose
     @Column(name="set_random_order")
     private boolean SetRandomOrder;
     
+    @Expose
     @Column(name="number_of_questions")
     private int NumberOfQuestions;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="quiz_open_time")
     private Calendar QuizOpenTime;
     
+    @Expose
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="quiz_close_time")
     private Calendar QuizCloseTime;
     
+    @Expose
     @Column(name="return_result_user")
     private boolean ReturnResult;
     
-    @OneToMany
+    @ManyToOne(optional=true, targetEntity=Quiz.class)
+    @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
-    @OneToMany
+    @ManyToOne(optional=true, targetEntity=QuizGroup.class)
+    @JoinColumn(name="group_id", referencedColumnName="group_id")
     private QuizGroup LinkedGroup;
     
     public QuizConfiguration()
@@ -133,4 +141,15 @@ public class QuizConfiguration
     {
         return LinkedGroup;
     }    
+    
+    public void setReturnResult(boolean newReturnResult)
+    {
+        ReturnResult = newReturnResult;
+    }
+    
+    public boolean getReturnResult()
+    {
+        return ReturnResult;
+    }
+    
 }

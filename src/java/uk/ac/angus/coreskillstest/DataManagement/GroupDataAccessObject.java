@@ -126,11 +126,18 @@ public class GroupDataAccessObject
      * @param groupId
      * @return 
      */
-    public String fetchGroupById(int groupId)
+    public String fetchGroupByIdJSON(int groupId)
     {
         String json = "";
         
         return json;
+    }
+    
+    public QuizGroup fetchGroupByIdObject(int groupId)
+    {
+        QuizGroup qg = null;
+        
+        return qg;
     }
     
     /**
@@ -138,7 +145,7 @@ public class GroupDataAccessObject
      * 
      * @return 
      */
-    public String fetchAllGroupsandUsers()
+    public String fetchAllGroupsandUsersJSON()
     {
         Gson JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json;
@@ -158,13 +165,20 @@ public class GroupDataAccessObject
         return json;
     }    
     
+    public QuizGroup fetchAllGroupsandUsersObject()
+    {
+        QuizGroup qg = null;
+        
+        return qg;
+    }
+    
     /**
      * Return group details only.  Exclude users.
      * 
      * @return 
      */
     
-    public String fetchAllGroups()
+    public String fetchAllGroupsJSON()
     {
         Gson JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         

@@ -70,6 +70,7 @@
 
         $('input[type="button"]').button();
         
+        // Download users and groups.
         controller.downloadGroupsandUsersEvent();
         
     });

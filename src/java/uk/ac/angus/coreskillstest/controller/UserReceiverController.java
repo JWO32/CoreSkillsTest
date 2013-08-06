@@ -81,7 +81,7 @@ public class UserReceiverController extends HttpServlet
                     case "allgroupsandusers":
                         gDAO = new GroupDataAccessObject();
                         
-                        json = gDAO.fetchAllGroupsandUsers();
+                        json = gDAO.fetchAllGroupsandUsersJSON();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
                         resp.setContentType("application/json");
@@ -91,7 +91,7 @@ public class UserReceiverController extends HttpServlet
                     case "allgroups":
                          gDAO = new GroupDataAccessObject();
                         
-                        json = gDAO.fetchAllGroups();
+                        json = gDAO.fetchAllGroupsJSON();
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
                         resp.setContentType("application/json");
@@ -114,7 +114,7 @@ public class UserReceiverController extends HttpServlet
                         
                         String groupId = req.getParameter("groupid");
                         
-                        json = gDAO.fetchGroupById(Integer.valueOf(groupId));
+                        json = gDAO.fetchGroupByIdJSON(Integer.valueOf(groupId));
                         
                         resp.setStatus(HttpServletResponse.SC_OK);
                         output = resp.getWriter();
