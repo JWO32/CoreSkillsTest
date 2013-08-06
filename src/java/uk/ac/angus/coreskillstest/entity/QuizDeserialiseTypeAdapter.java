@@ -17,7 +17,7 @@ import java.util.List;
  * question options for each question.
  * @author JWO
  */
-public class QuizTypeAdapter implements JsonDeserializer<Quiz>
+public class QuizDeserialiseTypeAdapter implements JsonDeserializer<Quiz>
 {
     @Override
     public Quiz deserialize(final JsonElement json, Type typeOf, JsonDeserializationContext context) throws JsonParseException

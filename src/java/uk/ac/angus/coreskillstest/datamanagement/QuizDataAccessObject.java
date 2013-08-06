@@ -14,7 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import javax.persistence.Query;
 
-import uk.ac.angus.coreskillstest.entity.QuizTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.QuizDeserialiseTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.QuizDetailsTypeAdaptor;
 
 
 /**
@@ -38,7 +39,7 @@ public class QuizDataAccessObject
         GsonBuilder gb = new GsonBuilder();
         boolean serialiseSuccess = true;
         
-        gb.registerTypeAdapter(Quiz.class, new QuizTypeAdapter());        
+        gb.registerTypeAdapter(Quiz.class, new QuizDeserialiseTypeAdapter());        
         Gson g = gb.excludeFieldsWithoutExposeAnnotation().create();
         
         newQuiz = (Quiz) g.fromJson(json, Quiz.class);
@@ -51,12 +52,10 @@ public class QuizDataAccessObject
         }catch (javax.persistence.EntityExistsException ex)
         {
             System.err.println("Unable to write Quiz object -- already exists");
-            ex.printStackTrace();
             serialiseSuccess = false;
         }catch(javax.persistence.TransactionRequiredException ex)
         {
            System.err.println("Unable to write Quiz Object -- transaction required");
-           ex.printStackTrace();
            serialiseSuccess = false;
         }finally
         {
@@ -94,6 +93,39 @@ public class QuizDataAccessObject
         List<Quiz> allQuizzes = new ArrayList<>();
         
         return allQuizzes;
+    }
+    
+    public String getShortQuizList()
+    {
+        String json;
+        EntityManager em = emf.createEntityManager();
+        List<Quiz> allQuizzes = new ArrayList<>();
+        
+        try
+        {
+            Query q = em.createNamedQuery("Quiz.getAllQuizzes");
+            
+            allQuizzes = q.getResultList();
+            
+        }catch(javax.persistence.NoResultException ex)
+        {
+            System.err.println("No Quizzes found");
+        }finally
+        {
+            if(em.isOpen())
+                em.close();
+        }
+        
+        //Probably better to remove this to another function
+        //
+        GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(Quiz.class, new QuizDetailsTypeAdaptor());
+        
+        Gson g = gb.create();
+        
+        json = g.toJson(allQuizzes);
+        
+        return json;
     }
     
     /**

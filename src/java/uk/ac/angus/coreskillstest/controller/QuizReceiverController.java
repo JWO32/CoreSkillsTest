@@ -40,16 +40,24 @@ public class QuizReceiverController extends HttpServlet
         {
             String path = req.getRequestURI();
             String[] pathComponents = path.split("/");
-            PrintWriter output;
+            PrintWriter output = resp.getWriter();
             QuizDataAccessObject qDAO = new QuizDataAccessObject();
+            String json;
             
             switch(pathComponents[3])
             {
                 case "get":
-                    String json;
+                    
                     int quizId = Integer.valueOf(pathComponents[4]);
                     
                     qDAO.getQuizById(quizId);
+                break;                
+                case "quizlist":
+                    json = qDAO.getShortQuizList();
+                    resp.setContentType("text/json");
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    output.write(json);
+                break;
                 
             }
         }

@@ -211,4 +211,9 @@ public class Quiz implements Serializable
     {
         return QuizConfigurations;
     }   
+    
+    public int getNumberOfQuestions()
+    {
+        return Questions.size();
+    }
 }

@@ -18,7 +18,18 @@
         <script type="text/javascript" src="js/handlebars.js"/></script>
 
         <script id="quiz_event_template" type="text/x-handlebars-template">
-            
+            {{#QuizEvents}}
+            <div id="{{QuizEventId}}">
+                <ol class="quiz_event">
+                    <li>Quiz Title: {{QuizTitle}}</li>
+                    <li>Number of Questions: {{NumberOfQuestions}}</li>
+                    <li>Randomize Questions: {{RandomQuestions}}</li>
+                    <li>Quiz Open Date: {{OpenDate}}</li>
+                    <li>Quiz Close Date: {{CloseDate}}</li>
+                    <li>Feedback to User: {{Feedback}}</li>
+                </ol>      
+            </div>
+            {{/QuizEvents}}
         </script>
         
         <script type="text/javascript">
@@ -26,6 +37,7 @@
         {
             var quizSetupController = QuizSetupController();
             
+            quizSetupController.downloadQuizList();
             quizSetupController.init();
            
            $('input[type="datetime"]').datepicker();
