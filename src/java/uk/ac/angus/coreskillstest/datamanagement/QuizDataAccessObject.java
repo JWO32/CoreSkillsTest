@@ -14,8 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import javax.persistence.Query;
 
-import uk.ac.angus.coreskillstest.entity.QuizDeserialiseTypeAdapter;
-import uk.ac.angus.coreskillstest.entity.QuizDetailsTypeAdaptor;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDeserialiseTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDetailsDeserialiseTypeAdaptor;
 
 
 /**
@@ -119,7 +119,7 @@ public class QuizDataAccessObject
         //Probably better to remove this to another function
         //
         GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(Quiz.class, new QuizDetailsTypeAdaptor());
+        gb.registerTypeAdapter(Quiz.class, new QuizDetailsDeserialiseTypeAdaptor());
         
         Gson g = gb.create();
         

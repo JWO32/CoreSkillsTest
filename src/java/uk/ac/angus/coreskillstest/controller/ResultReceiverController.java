@@ -36,9 +36,7 @@ public class ResultReceiverController extends HttpServlet
             case "get":
                 String resultIdParam = pathComponents[4];
                 int resultId = Integer.parseInt(resultIdParam);
-                
-                
-                
+               
             break;
         }
     }

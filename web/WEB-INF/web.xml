@@ -19,13 +19,17 @@
         <servlet-name>QuizReceiverController</servlet-name>
         <servlet-class>uk.ac.angus.coreskillstest.controller.QuizReceiverController</servlet-class>
     </servlet>
+        <servlet-mapping>
+        <servlet-name>QuizReceiverController</servlet-name>
+        <url-pattern>/Quiz/*</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>QuizEventController</servlet-name>
         <servlet-class>uk.ac.angus.coreskillstest.controller.QuizEventController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>QuizReceiverController</servlet-name>
-        <url-pattern>/Quiz/*</url-pattern>
+        <servlet-name>QuizEventController</servlet-name>
+        <url-pattern>/Event/*</url-pattern>
     </servlet-mapping>
     <servlet>
         <description/>

@@ -28,8 +28,8 @@ import javax.persistence.ManyToOne;
  *
  * @author JWO
  */
-@Entity(name="QUIZ_CONFIGURATION")
-public class QuizConfiguration implements Serializable
+@Entity(name="QUIZ_EVENT")
+public class QuizEvent implements Serializable
 {
     @Expose
     @Id
@@ -67,7 +67,7 @@ public class QuizConfiguration implements Serializable
     @JoinColumn(name="group_id", referencedColumnName="group_id")
     private QuizGroup LinkedGroup;
     
-    public QuizConfiguration()
+    public QuizEvent()
     {
         
     }

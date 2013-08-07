@@ -1,4 +1,4 @@
-package uk.ac.angus.coreskillstest.entity;
+package uk.ac.angus.coreskillstest.entity.jsontypeadaptors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -9,6 +9,9 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.angus.coreskillstest.entity.Question;
+import uk.ac.angus.coreskillstest.entity.QuestionOption;
+import uk.ac.angus.coreskillstest.entity.Quiz;
 
 /**
  * Constructs a Quiz Object from JSON.

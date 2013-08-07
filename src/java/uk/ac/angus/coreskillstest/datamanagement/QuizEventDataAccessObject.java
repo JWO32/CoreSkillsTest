@@ -3,34 +3,34 @@ package uk.ac.angus.coreskillstest.datamanagement;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 /**
  *
  * @author JWO
  */
-public class QuizConfigurationDataAccessObject 
+public class QuizEventDataAccessObject 
 {
     private EntityManagerFactory QuizConfigEntityManager;
     
-    public QuizConfigurationDataAccessObject()
+    public QuizEventDataAccessObject()
     {
         QuizConfigEntityManager = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
     }
     
-    public QuizConfiguration getQuizConfigurationById(int quizConfigId)
+    public QuizEvent getQuizConfigurationById(int quizConfigId)
     {
-        QuizConfiguration qc;
+        QuizEvent qc;
         
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         
         // Remember - returns null if no object is found - catch this!
         // TODO: may prove unreliable, provide a named query to implement this functionality
-        qc =  em.find(QuizConfiguration.class, quizConfigId);
+        qc =  em.find(QuizEvent.class, quizConfigId);
         
         return qc;
     }
     
-    public void addQuizConfiguration(QuizConfiguration quizConfig)
+    public void addQuizConfiguration(QuizEvent quizConfig)
     {
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         
@@ -44,7 +44,7 @@ public class QuizConfigurationDataAccessObject
         
     }
     
-    public void editQuizConfiguration(int quizConfigId, QuizConfiguration amendedConfig)
+    public void editQuizConfiguration(int quizConfigId, QuizEvent amendedConfig)
     {
         
     } 

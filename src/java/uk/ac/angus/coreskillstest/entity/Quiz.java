@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -82,8 +82,8 @@ public class Quiz implements Serializable
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=ResultRule.class, fetch=FetchType.LAZY)
     private List<ResultRule> ResultRules = new ArrayList<>();
     
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=QuizConfiguration.class, fetch=FetchType.LAZY)
-    private List<QuizConfiguration> QuizConfigurations = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=QuizEvent.class, fetch=FetchType.LAZY)
+    private List<QuizEvent> QuizConfigurations = new ArrayList<>();
     
     public Quiz()
     {
@@ -202,12 +202,12 @@ public class Quiz implements Serializable
         return ResultRules;
     }
     
-    public void setQuizConfiguration(List<QuizConfiguration> qcList)
+    public void setQuizConfiguration(List<QuizEvent> qcList)
     {
         QuizConfigurations = qcList;
     }
     
-    public List<QuizConfiguration> getQuizConfiguration()
+    public List<QuizEvent> getQuizConfiguration()
     {
         return QuizConfigurations;
     }   

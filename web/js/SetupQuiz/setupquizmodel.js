@@ -40,7 +40,10 @@ QuizSetupModel = function()
 
 QuizEvent = function()
 {
+    this.QuizId = 0;
     this.QuizTitle = 0;
+    this.GroupId = 0;
+    this.GroupName = 0;
     this.OpenDate = 0;
     this.CloseDate = 0;
     this.RandomQuestions = 0;

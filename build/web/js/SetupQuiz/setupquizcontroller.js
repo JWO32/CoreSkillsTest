@@ -16,7 +16,13 @@ QuizSetupController = function()
         },
         addQuizEvent: function()
         {
+            var eventDetails;
+            eventDetails = SetupView.getAllDetails();
             
+            if(eventDetails !== null)
+            {
+                this.sendQuizEventDetails(eventDetails);
+            }
         },
         editQuizEvent: function()
         {
@@ -38,13 +44,28 @@ QuizSetupController = function()
         },
         updateEventList: function(data)
         {
-            SetupModel.setEventDetails(data)
+            SetupModel.setEventDetails(data);
             SetupView.renderEventList(SetupModel.getEventDetails());
+        },
+        sendQuizEventDetails: function(eventData)
+        {         
+            $.ajax({
+                url:'Event/add',
+                method:'POST',
+                dataType: 'json',
+                data: 'event='+eventData,
+                success: this.updateEventList,
+                error: function()
+                {
+                    
+                }
+            });
         },
         downloadQuizList: function()
         {
             $.ajax({
                url:'Quiz/quizlist',
+               method:'GET',
                dataType: 'json',
                success: this.updateQuizList,
                error: function()
@@ -57,6 +78,7 @@ QuizSetupController = function()
         {
             $.ajax({
                url: 'Group/grouplist',
+               method: 'GET',
                dataType: 'json',
                success: this.updateGroupList,
                error: function(data)
@@ -69,6 +91,7 @@ QuizSetupController = function()
         {
           $.ajax({
               url:'QuizEvent/eventlist',
+              method:'GET',
               dataType:'json',
               success: this.updateEventList,
               error: function(data)

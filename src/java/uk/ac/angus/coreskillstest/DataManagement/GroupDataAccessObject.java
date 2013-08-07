@@ -2,6 +2,7 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.GroupDeserialiseTypeAdaptor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import java.util.List;
- 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -163,7 +163,33 @@ public class GroupDataAccessObject
         em.close();
        
         return json;
-    }    
+    }   
+    
+    public String fetchGroupDetailsJSON()
+    {
+        String json;
+        GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(QuizGroup.class, new GroupDeserialiseTypeAdaptor());
+        gb.excludeFieldsWithoutExposeAnnotation();
+        Gson gsn = gb.create();
+        
+        EntityManager em = GroupDataFactory.createEntityManager();
+        
+        try
+        {
+            Query q = em.createNamedQuery("Groups.getAllGroups");
+            
+            List<QuizGroup> queryResults = q.getResultList();
+            
+            json = gsn.toJson(queryResults, QuizGroup.class);
+            
+        }finally
+        {
+            em.close();
+        }
+        
+        return json;
+    }
     
     public QuizGroup fetchAllGroupsandUsersObject()
     {

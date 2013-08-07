@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.google.gson.annotations.Expose;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
 /**
  * Class QuizGroup
@@ -67,8 +67,8 @@ public class QuizGroup implements Serializable
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "Group", targetEntity=QuizUser.class, fetch=FetchType.EAGER)
     private List<QuizUser> UserList = new ArrayList<>();
     
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedGroup", targetEntity=QuizConfiguration.class, fetch=FetchType.LAZY)
-    private List<QuizConfiguration> QuizConfigurationList = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedGroup", targetEntity=QuizEvent.class, fetch=FetchType.LAZY)
+    private List<QuizEvent> QuizConfigurationList = new ArrayList<>();
     
     public QuizGroup()
     {
@@ -121,12 +121,12 @@ public class QuizGroup implements Serializable
         return UserList;
     }    
     
-    public void setConfigurationList(List<QuizConfiguration> newConfigList)
+    public void setConfigurationList(List<QuizEvent> newConfigList)
     {
         QuizConfigurationList = newConfigList;
     }
     
-    public List<QuizConfiguration> getQuizConfiguration()
+    public List<QuizEvent> getQuizConfiguration()
     {
         return QuizConfigurationList;
     }

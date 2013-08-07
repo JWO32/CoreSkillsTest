@@ -40,6 +40,12 @@
             quizSetupController.downloadQuizList();
             quizSetupController.init();
            
+            
+           $('#add_quiz_button').on('click', function()
+           {
+                quizSetupController.addQuizEvent();
+           });
+           
            $('input[type="datetime"]').datepicker();
            $('input[type="datetime"]').datepicker('setDate', new Date());
            $('input[type="button"]').button();
@@ -75,8 +81,14 @@
                          <div id="quiz_select">
                             <label>Select a Quiz</label>
                             <select id="quiz_list">
-                                <option>No Quiz Selected</option>
+                                <option value="0">No Quiz Selected</option>
                             </select>
+                         </div>
+                         <div id="group_select">
+                             <label>Group Details</label>
+                             <select id="group_list">
+                                 <option value="0">No Group Selected</option>
+                             </select>
                          </div>
                          <div id="quiz_dates">
                             <label>Select an Opening Date</label>
@@ -95,10 +107,10 @@
                      </fieldset>
                      <fieldset>
                          <legend>Operations</legend>
-                         <input type="button" id="add_quiz_event" value="Add Quiz Event"/>
-                         <input type="button" id="delete_quiz_event" value="Delete Quiz Event"/>
-                         <input type="button" id="edit_quiz_event" value="Edit Quiz Event"/>
-                         <input type="button" id="clear_quiz_form" value="Clear Form"/>
+                         <input type="button" id="add_quiz_button" value="Add Quiz Event"/>
+                         <input type="button" id="delete_quiz_button" value="Delete Quiz Event"/>
+                         <input type="button" id="edit_quiz_button" value="Edit Quiz Event"/>
+                         <input type="button" id="clear_quiz_button" value="Clear Form"/>
                      </fieldset>
                  </form>                 
              </section>

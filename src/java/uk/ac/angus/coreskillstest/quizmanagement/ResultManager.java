@@ -7,8 +7,8 @@ import uk.ac.angus.coreskillstest.entity.Question;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
 import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
-import uk.ac.angus.coreskillstest.datamanagement.QuizConfigurationDataAccessObject;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.datamanagement.QuizEventDataAccessObject;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
 import uk.ac.angus.coreskillstest.entity.Feedback;
 
@@ -28,7 +28,7 @@ public class ResultManager
     private QuizUserResponse QuizResponse;
     private Quiz SelectedQuiz;
     private QuizUser SelectedUser;
-    private QuizConfiguration SelectedQuizConfiguration;
+    private QuizEvent SelectedQuizConfiguration;
     private Result QuizResult;
     private int Score = 0;
     
@@ -37,7 +37,7 @@ public class ResultManager
         QuizResult = new Result();
     }
     
-    public ResultManager(Quiz quiz, QuizUser quizUser, QuizConfiguration quizConfiguration)
+    public ResultManager(Quiz quiz, QuizUser quizUser, QuizEvent quizConfiguration)
     {
         SelectedQuiz = quiz;
         SelectedUser = quizUser;
@@ -131,8 +131,8 @@ public class ResultManager
     
     private boolean assignQuizConfiguration()
     {
-        QuizConfiguration qc;
-        QuizConfigurationDataAccessObject qcDAO = new QuizConfigurationDataAccessObject();
+        QuizEvent qc;
+        QuizEventDataAccessObject qcDAO = new QuizEventDataAccessObject();
         
         int quizConfigurationId = QuizResponse.getQuizConfigurationId();
         
