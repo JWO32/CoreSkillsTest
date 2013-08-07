@@ -29,6 +29,11 @@ import javax.persistence.ManyToOne;
  * @author JWO
  */
 @Entity(name="QUIZ_EVENT")
+
+@NamedQueries(
+        @NamedQuery(name="QuizEvent.getAllEvents",
+        query="SELECT qe FROM QUIZ_EVENT qe")
+        )
 public class QuizEvent implements Serializable
 {
     @Expose

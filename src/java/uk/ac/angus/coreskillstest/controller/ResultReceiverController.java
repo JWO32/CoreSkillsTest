@@ -71,7 +71,7 @@ public class ResultReceiverController extends HttpServlet
                     String errorMessage = ex.getMessage();
                     output.write(errorMessage);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    resp.setContentType("text");
+                    resp.setContentType("text/html");
                 }finally
                 {
                     output.close();

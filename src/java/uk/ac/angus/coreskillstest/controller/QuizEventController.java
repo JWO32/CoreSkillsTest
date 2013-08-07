@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import uk.ac.angus.coreskillstest.datamanagement.QuizEventDataAccessObject;
 
 /**
  *
@@ -31,12 +32,17 @@ public class QuizEventController extends HttpServlet
     {
         String path = req.getRequestURI();
         String[] pathComponents = path.split("/");
-        
-        
+        PrintWriter output = resp.getWriter();
+        String json;
+
         switch(pathComponents[3])
         {
             case "eventlist":
+                QuizEventDataAccessObject qeDAO = new QuizEventDataAccessObject();
                 
+                json = qeDAO.getAllQuizEventsJSON();
+                
+                output.write(json);
                 break;
         }
         

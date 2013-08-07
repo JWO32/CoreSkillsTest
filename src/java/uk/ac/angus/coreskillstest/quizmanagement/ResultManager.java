@@ -136,7 +136,7 @@ public class ResultManager
         
         int quizConfigurationId = QuizResponse.getQuizConfigurationId();
         
-        qc = qcDAO.getQuizConfigurationById(quizConfigurationId);
+        qc = qcDAO.getQuizEventByIdObject(quizConfigurationId);
         
         if(qc == null)
         {

@@ -1,8 +1,11 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
+import com.google.gson.GsonBuilder;
+import java.util.List;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 /**
  *
@@ -17,7 +20,7 @@ public class QuizEventDataAccessObject
         QuizConfigEntityManager = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
     }
     
-    public QuizEvent getQuizConfigurationById(int quizConfigId)
+    public QuizEvent getQuizEventByIdObject(int quizConfigId)
     {
         QuizEvent qc;
         
@@ -30,7 +33,37 @@ public class QuizEventDataAccessObject
         return qc;
     }
     
-    public void addQuizConfiguration(QuizEvent quizConfig)
+    public String getQuizEventByIdJSON(int quizConfigid)
+    {
+        String json = null;
+        
+        return json;
+    }
+    
+    public String getAllQuizEventsJSON()
+    {
+        String json = null;
+        EntityManager em = QuizConfigEntityManager.createEntityManager();
+        GsonBuilder gb = new GsonBuilder();
+        
+        
+        try
+        {
+            Query q = em.createNamedQuery("QuizEvent.getAllEvents");
+            
+            List<QuizEvent> eventList = q.getResultList();
+            
+            
+            
+        }finally
+        {
+            em.close();
+        }
+        
+        return json;
+    }
+    
+    public void addQuizEvent(QuizEvent quizConfig)
     {
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         
@@ -39,12 +72,12 @@ public class QuizEventDataAccessObject
         em.getTransaction().commit();
     }
     
-    public void deleteQuizConfiguration(int quizConfigId)
+    public void deleteQuizEvent(int quizConfigId)
     {
         
     }
     
-    public void editQuizConfiguration(int quizConfigId, QuizEvent amendedConfig)
+    public void editQuizEvent(int quizConfigId, QuizEvent amendedConfig)
     {
         
     } 
