@@ -27,8 +27,18 @@ public class QuizEventController extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
+        String path = req.getRequestURI();
+        String[] pathComponents = path.split("/");
+        
+        
+        switch(pathComponents[3])
+        {
+            case "eventlist":
+                
+                break;
+        }
         
     }
 
@@ -45,5 +55,11 @@ public class QuizEventController extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
 
+    }
+    
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        
     }
 }

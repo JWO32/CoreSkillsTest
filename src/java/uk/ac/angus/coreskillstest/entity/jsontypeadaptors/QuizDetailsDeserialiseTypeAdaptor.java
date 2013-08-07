@@ -17,8 +17,7 @@ public class QuizDetailsDeserialiseTypeAdaptor implements JsonSerializer<Quiz>
     public JsonElement serialize(Quiz src, Type typeOfSrc, JsonSerializationContext context) 
     {
         JsonObject obj = new JsonObject();
-        
-        
+              
         obj.addProperty("QuizId", src.getQuizId());
         obj.addProperty("QuizTitle", src.getQuizTitle());
         obj.addProperty("NumberOfQuestions", src.getNumberOfQuestions());

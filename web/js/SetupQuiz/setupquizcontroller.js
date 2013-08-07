@@ -68,7 +68,7 @@ QuizSetupController = function()
                method:'GET',
                dataType: 'json',
                success: this.updateQuizList,
-               error: function()
+               error: function(data)
                {
                    
                }
@@ -77,7 +77,7 @@ QuizSetupController = function()
         downloadUserGroup: function()
         {
             $.ajax({
-               url: 'Group/grouplist',
+               url: 'User/get/groupdetails',
                method: 'GET',
                dataType: 'json',
                success: this.updateGroupList,
@@ -90,7 +90,7 @@ QuizSetupController = function()
         downloadQuizEventList: function()
         {
           $.ajax({
-              url:'QuizEvent/eventlist',
+              url:'Event/eventlist',
               method:'GET',
               dataType:'json',
               success: this.updateEventList,

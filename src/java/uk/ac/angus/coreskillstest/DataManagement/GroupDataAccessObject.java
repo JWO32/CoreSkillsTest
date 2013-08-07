@@ -178,10 +178,11 @@ public class GroupDataAccessObject
         try
         {
             Query q = em.createNamedQuery("Groups.getAllGroups");
+            Type groupDetails = new TypeToken<List<QuizGroup>>(){}.getType();
             
             List<QuizGroup> queryResults = q.getResultList();
             
-            json = gsn.toJson(queryResults, QuizGroup.class);
+            json = gsn.toJson(queryResults, groupDetails);
             
         }finally
         {

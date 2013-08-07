@@ -38,7 +38,7 @@
             var quizSetupController = QuizSetupController();
             
             quizSetupController.downloadQuizList();
-            quizSetupController.init();
+            quizSetupController.initAllDetails();
            
             
            $('#add_quiz_button').on('click', function()

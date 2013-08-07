@@ -119,7 +119,16 @@ public class UserReceiverController extends HttpServlet
                         resp.setStatus(HttpServletResponse.SC_OK);
                         output = resp.getWriter();
                         output.write(json);                   
-                        break;               
+                        break;   
+                        
+                    case "groupdetails":
+                        gDAO = new GroupDataAccessObject();
+                        json = gDAO.fetchGroupDetailsJSON();
+                        output = resp.getWriter();
+                        output.write(json);
+                        resp.setContentType("text/json");
+                        resp.setStatus(HttpServletResponse.SC_OK);                     
+                        break;
                 }
             }
 	}
