@@ -57,6 +57,8 @@ public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent
         linkedQuiz = getQuiz(quizId);
         linkedGroup = getGroup(groupId);
         
+        //qe.setGroupName(obj.get("GroupName").getAsString());
+        //qe.setQuizName(obj.get("QuizName").getAsString());
         qe.setLinkedQuiz(linkedQuiz);
         qe.setLinkedGroup(linkedGroup);
         qe.setQuizStartDate(startCal);
