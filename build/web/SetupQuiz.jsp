@@ -9,7 +9,6 @@
         <script type="text/javascript" src="js/SetupQuiz/setupquizcontroller.js"></script>
         <script type="text/javascript" src="js/SetupQuiz/setupquizmodel.js"></script>
         <script type="text/javascript" src="js/SetupQuiz/setupquizview.js"></script>
-        <script type="text/javascript" src="js/SetupQuiz/quizresult.js"></script>
       
         <!-- jQuery and JQuery UI Imports -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -18,18 +17,17 @@
         <script type="text/javascript" src="js/handlebars.js"/></script>
 
         <script id="quiz_event_template" type="text/x-handlebars-template">
-            {{#QuizEvents}}
             <div id="{{QuizEventId}}">
-                <ol class="quiz_event">
+                <ul class="quiz_event">
                     <li>Quiz Title: {{QuizTitle}}</li>
+                    <li>Set for Group: {{GroupName}}</li>
                     <li>Number of Questions: {{NumberOfQuestions}}</li>
-                    <li>Randomize Questions: {{RandomQuestions}}</li>
+                    <li>Randomize Questions: {{Randomise}}</li>
                     <li>Quiz Open Date: {{OpenDate}}</li>
                     <li>Quiz Close Date: {{CloseDate}}</li>
                     <li>Feedback to User: {{Feedback}}</li>
-                </ol>      
+                </ul>      
             </div>
-            {{/QuizEvents}}
         </script>
         
         <script type="text/javascript">

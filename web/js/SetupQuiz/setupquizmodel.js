@@ -46,7 +46,7 @@ QuizEvent = function()
     this.GroupName = 0;
     this.OpenDate = 0;
     this.CloseDate = 0;
-    this.RandomQuestions = 0;
+    this.Randomise = 0;
     this.NumberOfQuestions = 0;
     this.Feedback = 0;
 };

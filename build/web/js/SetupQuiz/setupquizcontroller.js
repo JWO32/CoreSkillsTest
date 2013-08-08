@@ -44,20 +44,33 @@ QuizSetupController = function()
         },
         updateEventList: function(data)
         {
-            SetupModel.setEventDetails(data);
-            SetupView.renderEventList(SetupModel.getEventDetails());
+            if(data instanceof Array)
+            {
+                // if the data is an array - update the model
+                // cache the events
+                // render the list of events
+                SetupModel.setQuizEvents(data);
+                SetupView.cacheEvents(SetupModel.getQuizEvents());
+                SetupView.renderEventList();
+            }else
+            {
+                //if the data is not an array - render the empty eventlist
+                SetupView.renderEventList();
+            }     
         },
         sendQuizEventDetails: function(eventData)
         {         
+            eventData = JSON.stringify(eventData);
+            
             $.ajax({
-                url:'Event/add',
+                url:'Event/addevent',
                 method:'POST',
                 dataType: 'json',
                 data: 'event='+eventData,
-                success: this.updateEventList,
+                success: this.downloadQuizEventList,
                 error: function()
                 {
-                    
+                    alert("error");
                 }
             });
         },
@@ -96,7 +109,7 @@ QuizSetupController = function()
               success: this.updateEventList,
               error: function(data)
               {
-                  
+                  alert("Error");
               }        
           });
         }

@@ -8,14 +8,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.Question;
 import uk.ac.angus.coreskillstest.entity.QuizCategory;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizConfiguration;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-05T21:25:02")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-08T13:00:12")
 @StaticMetamodel(Quiz.class)
 public class Quiz_ { 
 
     public static volatile ListAttribute<Quiz, ResultRule> ResultRules;
-    public static volatile ListAttribute<Quiz, QuizConfiguration> QuizConfigurations;
+    public static volatile ListAttribute<Quiz, QuizEvent> QuizConfigurations;
     public static volatile SingularAttribute<Quiz, Integer> TotalMarks;
     public static volatile ListAttribute<Quiz, Question> Questions;
     public static volatile SingularAttribute<Quiz, Integer> QuizId;

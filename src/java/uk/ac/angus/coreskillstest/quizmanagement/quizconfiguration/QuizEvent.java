@@ -14,15 +14,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.Calendar;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -51,18 +49,26 @@ public class QuizEvent implements Serializable
     private int NumberOfQuestions;
     
     @Expose
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="quiz_open_time")
-    private Calendar QuizOpenTime;
+    @Temporal(TemporalType.DATE)
+    @Column(name="quiz_open_date")
+    private Calendar QuizOpenDate;
     
     @Expose
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="quiz_close_time")
-    private Calendar QuizCloseTime;
+    @Temporal(TemporalType.DATE)
+    @Column(name="quiz_close_date")
+    private Calendar QuizCloseDate;
     
     @Expose
     @Column(name="return_result_user")
     private boolean ReturnResult;
+    
+    @Expose
+    @Transient
+    private String QuizName;
+    
+    @Expose
+    @Transient
+    private String GroupName;
     
     @ManyToOne(optional=true, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
@@ -75,6 +81,26 @@ public class QuizEvent implements Serializable
     public QuizEvent()
     {
         
+    }
+    
+    public String getQuizName()
+    {
+        return QuizName;
+    }
+    
+    public void setQuizName(String newQuizName)
+    {
+        QuizName = newQuizName;
+    }
+    
+    public String getGroupName()
+    {
+        return GroupName;
+    }
+    
+    public void setGroupName(String newGroupName)
+    {
+        GroupName = newGroupName;
     }
     
     public void setQuizConfigId(int newQuizConfigId)
@@ -107,24 +133,24 @@ public class QuizEvent implements Serializable
         return NumberOfQuestions;
     }
     
-    public void setQuizStartTime(Calendar newQuizStartTime)
+    public void setQuizStartDate(Calendar newQuizStartTime)
     {
-        QuizOpenTime = newQuizStartTime;
+        QuizOpenDate = newQuizStartTime;
     }
     
-    public Calendar getQuizStartTime()
+    public Calendar getQuizStartDate()
     {
-        return QuizOpenTime;
+        return QuizOpenDate;
     }
     
-    public Calendar getQuizCloseTime()
+    public Calendar getQuizCloseDate()
     {
-        return QuizCloseTime;
+        return QuizCloseDate;
     }
     
-    public void setQuizCloseTime(Calendar newQuizCloseTime)
+    public void setQuizCloseDate(Calendar newQuizCloseTime)
     {
-        QuizCloseTime = newQuizCloseTime;
+        QuizCloseDate = newQuizCloseTime;
     }
     
     public void setLinkedQuiz(Quiz newLinkedQuiz)

@@ -1,6 +1,5 @@
 QuizSetupView = function()
-{ 
-    
+{    
     var EventCache = [];
     
   return{
@@ -24,32 +23,56 @@ QuizSetupView = function()
               $('#group_list').append('<option value="'+val.GroupId+'">'+val.GroupName+'</option>');
           });
       },
-      renderEventList: function(eventsList)
+      cacheEvents: function(eventsList)
       {
-          var events = [];
+          if(eventsList.length === 0)
+              return;
+          
           var eventTemplateSource = $('#quiz_event_template').html();
           
           for(i = 0; i < eventsList.length; i++)
           { 
             var template = Handlebars.compile(eventTemplateSource);
 
-            var eventHTML = template(events);
+            var eventHTML = template(eventsList[i]);
 
             EventCache.push(eventHTML);
           }
+      },
+      renderEventList: function()
+      {
+          if(EventCache.length > 0)
+          {
+            for(i = 0; i < EventCache.length; i++)
+            {
+                var currentEvent = EventCache[i];
+                $('#quiz_events').append(currentEvent);
+            }
+          }else
+          {
+            $('#quiz_events').html('<h3>No Events</h3>');
+          }
+      },
+      renderDefaultValues: function()
+      {
+          //Reset the form back to defaults.
+          //
+          
       },
       getAllDetails: function ()
       {
           var quizEvent = new QuizEvent();
           
+          //TODO: add validation
+          //
           quizEvent.GroupId = $('#group_list option:selected').val();
           quizEvent.QuizId = $('#quiz_list option:selected').val();
           
           quizEvent.OpenDate = $('#opening_date').val();
           quizEvent.CloseDate = $('#closing_date').val();
-          quizEvent.RandomQuestions = $('#randomise_questions').is('checked');
+          quizEvent.RandomQuestions = $('#randomise_questions').is(':checked');
+          quizEvent.Feedback = $('#feedback').is(':checked');
           quizEvent.NumberOfQuestions = $('#number_questions').val();
-          quizEvent.Feedback = $('#feedback').is('checked');
           
           return quizEvent;
       }

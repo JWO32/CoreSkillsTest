@@ -19,13 +19,11 @@ import uk.ac.angus.coreskillstest.datamanagement.QuizEventDataAccessObject;
 public class QuizEventController extends HttpServlet 
 {
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
@@ -42,25 +40,38 @@ public class QuizEventController extends HttpServlet
                 
                 json = qeDAO.getAllQuizEventsJSON();
                 
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
                 output.write(json);
                 break;
-        }
-        
+        }      
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
-
+        String path = req.getRequestURI();
+        String[] pathComponents = path.split("/");
+        PrintWriter output = resp.getWriter();
+        String eventJSON = req.getParameter("event");
+        
+        switch(pathComponents[3])
+        {
+            case "addevent":
+                QuizEventDataAccessObject qeDAO = new QuizEventDataAccessObject();
+                
+                qeDAO.addQuizEventJSON(eventJSON);
+                
+                break;
+        }
+        
     }
     
     @Override

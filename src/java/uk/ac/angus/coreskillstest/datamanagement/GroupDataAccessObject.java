@@ -29,8 +29,7 @@ public class GroupDataAccessObject
        
     public GroupDataAccessObject()
     {
-        GroupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
-        
+        GroupDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");       
     }
 
     /**
@@ -133,9 +132,18 @@ public class GroupDataAccessObject
         return json;
     }
     
+    /**
+     * 
+     * @param groupId
+     * @return 
+     */
     public QuizGroup fetchGroupByIdObject(int groupId)
     {
         QuizGroup qg = null;
+        
+        EntityManager em = GroupDataFactory.createEntityManager();
+        
+        qg = em.find(QuizGroup.class, groupId);
         
         return qg;
     }
@@ -165,6 +173,10 @@ public class GroupDataAccessObject
         return json;
     }   
     
+    /**
+     * 
+     * @return 
+     */
     public String fetchGroupDetailsJSON()
     {
         String json;
@@ -192,6 +204,10 @@ public class GroupDataAccessObject
         return json;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public QuizGroup fetchAllGroupsandUsersObject()
     {
         QuizGroup qg = null;
