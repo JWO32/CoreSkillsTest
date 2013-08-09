@@ -18,7 +18,7 @@ import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -51,12 +51,12 @@ public class QuizEvent implements Serializable
     @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="quiz_open_date")
-    private Calendar QuizOpenDate;
+    private Date QuizOpenDate;
     
     @Expose
     @Temporal(TemporalType.DATE)
     @Column(name="quiz_close_date")
-    private Calendar QuizCloseDate;
+    private Date QuizCloseDate;
     
     @Expose
     @Column(name="return_result_user")
@@ -133,22 +133,22 @@ public class QuizEvent implements Serializable
         return NumberOfQuestions;
     }
     
-    public void setQuizStartDate(Calendar newQuizStartTime)
+    public void setQuizStartDate(Date newQuizStartTime)
     {
         QuizOpenDate = newQuizStartTime;
     }
     
-    public Calendar getQuizStartDate()
+    public Date getQuizStartDate()
     {
         return QuizOpenDate;
     }
     
-    public Calendar getQuizCloseDate()
+    public Date getQuizCloseDate()
     {
         return QuizCloseDate;
     }
     
-    public void setQuizCloseDate(Calendar newQuizCloseTime)
+    public void setQuizCloseDate(Date newQuizCloseTime)
     {
         QuizCloseDate = newQuizCloseTime;
     }

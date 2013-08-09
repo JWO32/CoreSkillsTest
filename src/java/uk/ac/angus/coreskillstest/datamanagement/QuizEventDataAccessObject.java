@@ -2,7 +2,6 @@ package uk.ac.angus.coreskillstest.datamanagement;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
@@ -11,11 +10,11 @@ import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import uk.ac.angus.coreskillstest.entity.Quiz;
-import uk.ac.angus.coreskillstest.entity.QuizGroup;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponses;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsDeserialiseTypeAdapter;
 import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventSerialiseTypeAdapter;
+
 /**
  *
  * @author JWO
@@ -86,7 +85,7 @@ public class QuizEventDataAccessObject
             if(eventList.isEmpty())
             {
                 //
-                json="{}";//Empty json array - might not be the best way to do this. TODO: Setup a static constant.
+                json = ServerClientResponses.getEmptyJSONObject();//Empty json array - might not be the best way to do this. TODO: Setup a static constant.
             }else
             {              
                 json = gsn.toJson(eventList, eventType);
@@ -139,6 +138,11 @@ public class QuizEventDataAccessObject
         {
             em.close();
         } 
+    }
+    
+    private void commitObject()    
+    {
+        
     }
     
     /**

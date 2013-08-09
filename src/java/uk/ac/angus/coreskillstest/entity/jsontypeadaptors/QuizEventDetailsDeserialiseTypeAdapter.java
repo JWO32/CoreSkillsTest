@@ -4,12 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+
 import java.lang.reflect.Type;
-import java.util.Locale;
-import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
-import uk.ac.angus.coreskillstest.datamanagement.QuizDataAccessObject;
-import uk.ac.angus.coreskillstest.entity.Quiz;
-import uk.ac.angus.coreskillstest.entity.QuizGroup;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
 /**
@@ -23,12 +23,18 @@ public class QuizEventDetailsDeserialiseTypeAdapter implements JsonSerializer<Qu
     public JsonElement serialize(QuizEvent src, Type typeOfSrc, JsonSerializationContext context) 
     {
        JsonObject jo = new JsonObject();
+       DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
        
+       Date openDate = src.getQuizStartDate();
+       Date closeDate = src.getQuizCloseDate();
+       //
+       // Construct Json Object
+       //
        jo.addProperty("QuizEventId", src.getQuizConfigId());
        jo.addProperty("NumberOfQuestions", src.getNumberOfQuestions());
        jo.addProperty("Randomise", src.getRandomOrder());
-       //jo.addProperty("OpenDate", src.getQuizStartDate().getDisplayName(field, style, Locale.UK));
-       //jo.addProperty("CloseDate", src.getQuizCloseDate());
+       jo.addProperty("OpenDate", sdf.format(openDate));
+       jo.addProperty("CloseDate", sdf.format(closeDate));
        jo.addProperty("Feedback", src.getReturnResult());
        jo.addProperty("QuizName", src.getLinkedQuiz().getQuizTitle());
        jo.addProperty("GroupName", src.getLinkedGroup().getGroupName());

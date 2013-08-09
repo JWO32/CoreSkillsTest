@@ -19,7 +19,7 @@
         <script id="quiz_event_template" type="text/x-handlebars-template">
             <div id="{{QuizEventId}}">
                 <ul class="quiz_event">
-                    <li>Quiz Title: {{QuizTitle}}</li>
+                    <li>Quiz Title: {{QuizName}}</li>
                     <li>Set for Group: {{GroupName}}</li>
                     <li>Number of Questions: {{NumberOfQuestions}}</li>
                     <li>Randomize Questions: {{Randomise}}</li>
@@ -44,8 +44,12 @@
                 quizSetupController.addQuizEvent();
            });
            
+           //Configure datepicker and date representation options
            $('input[type="datetime"]').datepicker();
            $('input[type="datetime"]').datepicker('setDate', new Date());
+           $('input[type="datetime"]').datepicker('option', 'dateFormat', 'dd/mm/yy');
+           //
+           
            $('input[type="button"]').button();
         });  
         </script>

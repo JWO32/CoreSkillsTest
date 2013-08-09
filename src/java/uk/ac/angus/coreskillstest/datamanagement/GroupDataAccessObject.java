@@ -19,7 +19,7 @@ import javax.persistence.Query;
  *
  * @author JWO
  */
-public class GroupDataAccessObject 
+public class GroupDataAccessObject
 {
     private EntityManagerFactory GroupDataFactory;
    // private Gson JsonSerialiser; // Using one object per class seems to cause errors
@@ -241,4 +241,5 @@ public class GroupDataAccessObject
         
         return json;
     }
+    
 }
