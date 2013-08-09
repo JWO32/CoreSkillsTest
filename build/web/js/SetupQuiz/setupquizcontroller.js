@@ -70,7 +70,7 @@ QuizSetupController = function()
                 success: this.downloadQuizEventList,
                 error: function()
                 {
-                    alert("error");
+                    alert("Server Error: Database not available");
                 }
             });
         },
@@ -83,7 +83,7 @@ QuizSetupController = function()
                success: this.updateQuizList,
                error: function(data)
                {
-                   
+                   alert('Server Error: Database not available');
                }
             });
         },
@@ -96,7 +96,7 @@ QuizSetupController = function()
                success: this.updateGroupList,
                error: function(data)
                {
-                   
+                   alert('Server Error: Database not available');
                }
             });
         },
@@ -109,7 +109,7 @@ QuizSetupController = function()
               success: this.updateEventList,
               error: function(data)
               {
-                  alert("Error");
+                  alert("Server Error: Database not available");
               }        
           });
         }
