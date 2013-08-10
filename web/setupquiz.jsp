@@ -17,8 +17,11 @@
         <script type="text/javascript" src="js/handlebars.js"/></script>
 
         <script id="quiz_event_template" type="text/x-handlebars-template">
-            <div id="{{QuizEventId}}">
-                <ul class="quiz_event">
+            <div class="quiz_event">
+            <div class="select_box">
+                <input type="checkbox" id="qe_{{QuizEventId}}" />
+            </div>
+                <ul>
                     <li>Quiz Title: {{QuizName}}</li>
                     <li>Set for Group: {{GroupName}}</li>
                     <li>Number of Questions: {{NumberOfQuestions}}</li>
@@ -44,6 +47,31 @@
                 quizSetupController.addQuizEvent();
            });
            
+           $('#delete_quiz_button').on('click', function()
+           {
+               
+           });
+           
+           $('#edit_quiz_button').on('click', function()
+           {
+               
+           });
+           
+           $('clear_quiz_button').on('click', function()
+           {
+               
+           });
+           
+           $('#number_questions').on('change', function()
+           {
+               quizSetupController.checkNumberOfQuestionsEvent();
+           });
+           
+           $('#quiz_list').on('change', function()
+           {
+               quizSetupController.changeQuizEvent();
+           });
+           
            //Configure datepicker and date representation options
            $('input[type="datetime"]').datepicker();
            $('input[type="datetime"]').datepicker('setDate', new Date());
@@ -58,9 +86,9 @@
     </head>
     <body>
          <div id="MainContent">
-            <section id="MainHeading">        
+            <section>        
                 <!-- Include page header here --> 
-                <header>
+                <header id="MainHeading">
                     <h1>Set Quiz Events</h1>
                 </header>
             </section>

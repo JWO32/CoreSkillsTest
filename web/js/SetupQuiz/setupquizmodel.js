@@ -34,6 +34,18 @@ QuizSetupModel = function()
       getQuizEvents: function()
       {
           return QuizEvents;
+      },
+      getQuizEventById: function(quizId)
+      {
+          quizId = parseInt(quizId);
+          
+          for(var i = 0; i < QuizEvents.length; i++)
+          {
+              if(QuizEvents[i].QuizId === quizId)
+                  return QuizEvents[i];
+          }
+          
+          return null;
       }
     };
 };

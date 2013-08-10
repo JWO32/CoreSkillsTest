@@ -1,12 +1,11 @@
-/* 
-    Document   : setupquiz
-    Created on : Aug 6, 2013, 12:01:44 PM
-    Author     : JWO
-    Description:
-        Purpose of the stylesheet follows.
-*/
 
-root { 
-    display: block;
+
+.quiz_event
+{
+    border: 1px solid #000000;
 }
 
+.quiz_event ul
+{
+    list-style: none;
+}

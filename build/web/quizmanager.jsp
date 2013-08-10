@@ -1,6 +1,6 @@
 <%-- 
-    Document   : StudentLogin
-    Created on : Aug 7, 2013, 8:26:00 PM
+    Document   : QuizManager
+    Created on : Jul 8, 2013, 10:07:15 AM
     Author     : JWO
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Quiz Managers</h1>
     </body>
 </html>

@@ -37,6 +37,37 @@ QuizSetupController = function()
             SetupModel.setQuizDetails(data);
             SetupView.renderQuizDetailsList(SetupModel.getQuizDetails());
         },
+        changeQuizEvent: function()
+        {
+            var quizId = SetupView.getSelectedQuizId();
+            var numberOfQuestions = 0;
+            var QuizEventDetails = 0;
+            
+            QuizEventDetails = SetupModel.getQuizEventById(quizId);
+            
+            SetupView.setNumberOfQuestions(QuizEventDetails.NumberOfQuestions);
+            
+        },
+        checkNumberOfQuestionsEvent: function()
+        {
+            var enteredNumber = SetupView.getNumberOfQuestions();
+            var currentQuizEvent = SetupView.getSelectedQuizId();
+            var currentEventObject = SetupModel.getQuizEventById(currentQuizEvent);
+            var maxQuestions = currentEventObject.NumberOfQuestions;
+            
+            if(enteredNumber > maxQuestions)
+            {
+                SetupView.setNumberOfQuestions(maxQuestions);
+
+            }else if(enteredNumber <= 0)
+            {
+                //Make sure the user doesn't set the number of questions to 0
+                SetupView.setNumberOfQuestions(1);
+            }
+            //TODO: Alert the user that their input has been changed.
+            
+            
+        },
         updateGroupList: function(data)
         {
             SetupModel.setGroupDetails(data);

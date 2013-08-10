@@ -1,12 +1,13 @@
 QuizSetupView = function()
 {    
     var EventCache = [];
+    var MaxNumberQuestions;
     
   return{
       renderQuizDetailsList: function(quizDetailsList)
       {
         $('#quiz_list').empty();
-        $('#quiz_list').append('<option>Select Quiz</option>');
+        $('#quiz_list').append('<option value="0">Select Quiz</option>');
         
         $.each(quizDetailsList, function(key, val)
         {
@@ -54,6 +55,14 @@ QuizSetupView = function()
             $('#quiz_events').html('<h3>No Events</h3>');
           }
       },
+      getSelectedGroupId: function()
+      {
+        return $('#group_list option:selected').val();  
+      },
+      getSelectedQuizId: function()
+      {
+        return $('#quiz_list option:selected').val();  
+      },
       renderDefaultValues: function()
       {
           //Reset the form back to defaults.
@@ -76,6 +85,14 @@ QuizSetupView = function()
           quizEvent.NumberOfQuestions = $('#number_questions').val();
           
           return quizEvent;
+      },
+      setNumberOfQuestions: function(numberOfQuestions)
+      {
+          $('#number_questions').val(numberOfQuestions);
+      },
+      getNumberOfQuestions: function()
+      {
+          return $('#number_questions').val();
       }
   };
 };

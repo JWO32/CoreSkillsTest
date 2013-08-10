@@ -17,6 +17,7 @@ import javax.persistence.Query;
 public class QuizEntityManager<T>
 {
     private EntityManagerFactory EntityManagerFactory;
+    String persistenceUnit;
     
     private Class Type;
     
@@ -40,7 +41,7 @@ public class QuizEntityManager<T>
      * 
      * @param objectToCommit 
      */
-    private void commitObject(T objectToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
+    public void commitObject(T objectToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         
@@ -64,7 +65,7 @@ public class QuizEntityManager<T>
      * 
      * @param objectsToCommit 
      */
-    private void commitObjectList(List<T> objectsToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
+    public void commitObjectList(List<T> objectsToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         
@@ -96,7 +97,7 @@ public class QuizEntityManager<T>
      * @return
      * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
      */
-    private T getSingleObject(int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    public T getSingleObject(int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         T object = null;
         
@@ -127,14 +128,14 @@ public class QuizEntityManager<T>
      * @return
      * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
      */
-    private List<T> getObjectList(String namedQuery) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    public List<T> getObjectList(String namedQuery) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
         List<T> objectList = new ArrayList<>();
         
         try
-        {
+        {          
             q = em.createNamedQuery(namedQuery);
             objectList = q.getResultList();
         }catch(Exception ex)
@@ -149,5 +150,22 @@ public class QuizEntityManager<T>
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("No resources found: " + getType().getSimpleName());
         
         return objectList;
+    }
+    
+    public void deleteObject(T objectToDelete, String deleteQuery)
+    {
+        EntityManager em = EntityManagerFactory.createEntityManager();
+        Query q;
+        
+        try
+        {
+            q = em.createNamedQuery(deleteQuery);
+        }catch(Exception ex)
+        {
+            
+        }finally
+        {
+            em.close();
+        }
     }
 }
