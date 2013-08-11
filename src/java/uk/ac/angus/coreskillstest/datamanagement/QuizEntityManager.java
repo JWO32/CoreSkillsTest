@@ -152,20 +152,30 @@ public class QuizEntityManager<T>
         return objectList;
     }
     
-    public void deleteObject(T objectToDelete, String deleteQuery)
+    public void deleteObject(String deleteQuery, String parameter, int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
+        int numberOfItemsDeleted = 0;
         
         try
         {
-            q = em.createNamedQuery(deleteQuery);
+            em.getTransaction().begin();
+            q = em.createNamedQuery(deleteQuery).setParameter(parameter, objectId);
+            numberOfItemsDeleted = q.executeUpdate();
+            em.getTransaction().commit();
         }catch(Exception ex)
         {
-            
+            System.err.println("Exception Occured: unable to delete specified object");
+            System.err.println(ex.getMessage());
         }finally
         {
             em.close();
+        }
+        
+        if(numberOfItemsDeleted == 0)
+        {
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Delete Error: no objects deleted");
         }
     }
 }

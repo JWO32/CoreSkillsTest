@@ -6,6 +6,7 @@ package uk.ac.angus.coreskillstest.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -116,15 +117,21 @@ public class QuizEventController extends HttpServlet
     {
         String path = req.getRequestURI();
         String[] pathComponents = path.split("/");
-        
-        String deleteJson = req.getParameter("eventid");
         ServerClientResponse clientResponse;
+        //int quizEventId = Integer.parseInt(req.getParameter("quizeventid"));
+        
+        //Delete requests don't come with parameters so the id to delete is included
+        //in the request URI.
+        int quizEventId = Integer.parseInt(URLDecoder.decode(pathComponents[4], "UTF-8"));
         
         switch(pathComponents[3])
         {
             case "delete":
+                QuizEventDataAccessObject qDAO = new QuizEventDataAccessObject();
                 
+                clientResponse = qDAO.deleteSingleItem(quizEventId);
                 
+                setResponse(clientResponse, resp);               
                 break;
         }
     }

@@ -28,10 +28,12 @@ import javax.persistence.Transient;
  */
 @Entity(name="QUIZ_EVENT")
 
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(name="QuizEvent.getAllEvents",
-        query="SELECT qe FROM QUIZ_EVENT qe")
-        )
+        query="SELECT qe FROM QUIZ_EVENT qe"),
+        @NamedQuery(name="QuizEvent.deleteEvent",
+        query="DELETE FROM QUIZ_EVENT qe WHERE qe.QuizConfigId=:id")
+})
 public class QuizEvent implements Serializable
 {
     @Expose

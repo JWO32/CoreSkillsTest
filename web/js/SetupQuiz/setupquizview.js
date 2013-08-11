@@ -24,6 +24,22 @@ QuizSetupView = function()
               $('#group_list').append('<option value="'+val.GroupId+'">'+val.GroupName+'</option>');
           });
       },
+      getSelectedQuizEvents: function()
+      {
+          var selectedEventList = [];
+                  
+          $('#quiz_events input:checked').each(function()
+          {
+              var id = $(this).attr('id');
+              
+              // Remove the leading characters from the HTML DIV id.
+              id = id.replace('qe_','');
+              
+              selectedEventList.push(id);
+          });
+          
+          return selectedEventList;
+      },
       cacheEvents: function(eventsList)
       {
           if(eventsList.length === 0)
@@ -33,8 +49,20 @@ QuizSetupView = function()
           
           for(i = 0; i < eventsList.length; i++)
           { 
+            //Little bit of a hack, but need to change boolean true/false
+            //into Yes/No for user friendliness.
+            //These are compiled into HTML templates and so don't affect data in the model
+            if(eventsList[i].Feedback === true)
+                eventsList[i].Feedback = 'Yes';
+            else
+                eventsList[i].Feedback = 'No';
+            
+            if(eventsList[i].RandomQuestions === true)
+                eventsList[i].RandomQuestions = 'Yes';
+            else
+                eventsList[i].RandomQuestions = 'No';
+            
             var template = Handlebars.compile(eventTemplateSource);
-
             var eventHTML = template(eventsList[i]);
 
             EventCache.push(eventHTML);
@@ -93,6 +121,10 @@ QuizSetupView = function()
       getNumberOfQuestions: function()
       {
           return $('#number_questions').val();
+      },
+      renderDialogue: function(title, message)
+      {
+          
       }
   };
 };

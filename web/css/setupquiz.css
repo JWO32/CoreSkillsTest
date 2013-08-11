@@ -1,11 +1,47 @@
 
+.select_box
+{
+    float: left;
+    height: 100%;
+    padding-right: 0.5em;
+}
+
+.event_details
+{
+    height: 100%;
+    width: auto;
+}
 
 .quiz_event
 {
-    border: 1px solid #000000;
+    margin: 1em;
+    clear: both;
 }
 
 .quiz_event ul
 {
     list-style: none;
+}
+
+fieldset ol
+{
+    list-style: none;
+}
+
+#quiz_group_select
+{
+    float: left;
+    width: 32%;
+}
+
+#quiz_options
+{
+    width: 32%;
+    float: left;
+}
+
+#quiz_dates
+{
+    width: 32%;
+    float: right;
 }

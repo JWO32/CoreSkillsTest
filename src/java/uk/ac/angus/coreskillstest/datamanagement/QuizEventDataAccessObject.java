@@ -146,7 +146,8 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
     }
    
     //Implement interface functionality here...
-    
+    // REFACTORING STARTS HERE
+    //
     @Override
     public ServerClientResponse addItemJson(String jsonString) 
     {
@@ -231,11 +232,30 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
     }
 
     @Override
-    public ServerClientResponse deleteSingleItem(String jsonString) 
+    public ServerClientResponse deleteSingleItem(int itemId) 
     {
-       ServerClientResponse response = null;
-        
-        return response;
+       ServerClientResponse response = new ServerClientResponse();
+       QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
+       String query;
+       String parameter;
+       
+       query="QuizEvent.deleteEvent";
+       parameter="id";
+       
+       try
+       {
+           qem.deleteObject(query, parameter, itemId);
+           response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+           response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Quiz Event Deleted", "Quiz event has been successfully deleted."));
+       
+       }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException ex)
+       {
+           response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+           response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Records Deleted", "No records were deleted"));
+       }
+       
+       
+       return response;
     }
 
     @Override
@@ -260,5 +280,17 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         ServerClientResponse response = null;
         
         return response;
+    }
+    
+    /**
+     * Determine a strategy to pick out and delete expired quiz events
+     * don't want this to happen too often and use resources unecessarily.
+     * 
+     */
+    private void deleteExpiredQuizEvents()
+    { 
+        QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
+        
+        
     }
 }

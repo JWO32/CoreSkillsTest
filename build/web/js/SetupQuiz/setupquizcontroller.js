@@ -30,7 +30,15 @@ QuizSetupController = function()
         },
         deleteQuizEvent: function()
         {
+            var selectedQuizId = SetupView.getSelectedQuizEvents();
             
+            if(selectedQuizId.length>1)
+            {
+                alert('Please selected only 1 quiz to delete');
+                return;
+            }
+
+            this.deleteQuizEvents(selectedQuizId);
         },
         updateQuizList: function(data)
         {
@@ -65,8 +73,7 @@ QuizSetupController = function()
                 SetupView.setNumberOfQuestions(1);
             }
             //TODO: Alert the user that their input has been changed.
-            
-            
+       
         },
         updateGroupList: function(data)
         {
@@ -143,6 +150,20 @@ QuizSetupController = function()
                   alert("Server Error: Database not available");
               }        
           });
+        },
+        deleteQuizEvents: function(eventToDelete)
+        {
+            $.ajax({
+               url:'Event/delete/'+eventToDelete,
+               method:'DELETE',
+               dataType:'json',
+               data:'quizeventid='+eventToDelete,
+               success: this.updateEventList,
+               error: function(data)
+               {
+                   
+               }          
+            });
         }
     };
 };

@@ -17,7 +17,7 @@ public interface JSONInterface<T>
     
     ServerClientResponse getAllItems();
     
-    ServerClientResponse deleteSingleItem(String jsonString);
+    ServerClientResponse deleteSingleItem(int itemId);
     
     ServerClientResponse deleteMultipleItems(String jsonString);
     

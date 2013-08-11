@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.ac.angus.coreskillstest.controller;
+package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author JWO
  */
-@WebServlet(name = "QuizDispatcherController", urlPatterns = {"/Dispatcher/*"})
-public class QuizDispatcherController extends HttpServlet {
+@WebServlet(name = "ApplicationSettingsManager", urlPatterns = {"/Settings/*"})
+public class ApplicationSettingsManager extends HttpServlet 
+{
+
 
     /**
      * Handles the HTTP
@@ -31,7 +33,7 @@ public class QuizDispatcherController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-        
+
     }
 
     /**
@@ -48,5 +50,4 @@ public class QuizDispatcherController extends HttpServlet {
     {
         
     }
-
 }

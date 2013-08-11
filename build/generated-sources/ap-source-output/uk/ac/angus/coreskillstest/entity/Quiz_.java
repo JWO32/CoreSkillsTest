@@ -10,7 +10,7 @@ import uk.ac.angus.coreskillstest.entity.QuizCategory;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-10T19:50:54")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-11T19:18:36")
 @StaticMetamodel(Quiz.class)
 public class Quiz_ { 
 
