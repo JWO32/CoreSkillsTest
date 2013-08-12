@@ -1,23 +1,24 @@
 QuizSetupController = function()
 {
-    var SetupModel = QuizSetupModel();
-    var SetupView = QuizSetupView();
+    var Model = new QuizSetupModel();
+    var View = new QuizSetupView();
        
     return {
-        init: function()
+        init: function(model, view)
         {
-            
+            Model = model;
+            View = view;
         },
         initAllDetails: function()
         {
             this.downloadQuizList();
             this.downloadUserGroup();
-            this.downloadQuizEventList();
+            this.downloadQuizEventList(this);
         },
         addQuizEvent: function()
         {
             var eventDetails;
-            eventDetails = SetupView.getAllDetails();
+            eventDetails = View.getAllDetails();
             
             if(eventDetails !== null)
             {
@@ -26,7 +27,7 @@ QuizSetupController = function()
         },
         editQuizEvent: function()
         {
-            var selectedQuizEventId = SetupView.getSelectedQuizEvents();
+            var selectedQuizEventId = View.getSelectedQuizEvents();
             
             if(selectedQuizEventId.length>1)
             {
@@ -36,13 +37,13 @@ QuizSetupController = function()
                 return;
             }
             
-            var selectedEvent = SetupModel.getQuizEventById(selectedQuizEventId);
+            var selectedEvent = Model.getQuizEventById(selectedQuizEventId);
             
-            SetupView.displayEditDialogue(selectedEvent);
+            View.displayEditDialogue(selectedEvent);
         },
         deleteQuizEvent: function()
         {
-            var selectedQuizId = SetupView.getSelectedQuizEvents();
+            var selectedQuizId = View.getSelectedQuizEvents();
             
             if(selectedQuizId.length>1)
             {
@@ -56,23 +57,23 @@ QuizSetupController = function()
         },
         updateQuizList: function(data)
         {
-            SetupModel.setQuizDetails(data);
-            SetupView.renderQuizDetailsList(SetupModel.getQuizDetails());
+            Model.setQuizDetails(data);
+            View.renderQuizDetailsList(Model.getQuizDetails());
         },
         changeQuizEvent: function()
         {
-            var quizId = SetupView.getSelectedQuizId();
+            var quizId = View.getSelectedQuizId();
             var QuizEventDetails = 0;
             
-            QuizEventDetails = SetupModel.getQuizEventById(quizId);
+            QuizEventDetails = Model.getQuizEventById(quizId);
             
-            SetupView.setNumberOfQuestions(QuizEventDetails.NumberOfQuestions);          
+            View.setNumberOfQuestions(QuizEventDetails.NumberOfQuestions);          
         },
         checkNumberOfQuestionsEvent: function()
         {
-            var enteredNumber = SetupView.getNumberOfQuestions();
-            var currentQuizEvent = SetupView.getSelectedQuizId();
-            var currentEventObject = SetupModel.getQuizEventById(currentQuizEvent);
+            var enteredNumber = View.getNumberOfQuestions();
+            var currentQuizEvent = View.getSelectedQuizId();
+            var currentEventObject = Model.getQuizEventById(currentQuizEvent);
             var maxQuestions = 1;
             
             if(currentEventObject !== null)
@@ -80,39 +81,39 @@ QuizSetupController = function()
        
             if(enteredNumber > maxQuestions)
             {
-                SetupView.setNumberOfQuestions(maxQuestions);
+                View.setNumberOfQuestions(maxQuestions);
 
             }else if(enteredNumber <= 0)
             {
                 //Make sure the user doesn't set the number of questions to 0
-                SetupView.setNumberOfQuestions(1);
+                View.setNumberOfQuestions(1);
             }
             //TODO: Alert the user that their input has been changed.
        
         },
         updateGroupList: function(data)
         {
-            SetupModel.setGroupDetails(data);
-            SetupView.renderGroupDetailsList(SetupModel.getGroupDetails());
+            Model.setGroupDetails(data);
+            View.renderGroupDetailsList(Model.getGroupDetails());
         },
         updateEventList: function(data)
         {
             // Reinitialise the model
-            SetupModel.clearQuizEvents();
-            SetupView.clearEventCache();
+            Model.clearQuizEvents();
+            View.clearEventCache();
             
             if(data instanceof Array)
             {
                 // if the data is an array - update the model
                 // cache the events
                 // render the list of events
-                SetupModel.setQuizEvents(data);
-                SetupView.cacheEvents(SetupModel.getQuizEvents());
-                SetupView.renderEventList();
+                Model.setQuizEvents(data);
+                View.cacheEvents(Model.getQuizEvents());
+                View.renderEventList();
             }else
             {
                 //if the data is not an array - render the empty eventlist
-                SetupView.renderEventList();
+                View.renderEventList();
             }     
         },
         sendQuizEventDetails: function(eventData, controllerRef)
@@ -128,11 +129,18 @@ QuizSetupController = function()
                 data: 'event='+eventData,
                 success: function(data)
                 {
-                    controllerRef.downloadQuizEventList();
+                    controllerRef.downloadQuizEventList(controllerRef);
                 },
                 error: function()
                 {
-                    alert("Server Error: Database not available");
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                   
+                   if(errorTitle !== null && errorMsg !== null)
+                        View.renderDialogue(errorTitle, errorMsg);
+                   else
+                        View.renderDialogue("Event Add Error", "Unable to add event");
                 }
             });
         },
@@ -145,7 +153,14 @@ QuizSetupController = function()
                success: this.updateQuizList,
                error: function(data)
                {
-                   alert('Server Error: Database not available');
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                   
+                   if(errorTitle !== null && errorMsg !== null)
+                        View.renderDialogue(errorTitle, errorMsg);
+                   else
+                       View.renderDialogue("Quiz List Error", "Unable to download quiz list");
                }
             });
         },
@@ -158,21 +173,33 @@ QuizSetupController = function()
                success: this.updateGroupList,
                error: function(data)
                {
-                   alert('Server Error: Database not available');
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  View.renderDialogue(errorTitle, errorMsg);
                }
             });
         },
-        downloadQuizEventList: function()
+        downloadQuizEventList: function(controllerRef)
         {
           $.ajax({
               url:'Event/eventlist',
               method:'GET',
               cache: 'no',
               dataType:'json',
-              success: this.updateEventList,
+              success: controllerRef.updateEventList,
               error: function(data)
               {
-                  alert("Server Error: Database not available");
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  if(errorTitle !== null && errorMsg !== null)
+                        View.renderDialogue(errorTitle, errorMsg);
+                   else
+                       View.renderDialogue("Quiz Event Download Error", "Unable to download event list");
+                  controllerRef.updateEventList(null);
               }        
           });
         },
@@ -184,11 +211,15 @@ QuizSetupController = function()
                dataType:'json',
                success: function(data)
                {
-                   controllerRef.downloadQuizEventList()
+                   controllerRef.downloadQuizEventList();
                },
                error: function(data)
                {
-                   
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  View.renderDialogue(errorTitle, errorMsg);
                }          
             });
         }

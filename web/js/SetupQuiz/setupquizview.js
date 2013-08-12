@@ -152,7 +152,21 @@ QuizSetupView = function()
       },
       renderDialogue: function(title, message)
       {
-          
+          $('<div></div>').dialog({
+             modal: true,
+             title: title,
+             buttons: {
+                 "OK": function()
+                 {
+                     $(this).dialog('close');
+                 }
+             },
+             close: function(event, ui)
+             {
+                 $(this).remove();
+             },
+             resizable: false            
+          }).text(message);
       },
       clearEventCache: function ()
       {

@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.Question;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-11T19:18:36")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-12T15:40:53")
 @StaticMetamodel(QuestionCategory.class)
 public class QuestionCategory_ { 
 

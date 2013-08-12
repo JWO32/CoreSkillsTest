@@ -37,6 +37,9 @@ import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
  * /delete/group/<GROUPID>
  */
 
+// TODO: Refactor this class to use QuizEntityManager and Client JSON interface.
+//
+
 public class UserReceiverController extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
