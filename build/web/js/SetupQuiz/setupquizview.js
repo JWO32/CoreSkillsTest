@@ -155,6 +155,8 @@ QuizSetupView = function()
           $('<div></div>').dialog({
              modal: true,
              title: title,
+             width: 'auto',
+             height: 'auto',
              buttons: {
                  "OK": function()
                  {

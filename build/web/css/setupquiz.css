@@ -45,3 +45,10 @@ fieldset ol
     width: 32%;
     float: right;
 }
+
+#buttons
+{
+    margin: 0 auto;
+    width: 80%;
+    padding: 0.5em;
+}

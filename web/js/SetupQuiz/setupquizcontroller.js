@@ -177,7 +177,10 @@ QuizSetupController = function()
                   var errorTitle = errorObj.Status;
                   var errorMsg = errorObj.Message;
                   
-                  View.renderDialogue(errorTitle, errorMsg);
+                  if(errorTitle !== null && errorMsg !== null)
+                    View.renderDialogue(errorTitle, errorMsg);
+                  else
+                     View.renderDialogue("Group Download Error", "Unable to download group list");
                }
             });
         },

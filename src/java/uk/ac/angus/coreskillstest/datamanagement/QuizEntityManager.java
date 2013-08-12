@@ -2,6 +2,8 @@ package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
@@ -128,19 +130,31 @@ public class QuizEntityManager<T>
      * @return
      * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
      */
-    public List<T> getObjectList(String namedQuery) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    public List<T> getObjectList(String namedQuery, Map queryParameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
         List<T> objectList = new ArrayList<>();
         
+        //Get Keys
+        String[] keys = (String[]) queryParameters.keySet().toArray();
+
         try
         {          
             q = em.createNamedQuery(namedQuery);
+            
+            for(String currentKey : keys)
+            {
+                String currentParam = (String) queryParameters.get(currentKey);
+
+                q.setParameter(currentKey, currentParam);
+            }
+            
             objectList = q.getResultList();
         }catch(Exception ex)
         {
             System.err.println("Exception Occured: unable to get object list");
+            System.err.println(ex.getMessage());
         }finally
         {
             em.close();

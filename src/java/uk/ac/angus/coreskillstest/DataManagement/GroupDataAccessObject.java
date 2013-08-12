@@ -139,7 +139,7 @@ public class GroupDataAccessObject
      */
     public QuizGroup fetchGroupByIdObject(int groupId)
     {
-        QuizGroup qg = null;
+        QuizGroup qg;
         
         EntityManager em = GroupDataFactory.createEntityManager();
         

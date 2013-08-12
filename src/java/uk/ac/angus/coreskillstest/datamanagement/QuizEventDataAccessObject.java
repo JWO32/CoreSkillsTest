@@ -207,7 +207,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         {
             String query = "QuizEvent.getAllEvents";
             
-            returnedEvents = qem.getObjectList(query);
+            returnedEvents = qem.getObjectList(query, null);
             
             if(returnedEvents.isEmpty())
             {

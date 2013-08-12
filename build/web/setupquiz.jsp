@@ -175,7 +175,6 @@
                         </fieldset>
                  </form>
                  <div id="buttons">   
-                 <h3>Operations</h3>
                 <input type="button" id="add_quiz_button" value="Add Quiz Event"/>
                 <input type="button" id="delete_quiz_button" value="Delete Quiz Event"/>
                 <input type="button" id="edit_quiz_button" value="Edit Quiz Event"/>
