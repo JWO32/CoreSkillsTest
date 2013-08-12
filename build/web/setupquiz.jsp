@@ -38,6 +38,11 @@
         <script type="text/javascript">
         $(document).ready(function()
         {
+            $.ajaxSetup ({
+                // Disable caching of AJAX responses
+                cache: false
+              });
+              
             var controller = QuizSetupController();
 
             controller.downloadQuizList();
@@ -77,7 +82,7 @@
             $('input[type="datetime"]').datepicker();
             $('input[type="datetime"]').datepicker('setDate', new Date());
             $('input[type="datetime"]').datepicker('option', 'dateFormat', 'dd/mm/yy');
-            $('input [type="text"]').addClass('ui-widget ui-widget-content ui-widget-header ui-corner-all');
+            $('input [type="text"]').addClass('text ui-widget ui-widget-content ui-corner-all');
             $('input [type="checkbox"]').button();
 
             $('input[type="button"]').button();
@@ -91,7 +96,7 @@
             <section>        
                 <!-- Include page header here --> 
                 <header id="MainHeading">
-                    <h1>Set Quiz Events</h1>
+                    <h1>Manage Quiz Events</h1>
                 </header>
             </section>
             <section id="Navigation">
@@ -163,29 +168,23 @@
                                     </li>
                                     <li>
                                         <label>Number of questions to include</label>
-                                        <input type="number" value="0" id="number_questions"/>
+                                        <input type="number" value="1" id="number_questions"/>
                                     </li>                              
                                 </ol>
                             </div>
                         </fieldset>
-                     <fieldset>
-                         <legend>Operations</legend>
-                         <input type="button" id="add_quiz_button" value="Add Quiz Event"/>
-                         <input type="button" id="delete_quiz_button" value="Delete Quiz Event"/>
-                         <input type="button" id="edit_quiz_button" value="Edit Quiz Event"/>
-                         <input type="button" id="clear_quiz_button" value="Clear Form"/>
-                     </fieldset>
-                 </form>                 
+                 </form>
+                 <div id="buttons">   
+                 <h3>Operations</h3>
+                <input type="button" id="add_quiz_button" value="Add Quiz Event"/>
+                <input type="button" id="delete_quiz_button" value="Delete Quiz Event"/>
+                <input type="button" id="edit_quiz_button" value="Edit Quiz Event"/>
+                <input type="button" id="clear_quiz_button" value="Clear Form"/>
+                 </div>
              </section>
              <section id="quiz_events">
                  
              </section>
          </div>
-        
-        <!-- Probably redundant for this part of the app -->
-        <div id="add_quiz_event_dialogue" style="display: none">
-            
-        </div>
     </body>
-
 </html>

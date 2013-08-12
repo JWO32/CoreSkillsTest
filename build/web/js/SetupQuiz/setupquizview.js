@@ -1,7 +1,6 @@
 QuizSetupView = function()
 {    
     var EventCache = [];
-    var MaxNumberQuestions;
     
   return{
       renderQuizDetailsList: function(quizDetailsList)
@@ -106,8 +105,37 @@ QuizSetupView = function()
           quizEvent.GroupId = $('#group_list option:selected').val();
           quizEvent.QuizId = $('#quiz_list option:selected').val();
           
+          //Ensure that a group has been picked
+          //
+          if(quizEvent.GroupId === '0')
+          {
+              alert('Please select a group');
+              return null;
+          }
+          
+          //Ensure that a quiz has been picked 
+          //
+          if(quizEvent.QuizId === '0')
+          {
+              alert('Please select a quiz');
+              return null;
+          }
+          
+          var openDate = $('#opening_date').datepicker('getDate');
+          var closeDate = $('#closing_date').datepicker('getDate');
+          
+          // Validate open and close dates
+          //
+          if(closeDate < openDate)
+          {
+              alert('End date is before open date!');
+              return null;
+          }
+          
           quizEvent.OpenDate = $('#opening_date').val();
           quizEvent.CloseDate = $('#closing_date').val();
+         
+          
           quizEvent.RandomQuestions = $('#randomise_questions').is(':checked');
           quizEvent.Feedback = $('#feedback').is(':checked');
           quizEvent.NumberOfQuestions = $('#number_questions').val();
@@ -125,6 +153,37 @@ QuizSetupView = function()
       renderDialogue: function(title, message)
       {
           
+      },
+      clearEventCache: function ()
+      {
+          EventCache = [];
+      },
+      displayEditDialogue: function(selectedEvent)
+      {
+          
+        $('#new_event_form').dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+            title:'Edit Quiz Event',
+            show:'blind',
+            hide:'blind',
+            buttons:{
+                        "OK": function()
+                        {
+
+                        },
+                        "Cancel": function()
+                        {
+                            $(this).dialog('destroy');
+                        }
+                    },
+            close: function()
+            {
+                $(this).dialog('destroy');
+            }
+        }).dialog('open');
       }
   };
 };

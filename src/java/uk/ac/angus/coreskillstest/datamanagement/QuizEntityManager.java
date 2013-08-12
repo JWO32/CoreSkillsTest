@@ -50,7 +50,7 @@ public class QuizEntityManager<T>
             em.getTransaction().begin();
             em.persist(objectToCommit);
             em.getTransaction().commit();
-        }catch(javax.persistence.RollbackException ex)
+        }catch(Exception ex)
         {
             System.err.println("Database Error: unable to commit to database");
             System.err.println(ex.getMessage());

@@ -21,12 +21,24 @@ QuizSetupController = function()
             
             if(eventDetails !== null)
             {
-                this.sendQuizEventDetails(eventDetails);
+                this.sendQuizEventDetails(eventDetails, this);
             }
         },
         editQuizEvent: function()
         {
+            var selectedQuizEventId = SetupView.getSelectedQuizEvents();
             
+            if(selectedQuizEventId.length>1)
+            {
+                //TODO: move this to the view using jquery dialogue
+                //
+                alert('Please select only 1 quiz to edit');
+                return;
+            }
+            
+            var selectedEvent = SetupModel.getQuizEventById(selectedQuizEventId);
+            
+            SetupView.displayEditDialogue(selectedEvent);
         },
         deleteQuizEvent: function()
         {
@@ -34,11 +46,13 @@ QuizSetupController = function()
             
             if(selectedQuizId.length>1)
             {
-                alert('Please selected only 1 quiz to delete');
+                //TODO: move this to the view using jquery dialogue
+                //
+                alert('Please select only 1 quiz to delete');
                 return;
             }
 
-            this.deleteQuizEvents(selectedQuizId);
+            this.deleteQuizEvents(selectedQuizId, this);
         },
         updateQuizList: function(data)
         {
@@ -48,21 +62,22 @@ QuizSetupController = function()
         changeQuizEvent: function()
         {
             var quizId = SetupView.getSelectedQuizId();
-            var numberOfQuestions = 0;
             var QuizEventDetails = 0;
             
             QuizEventDetails = SetupModel.getQuizEventById(quizId);
             
-            SetupView.setNumberOfQuestions(QuizEventDetails.NumberOfQuestions);
-            
+            SetupView.setNumberOfQuestions(QuizEventDetails.NumberOfQuestions);          
         },
         checkNumberOfQuestionsEvent: function()
         {
             var enteredNumber = SetupView.getNumberOfQuestions();
             var currentQuizEvent = SetupView.getSelectedQuizId();
             var currentEventObject = SetupModel.getQuizEventById(currentQuizEvent);
-            var maxQuestions = currentEventObject.NumberOfQuestions;
+            var maxQuestions = 1;
             
+            if(currentEventObject !== null)
+                maxQuestions = currentEventObject.NumberOfQuestions;
+       
             if(enteredNumber > maxQuestions)
             {
                 SetupView.setNumberOfQuestions(maxQuestions);
@@ -82,6 +97,10 @@ QuizSetupController = function()
         },
         updateEventList: function(data)
         {
+            // Reinitialise the model
+            SetupModel.clearQuizEvents();
+            SetupView.clearEventCache();
+            
             if(data instanceof Array)
             {
                 // if the data is an array - update the model
@@ -96,8 +115,10 @@ QuizSetupController = function()
                 SetupView.renderEventList();
             }     
         },
-        sendQuizEventDetails: function(eventData)
-        {         
+        sendQuizEventDetails: function(eventData, controllerRef)
+        {    
+            //TODO: This is a bit clunky refactor network operations into separate JavaScript object?
+            //
             eventData = JSON.stringify(eventData);
             
             $.ajax({
@@ -105,7 +126,10 @@ QuizSetupController = function()
                 method:'POST',
                 dataType: 'json',
                 data: 'event='+eventData,
-                success: this.downloadQuizEventList,
+                success: function(data)
+                {
+                    controllerRef.downloadQuizEventList();
+                },
                 error: function()
                 {
                     alert("Server Error: Database not available");
@@ -143,6 +167,7 @@ QuizSetupController = function()
           $.ajax({
               url:'Event/eventlist',
               method:'GET',
+              cache: 'no',
               dataType:'json',
               success: this.updateEventList,
               error: function(data)
@@ -151,14 +176,16 @@ QuizSetupController = function()
               }        
           });
         },
-        deleteQuizEvents: function(eventToDelete)
+        deleteQuizEvents: function(eventToDelete, controllerRef)
         {
             $.ajax({
                url:'Event/delete/'+eventToDelete,
                method:'DELETE',
                dataType:'json',
-               data:'quizeventid='+eventToDelete,
-               success: this.updateEventList,
+               success: function(data)
+               {
+                   controllerRef.downloadQuizEventList()
+               },
                error: function(data)
                {
                    

@@ -35,14 +35,18 @@ QuizSetupModel = function()
       {
           return QuizEvents;
       },
+      clearQuizEvents: function()
+      {
+           QuizEvents = [];  
+      },
       getQuizEventById: function(quizId)
       {
           quizId = parseInt(quizId);
           
-          for(var i = 0; i < QuizEvents.length; i++)
+          for(var i = 0; i < QuizDetailsList.length; i++)
           {
-              if(QuizEvents[i].QuizId === quizId)
-                  return QuizEvents[i];
+              if(QuizDetailsList[i].QuizId === quizId)
+                  return QuizDetailsList[i];
           }
           
           return null;

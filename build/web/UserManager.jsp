@@ -1,16 +1,9 @@
-<%-- 
-    Document   : UserManager
-    Created on : Jul 7, 2013, 8:10:21 PM
-    Author     : JWO
---%>
 <!doctype html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 
 <!-- Stylesheets -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
-<link rel="stylesheet" href="css/quizcreate.css" type="text/css"/>
+<link rel="stylesheet" href="css/usermanager.css" type="text/css"/>
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
 <!-- JavaScript Library Imports -->
@@ -99,12 +92,16 @@
     </section>
    
     <section id="content_body">
-        <h1>Manage Users and Groups</h1>
+        <form>
+            <fieldset>
+                <legend>Manage Users and Groups</legend>
+                <input type="button" id="add_user_button" value="Add User"></input>
+                <input type="button" id="add_group_button" value="Add Group"></input>
+                <input type="button" id="delete_selected_user" value="Delete User"></input>
+                <input type="button" id="delete_selected_group" value="Delete Group"></input>
+            </fieldset>         
+        </form>
         
-        <input type="button" id="add_user_button" value="Add User"></input>
-        <input type="button" id="add_group_button" value="Add Group"></input>
-        <input type="button" id="delete_selected_user" value="Delete User"></input>
-        <input type="button" id="delete_selected_group" value="Delete Group"></input>
         
         <h3>Student and Group List</h3>
         

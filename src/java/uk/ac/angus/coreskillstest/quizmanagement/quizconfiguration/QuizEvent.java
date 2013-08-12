@@ -30,7 +30,7 @@ import javax.persistence.Transient;
 
 @NamedQueries({
         @NamedQuery(name="QuizEvent.getAllEvents",
-        query="SELECT qe FROM QUIZ_EVENT qe"),
+        query="SELECT qe FROM QUIZ_EVENT qe ORDER BY qe.QuizOpenDate"),
         @NamedQuery(name="QuizEvent.deleteEvent",
         query="DELETE FROM QUIZ_EVENT qe WHERE qe.QuizConfigId=:id")
 })

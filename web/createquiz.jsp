@@ -77,9 +77,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-
 <div id="mainbody">
-
 <header>
 <h1>Create a New Quiz</h1>
 </header>

@@ -40,7 +40,7 @@ public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent
      * @throws JsonParseException 
      */
     @Override
-    public QuizEvent deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException 
+    public QuizEvent deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
     {
         JsonObject obj = json.getAsJsonObject();
         
@@ -56,8 +56,12 @@ public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent
         
         linkedQuiz = getQuiz(quizId);
         linkedGroup = getGroup(groupId);
+        
         try
-        {
+        {       
+           if(linkedQuiz == null || linkedGroup == null)
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz Event Error: cannot locate quiz resource indicated by QuizEvent");
+        
             openDate = sdf.parse(obj.get("OpenDate").getAsString());
             closeDate = sdf.parse(obj.get("CloseDate").getAsString());
             qe.setLinkedQuiz(linkedQuiz);
@@ -71,6 +75,10 @@ public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent
         {
             System.err.println("Quiz Event Error: cannot parse date");
             
+            qe = null;
+        }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
+        {
+            System.err.println("Quiz Event Error: cannot locate resource indicated in Quiz Event");
             qe = null;
         }
         

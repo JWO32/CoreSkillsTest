@@ -81,6 +81,9 @@ public class QuizEventController extends HttpServlet
                 setResponse(clientResponse, resp);
                 
                 break;
+            case "editevent":
+                
+                break;
         }     
     }
      
