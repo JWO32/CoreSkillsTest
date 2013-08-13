@@ -10,6 +10,14 @@ LoginController = function()
           if(emailAddress !== null)
               this.ajaxSendLogin(emailAddress);
         },
+        doQuizEvent: function ()
+        {
+            
+        },
+        updateQuizList: function ()
+        {
+            
+        },
         ajaxSendLogin: function (emailAddress)
         {   
             $.ajax({
@@ -27,13 +35,28 @@ LoginController = function()
                     
                 }
             });
+        },
+        ajaxDoQuiz: function(quizId, quizEventId)
+        {
+           $.ajax({
+             url: 'Dispatcher/doquiz',
+             method: 'GET',
+             dataType: 'json',
+             data:'quizid='+quizId+"&quizeventid="+quizEventId,
+             success: this.updateEventList,
+             error: function ()
+             {
+                 
+             }
+           });
         }
-        
     };
 };
 
 LoginView = function ()
 {
+    var cachedEvents = [];
+    
     return{
       getEmailAddress: function()
       {
@@ -41,6 +64,11 @@ LoginView = function ()
       },
       displayQuizEvents: function()
       {
+          
+      },
+      createEventsFromTemplates: function(eventList)
+      {
+          
           
       }
     };

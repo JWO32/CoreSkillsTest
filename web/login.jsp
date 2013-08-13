@@ -1,5 +1,15 @@
 <jsp:include page="inc/header-inc.jsp" flush="false" />
 
+<script id="quiz_events_template" type="text/x-handlebars-template">
+    <div id="qe_"{{QuizEventId}}>
+        <3>Quiz: {{QuizName}}</h3>
+        <p>This quiz has <strong>{{NumberOfQuestions}}</strong> questions.</p>
+        <p><a class="doQuizLink" href="{{QuizId}}/{{QuizEventId}}">Click here to attempt this quiz</p>
+    </div>
+
+</script>
+    
+
 <script type="text/javascript">
     $(document).ready(function()
     {
@@ -8,6 +18,8 @@
        $('#submit_button').on('click', function (){
           Controller.loginEvent(); 
        });
+       
+       $()
 
        $('input[type="button"]').button();
     });
@@ -26,7 +38,7 @@
     </form>  
 </section>
 
-<section id="quiz_list">
+<section id="quiz_event_list">
     
     
 </section>
