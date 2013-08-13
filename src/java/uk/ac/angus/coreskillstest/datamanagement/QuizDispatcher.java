@@ -119,8 +119,17 @@ public class QuizDispatcher
      */
     public ServerClientResponse getValidQuizEventsForUser()
     {
-        QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
         ServerClientResponse response = new ServerClientResponse();
+        
+        if(SelectedUser == null)
+        {
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No User Found", "Unable to search for Quiz Events because no user found"));
+            
+            return response;
+        }
+ 
+        QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);       
         List<QuizEvent> eventList;
 
         String eventJson;

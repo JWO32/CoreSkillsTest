@@ -14,9 +14,13 @@ LoginController = function()
         {
             
         },
-        updateQuizList: function ()
+        updateQuizList: function (eventList)
         {
-            
+            if(eventList !== null)
+            {
+                View.cacheQuizEvents(eventList);
+                View.renderQuizEvents();
+            }
         },
         ajaxSendLogin: function (emailAddress)
         {   
@@ -25,10 +29,7 @@ LoginController = function()
                 method:'GET',
                 dataType: 'json',
                 data: 'email='+emailAddress,
-                success: function ()
-                {
-                    
-                },
+                success: this.updateQuizList,
                 error: function ()
                 {
                     
@@ -62,14 +63,32 @@ LoginView = function ()
       {
          return $('#email').val(); 
       },
-      displayQuizEvents: function()
+      renderQuizEvents: function()
       {
+          $('#quiz_event_list').empty();
           
+          if(cachedEvents.length > 0)
+          {
+              for(var i = 0; i < cachedEvents.length; i++)
+              {
+                  $('#quiz_event_list').append(cachedEvents[i]);
+              }
+          }else
+          {
+              $('#quiz_event_list').append('<h3>No Quiz Events</h3>');
+          }
       },
-      createEventsFromTemplates: function(eventList)
+      cacheQuizEvents: function(eventList)
       {
+          var templateSource = $('quiz_events_template').html();
           
-          
+          for(var i = 0; i < eventList.length; i++)
+          {
+              var template = Handlebars.compile(templateSource);
+              var eventHTML = template(eventList[i]);
+              
+              cachedEvents.push(eventHTML);
+          }   
       }
     };
 };

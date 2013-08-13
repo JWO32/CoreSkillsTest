@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.angus.coreskillstest.controller;
 
 import java.io.IOException;
@@ -45,6 +41,10 @@ public class QuizDispatcherController extends HttpServlet {
                 dispatcher.getUserByEmail(emailAddress);
                 response = dispatcher.getValidQuizEventsForUser();
                 setResponse(response, resp);
+                
+                break;
+            case "doquiz":
+                
                 
                 break;
         }   

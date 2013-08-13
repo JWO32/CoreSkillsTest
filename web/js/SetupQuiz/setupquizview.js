@@ -72,7 +72,7 @@ QuizSetupView = function()
           if(EventCache.length > 0)
           {
               $('#quiz_events').empty();
-            for(i = 0; i < EventCache.length; i++)
+            for(var i = 0; i < EventCache.length; i++)
             {
                 var currentEvent = EventCache[i];
                 $('#quiz_events').append(currentEvent);

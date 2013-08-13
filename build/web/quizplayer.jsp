@@ -49,11 +49,11 @@
             $(document).ready(function()
             {
                 var QuizManager = new QuizPlayerManager();
-                
+              
                 //Test data
-                //
+                // Replace with JSP property to insert Quiz Details
                 var QuizIntro = '{"Title":"Test Quiz", "Content":"Welcome to the test quiz", "PassCriteria":"60%"}';
-                var QuizData = '{"UserId":1,"QuizId":1,"QuizTitle":"Core Skills ICT","QuizDuration":45,"Questions":[{"QuestionId":1,"QuestionText":"What is a mouse?","Options":[{"OptionId":5,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":2,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":3,"OptionText":"Database software","OptionCorrect":false},{"OptionId":4,"OptionText":"Spreadsheet software","OptionCorrect":false}]},{"QuestionId":2,"QuestionText":"What is a keyboard?","Options":[{"OptionId":1,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":6,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":7,"OptionText":"Database software","OptionCorrect":false},{"OptionId":8,"OptionText":"Spreadsheet software","OptionCorrect":false}]}]}';
+                var QuizData = '{"QuizEventId":30, "UserId":1,"QuizId":1,"QuizTitle":"Core Skills ICT","QuizDuration":45,"Questions":[{"QuestionId":1,"QuestionText":"What is a mouse?","Options":[{"OptionId":5,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":2,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":3,"OptionText":"Database software","OptionCorrect":false},{"OptionId":4,"OptionText":"Spreadsheet software","OptionCorrect":false}]},{"QuestionId":2,"QuestionText":"What is a keyboard?","Options":[{"OptionId":1,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":6,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":7,"OptionText":"Database software","OptionCorrect":false},{"OptionId":8,"OptionText":"Spreadsheet software","OptionCorrect":false}]}]}';
                 var QuizEnd = '{"Title":"Quiz Complete", "Content":"Congratulations, you have now completed this quiz."}';
                 //
     
