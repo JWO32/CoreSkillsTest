@@ -7,7 +7,7 @@ import uk.ac.angus.coreskillstest.entity.Feedback;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-12T16:08:52")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-13T01:10:40")
 @StaticMetamodel(Result.class)
 public class Result_ { 
 

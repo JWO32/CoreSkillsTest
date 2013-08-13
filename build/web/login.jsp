@@ -2,6 +2,7 @@
 
 
 
+
 <section id="login_details">
     <h1>Quiz Login</h1>
     <form id="login_form">

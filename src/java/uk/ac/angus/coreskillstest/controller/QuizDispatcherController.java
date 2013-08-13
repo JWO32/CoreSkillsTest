@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import uk.ac.angus.coreskillstest.datamanagement.QuizDispatcher;
 
 /**
  *
@@ -36,7 +37,10 @@ public class QuizDispatcherController extends HttpServlet {
         switch(pathComponents[3])
         {
             case "getevents":
+                String emailAddress = req.getParameter("email");
+                QuizDispatcher dispatcher = new QuizDispatcher();
                 
+                dispatcher.getUserByEmail(emailAddress);
                 break;
         }
                 
