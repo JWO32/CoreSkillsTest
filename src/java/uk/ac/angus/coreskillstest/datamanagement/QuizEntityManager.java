@@ -1,6 +1,8 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -92,6 +94,45 @@ public class QuizEntityManager<T>
         
     }
     
+    public T getSingleObjectByNonKey(String query, Map parameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    {
+        T object;
+        EntityManager em = EntityManagerFactory.createEntityManager();
+        
+        Query q;
+        
+        Object[] parameterKeys = parameters.keySet().toArray();
+        
+        try
+        {
+            q = em.createNamedQuery(query);
+            
+            for(Object currentKey : parameterKeys)
+            {
+                String keyString = (String) currentKey;
+                String param = (String) parameters.get(keyString);
+                
+                q.setParameter(keyString, param);
+            }
+            
+            object = (T) q.getSingleResult();
+            
+        }catch(javax.persistence.NoResultException ex)
+        {
+            System.err.println("Get single object: No result found for parameters");
+            System.err.println(ex.getMessage());
+            object = null;
+        }finally
+        {
+            em.close();
+        }
+        
+        if(object == null)
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Unable to locate object by non-key value");
+        
+        return object;
+    }
+    
     /**
      * Find a single object by the primary key value
      * 
@@ -99,7 +140,7 @@ public class QuizEntityManager<T>
      * @return
      * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
      */
-    public T getSingleObject(int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
+    public T getSingleObjectByPrimaryKey(int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         T object = null;
         
@@ -135,21 +176,41 @@ public class QuizEntityManager<T>
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
         List<T> objectList = new ArrayList<>();
-        
-        //Get Keys
-        String[] keys = (String[]) queryParameters.keySet().toArray();
+        q = em.createNamedQuery(namedQuery);
+        Object value = null;
+          
+        //Get Keys     
+        // Since there is the possibility that the map may contain mixed objects,
+        // it's necessary to carry out some introspection on the objects to determine types
+        // at the moment this is restricted to Strings and Calendars... will use the Adaptor
+        // pattern if number of types increases significantly.
+        if(queryParameters != null)
+        {
+            Object[] keys =  queryParameters.keySet().toArray();
+            for(Object key : keys)
+            {
+                String currentKey = (String) key;
+                Object valueObj = queryParameters.get(key);
+                
+                // Deal with possible value types from the hash map
+                //
+                if(String.class.isAssignableFrom(valueObj.getClass()))
+                {
+                    value = (String) valueObj;
+                }else if(Calendar.class.isAssignableFrom(valueObj.getClass()))
+                {
+                    value = (Calendar) valueObj;
+                }else if(Date.class.isAssignableFrom(valueObj.getClass()))
+                {
+                    value = (Date) valueObj;
+                }
+                
+                q.setParameter(currentKey, value);
+            }
+        }
 
         try
-        {          
-            q = em.createNamedQuery(namedQuery);
-            
-            for(String currentKey : keys)
-            {
-                String currentParam = (String) queryParameters.get(currentKey);
-
-                q.setParameter(currentKey, currentParam);
-            }
-            
+        {                       
             objectList = q.getResultList();
         }catch(Exception ex)
         {

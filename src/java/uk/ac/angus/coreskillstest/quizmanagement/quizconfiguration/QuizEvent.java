@@ -34,7 +34,7 @@ import javax.persistence.Transient;
         @NamedQuery(name="QuizEvent.deleteEvent",
         query="DELETE FROM QUIZ_EVENT qe WHERE qe.QuizConfigId=:id"),
         @NamedQuery(name="QuizEvent.getLiveEventsByEmail",
-        query="SELECT qe FROM QUIZ_EVENT qe WHERE qe.LinkedGroup.UserList.Email=:email AND :date BETWEEN qe.QuizOpenDate AND qe.QuizCloseDate")
+        query="SELECT qe FROM QUIZ_EVENT qe JOIN qe.LinkedGroup lg JOIN lg.UserList qu WHERE qu.Email=:email AND :date BETWEEN qe.QuizOpenDate AND qe.QuizCloseDate")
 })
 public class QuizEvent implements Serializable
 {

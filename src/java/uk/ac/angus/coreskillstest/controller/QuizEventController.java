@@ -35,9 +35,7 @@ public class QuizEventController extends HttpServlet
     {
         String path = req.getRequestURI();
         String[] pathComponents = path.split("/");
-        PrintWriter output = resp.getWriter();
         ServerClientResponse response;
-        String json;
 
         switch(pathComponents[3])
         {

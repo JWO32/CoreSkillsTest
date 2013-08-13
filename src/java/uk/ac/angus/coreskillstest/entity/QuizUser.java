@@ -33,7 +33,10 @@ import com.google.gson.annotations.Expose;
         query="SELECT u FROM QUIZ_USER u WHERE u.UserId = :id"),
     
     @NamedQuery(name="Users.deleteUserById",
-        query="DELETE FROM QUIZ_USER u WHERE u.UserId = :id")
+        query="DELETE FROM QUIZ_USER u WHERE u.UserId = :id"),
+    
+    @NamedQuery(name="Users.findUserByEmail",
+        query="SELECT u FROM QUIZ_USER u WHERE u.Email=:email")
     })
 
 public class QuizUser implements Serializable

@@ -83,6 +83,24 @@ public class QuizDispatcher
      */
     public void getUserByEmail(String email)
     {
+        QuizEntityManager<QuizUser> user = new QuizEntityManager<>(QuizUser.class);
+        String query = "Users.findUserByEmail";
+        String parameterId = "email";
+        String parameterValue = email;
+        
+        Map params = new HashMap();
+        
+        params.put(parameterId, parameterValue);
+        try
+        {
+            SelectedUser = user.getSingleObjectByNonKey(query, params);
+        }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
+        {
+            System.err.println("Database Error: No user returned when searching by e-mail");
+            System.err.println(ex.getMessage());
+            SelectedUser = null;
+        }
+        
         
     }
     
@@ -104,8 +122,7 @@ public class QuizDispatcher
         QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
         ServerClientResponse response = new ServerClientResponse();
         List<QuizEvent> eventList;
-        Date d = new Date();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/M/yy");
+
         String eventJson;
         Type eventType = new TypeToken<List<QuizEvent>>(){}.getType();
         GsonBuilder gb = new GsonBuilder();
@@ -120,7 +137,7 @@ public class QuizDispatcher
         String emailValue = SelectedUser.getUserEmail();
         
         String dateParam = "date";
-        String dateValue =  currentDate.format(d);
+        Date dateValue = new Date();
         
         Map paramMap = new HashMap();
         
@@ -132,6 +149,7 @@ public class QuizDispatcher
         }catch (uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {
             System.err.println("Quiz Event: No quiz events found.");
+            System.err.println(ex.getMessage());
             response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
             response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Quiz Events Found", "No quiz events were found"));
             eventList = null;

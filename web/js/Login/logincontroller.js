@@ -38,6 +38,10 @@ LoginView = function ()
       getEmailAddress: function()
       {
          return $('#email').val(); 
+      },
+      displayQuizEvents: function()
+      {
+          
       }
     };
 };

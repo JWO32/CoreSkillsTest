@@ -20,18 +20,5 @@
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="js/handlebars.js"/></script>
     
-    <script type="text/javascript">
-            $(document).ready(function()
-            {
-
-               var Controller = new LoginController();
-
-               $('#submit_button').on('click', function (){
-                  Controller.loginEvent(); 
-               });
-
-               $('input[type="button"]').button();
-            });
-        </script>
         <title>Quiz Management: Set up a Quiz</title>
     </head>

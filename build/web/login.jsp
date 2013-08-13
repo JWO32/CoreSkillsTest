@@ -1,6 +1,17 @@
 <jsp:include page="inc/header-inc.jsp" flush="false" />
 
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+       var Controller = new LoginController();
 
+       $('#submit_button').on('click', function (){
+          Controller.loginEvent(); 
+       });
+
+       $('input[type="button"]').button();
+    });
+</script>
 
 
 <section id="login_details">
