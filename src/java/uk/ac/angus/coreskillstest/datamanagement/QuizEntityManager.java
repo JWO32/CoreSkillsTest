@@ -102,6 +102,7 @@ public class QuizEntityManager<T>
         Query q;
         
         Object[] parameterKeys = parameters.keySet().toArray();
+        Object value = null;
         
         try
         {
@@ -109,10 +110,18 @@ public class QuizEntityManager<T>
             
             for(Object currentKey : parameterKeys)
             {
-                String keyString = (String) currentKey;
-                String param = (String) parameters.get(keyString);
-                
-                q.setParameter(keyString, param);
+                 String keyString = (String) currentKey;
+                 Object valueObj = parameters.get(keyString);
+                 
+                if(String.class.isAssignableFrom(valueObj.getClass()))
+                {
+                    value = (String) valueObj;
+                    
+                }else if(Integer.class.isAssignableFrom(valueObj.getClass()))
+                {                  
+                    value = (Integer) valueObj;
+                }
+                q.setParameter(keyString, value);
             }
             
             object = (T) q.getSingleResult();

@@ -80,10 +80,16 @@ LoginView = function ()
       },
       cacheQuizEvents: function(eventList)
       {
-          var templateSource = $('quiz_events_template').html();
+          var templateSource = $('#quiz_events_template').html();
           
           for(var i = 0; i < eventList.length; i++)
           {
+              //Small hack to change the value of Feedback to something human readable.
+              if(eventList[i].Feedback === true)
+                  eventList[i].Feedback = "will";
+              else
+                  eventList[i].Feedback = "will not";
+              
               var template = Handlebars.compile(templateSource);
               var eventHTML = template(eventList[i]);
               

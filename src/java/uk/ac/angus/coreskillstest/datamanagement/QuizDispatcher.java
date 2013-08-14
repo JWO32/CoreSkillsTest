@@ -8,8 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +16,7 @@ import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientRespons
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventSerialiseTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsDeserialiseTypeAdapter;
 import uk.ac.angus.coreskillstest.quizmanagement.QuizPreparation;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 
@@ -108,9 +106,42 @@ public class QuizDispatcher
      * 
      * @param quizId 
      */
-    public void getQuizForEvent(int quizId)
+    public ServerClientResponse getQuizForEvent(int quizId, int eventId)
     {
+        QuizEntityManager<QuizEvent> quizEvent = new QuizEntityManager<>(QuizEvent.class);
+        ServerClientResponse response = new ServerClientResponse();
+        GsonBuilder gb = new GsonBuilder();
+        gb.excludeFieldsWithoutExposeAnnotation();
+        String quizJson;
         
+        Gson g = gb.create();
+        
+        QuizEvent qe;
+        Quiz q;
+        Map parameters = new HashMap();
+        String query = "QuizEvent.getQuizByEventId";
+        parameters.put("id", new Integer(eventId));
+        
+        try
+        {
+            qe = quizEvent.getSingleObjectByNonKey(query, parameters);         
+            q = qe.getLinkedQuiz();
+        }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
+        {
+            System.err.println("Quiz Dispatcher: Unable to locate quiz by Quiz Event Id");
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Quiz Events Found", "No quiz events were found"));
+            qe = null;
+            q = null;
+            return response;
+        }
+        
+        quizJson = g.toJson(q, Quiz.class);
+        
+        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+        response.setClientJson(quizJson);
+        
+        return response;
     }
     
     /**
@@ -135,7 +166,7 @@ public class QuizDispatcher
         String eventJson;
         Type eventType = new TypeToken<List<QuizEvent>>(){}.getType();
         GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(QuizEvent.class, new QuizEventSerialiseTypeAdapter());
+        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsDeserialiseTypeAdapter());
         gb.excludeFieldsWithoutExposeAnnotation();
         
         Gson g = gb.create();
@@ -162,6 +193,7 @@ public class QuizDispatcher
             response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
             response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Quiz Events Found", "No quiz events were found"));
             eventList = null;
+            return response;
         }
         
         eventJson = g.toJson(eventList, eventType);

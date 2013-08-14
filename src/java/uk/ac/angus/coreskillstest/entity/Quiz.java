@@ -76,6 +76,10 @@ public class Quiz implements Serializable
     private QuizCategory QCategory;
     
     @Expose
+    @OneToMany(cascade=CascadeType.ALL, targetEntity=QuizMessage.class, fetch=FetchType.LAZY)
+    private List<QuizMessage> QuizMessages;
+    
+    @Expose
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=Question.class, fetch=FetchType.LAZY)
     private List<Question> Questions = new ArrayList<>();
     
@@ -83,7 +87,7 @@ public class Quiz implements Serializable
     private List<ResultRule> ResultRules = new ArrayList<>();
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedQuiz", targetEntity=QuizEvent.class, fetch=FetchType.LAZY)
-    private List<QuizEvent> QuizConfigurations = new ArrayList<>();
+    private List<QuizEvent> QuizEvents = new ArrayList<>();
     
     public Quiz()
     {
@@ -204,13 +208,23 @@ public class Quiz implements Serializable
     
     public void setQuizConfiguration(List<QuizEvent> qcList)
     {
-        QuizConfigurations = qcList;
+        QuizEvents = qcList;
     }
     
     public List<QuizEvent> getQuizConfiguration()
     {
-        return QuizConfigurations;
+        return QuizEvents;
     }   
+    
+    public void setQuizMessages(List<QuizMessage> newQuizMessages)
+    {
+        QuizMessages = newQuizMessages;
+    }
+    
+    public List<QuizMessage> getQuizMessages()
+    {
+        return QuizMessages;
+    }
     
     public int getNumberOfQuestions()
     {

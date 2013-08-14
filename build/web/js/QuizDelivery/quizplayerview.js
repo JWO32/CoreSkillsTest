@@ -97,6 +97,12 @@ QuizPlayerView = function ()
         renderProgress: function (currentQuestion, totalQuestions)
         {
             $('#progress').html('Question: <strong>'+(currentQuestion+1)+'</strong>/<strong>'+totalQuestions+'</strong>');
+        },
+        renderQuizErrorMessage: function ()
+        {
+            $('#question_wrapper').empty();
+            $('#info_dialogue_button').hide();
+            $('#question_wrapper').append('<h3>Error: Quiz Not Downloaded</h3><p>Please close this window and try to log in again.');
         }
     };
 
