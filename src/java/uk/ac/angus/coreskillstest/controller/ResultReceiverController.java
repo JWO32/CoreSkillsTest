@@ -41,6 +41,15 @@ public class ResultReceiverController extends HttpServlet
         }
     }
     
+    /**
+     * 
+     * TODO: Refactor to take ServerClientResponse object into account
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
@@ -72,7 +81,11 @@ public class ResultReceiverController extends HttpServlet
                     output.write(errorMessage);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     resp.setContentType("text/html");
-                }finally
+                }catch(Exception ex)
+                {
+                    System.err.println("Error processing result");
+                    System.err.println(ex.getMessage());
+                } finally
                 {
                     output.close();
                 }

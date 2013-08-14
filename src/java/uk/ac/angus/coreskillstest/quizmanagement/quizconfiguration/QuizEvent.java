@@ -76,6 +76,10 @@ public class QuizEvent implements Serializable
     @Transient
     private String GroupName;
     
+    @Expose
+    @Transient
+    private int UserId;
+    
     @ManyToOne(optional=true, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
@@ -189,4 +193,13 @@ public class QuizEvent implements Serializable
         return ReturnResult;
     }
     
+    public void setUserId(int newUserId)
+    {
+        UserId = newUserId;
+    }
+    
+    public int getUserId()
+    {
+        return UserId;
+    }
 }

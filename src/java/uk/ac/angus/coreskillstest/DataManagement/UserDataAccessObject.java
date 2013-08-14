@@ -24,12 +24,12 @@ import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
 public class UserDataAccessObject 
 {   
-    private EntityManagerFactory factory;
+    private EntityManagerFactory UserDataFactory;
     private Gson gsn;
     
     public UserDataAccessObject()
     {
-        factory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
+        UserDataFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         gsn = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();        
     }
     
@@ -55,7 +55,7 @@ public class UserDataAccessObject
         
         //defaultGroup.getUserList().add(newUser);
         
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = UserDataFactory.createEntityManager();
         em.getTransaction().begin();
         
         em.persist(newUser);
@@ -76,7 +76,7 @@ public class UserDataAccessObject
     public QuizUser fetchSingleUserObject(int userId)
     {
         QuizUser user;
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = UserDataFactory.createEntityManager();
         try
         {
             TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findUserById", QuizUser.class);
@@ -98,7 +98,7 @@ public class UserDataAccessObject
     {
         String json;
         
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = UserDataFactory.createEntityManager();
         
         TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findUserById", QuizUser.class);
         
@@ -116,7 +116,7 @@ public class UserDataAccessObject
     {
         List<QuizUser> users;
         
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = UserDataFactory.createEntityManager();
         
         TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findall", QuizUser.class);
         
@@ -129,7 +129,7 @@ public class UserDataAccessObject
     {
         String json;
         
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = UserDataFactory.createEntityManager();
         
         TypedQuery <QuizUser> userQuery = em.createNamedQuery("Users.findall", QuizUser.class);
         

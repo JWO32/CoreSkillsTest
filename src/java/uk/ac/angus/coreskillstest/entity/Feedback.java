@@ -15,6 +15,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
@@ -25,17 +31,23 @@ public class Feedback implements Serializable
 {
     @Expose
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="feedback_id")
-    private int FeedbackId;
+    @OneToOne
+    private ResultRule LinkedResultRule;
+    
+    //@GeneratedValue(strategy=GenerationType.IDENTITY)
+    //@Column(name="feedback_id")
+    //private int FeedbackId;
     
     @Expose
     @Column(name="feedback_text")
     private String FeedbackText;
     
-    @OneToOne
-    @JoinColumn(name="result_rule_id")
-    private ResultRule LinkedResultRule;
+    @OneToMany(cascade=CascadeType.PERSIST, targetEntity=Result.class, fetch=FetchType.LAZY)
+    private List<Result> LinkedResults = new ArrayList<>();
+    
+    
+    //@PrimaryKeyJoinColumn
+    
     
     /**
      * Create a default feedback object if no feedback is provided by the Quiz
@@ -58,15 +70,26 @@ public class Feedback implements Serializable
     {
         FeedbackText = feedbackText;
     }
-    public void setFeedbackId(int newId)
+    
+    public List<Result> getResults()
     {
-        FeedbackId = newId;
+        return LinkedResults;
     }
     
-    public int getFeedbackId()
+    public void setResults(List<Result> results)
     {
-        return FeedbackId;
+        LinkedResults = results;
     }
+            
+//    public void setFeedbackId(int newId)
+//    {
+//        FeedbackId = newId;
+//    }
+//    
+//    public int getFeedbackId()
+//    {
+//        return FeedbackId;
+//    }
     
     public void setFeedbackText(String text)
     {
@@ -81,7 +104,7 @@ public class Feedback implements Serializable
     public void setResultRule(ResultRule newResultRule)
     {
         LinkedResultRule = newResultRule;
-        this.setFeedbackId(LinkedResultRule.getResultRuleId());
+        //this.setFeedbackId(LinkedResultRule.getResultRuleId());
     }
     
     public ResultRule getResultRule()

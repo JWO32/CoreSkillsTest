@@ -22,7 +22,6 @@ import javax.persistence.Query;
 public class GroupDataAccessObject
 {
     private EntityManagerFactory GroupDataFactory;
-   // private Gson JsonSerialiser; // Using one object per class seems to cause errors
     
     // This should be moved out to suitable defaults file in due course.
     private static final int DEFAULT_GROUP_ID = 1;

@@ -48,6 +48,7 @@ public class ResultDataAccessObject
         
         em.getTransaction().begin();
         em.persist(result);
+        em.getTransaction().commit();
         em.close();     
     }
     

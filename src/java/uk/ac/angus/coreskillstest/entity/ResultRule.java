@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 /**
@@ -46,8 +47,10 @@ public class ResultRule implements Serializable
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
+    //@OneToOne
+    //@JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
     @OneToOne
-    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
+    @JoinColumn(name="feedback_id")
     private Feedback LinkedFeedback;
     
     public ResultRule()

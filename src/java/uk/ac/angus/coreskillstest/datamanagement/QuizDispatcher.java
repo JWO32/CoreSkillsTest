@@ -15,10 +15,12 @@ import java.util.Map;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 import uk.ac.angus.coreskillstest.entity.Quiz;
+import uk.ac.angus.coreskillstest.entity.QuizMessage;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsDeserialiseTypeAdapter;
 import uk.ac.angus.coreskillstest.quizmanagement.QuizPreparation;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
 
 /**
  *
@@ -97,9 +99,7 @@ public class QuizDispatcher
             System.err.println("Database Error: No user returned when searching by e-mail");
             System.err.println(ex.getMessage());
             SelectedUser = null;
-        }
-        
-        
+        }   
     }
     
     /**
@@ -113,13 +113,14 @@ public class QuizDispatcher
      * 
      * @param quizId 
      */
-    public ServerClientResponse getQuizForEvent(int quizId, int eventId)
+    public QuizPackage getQuizForEvent(int userId, int eventId)
     {
         QuizEntityManager<QuizEvent> quizEvent = new QuizEntityManager<>(QuizEvent.class);
-        ServerClientResponse response = new ServerClientResponse();
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
         String quizJson;
+        QuizPackage quizPackage = new QuizPackage();
+        QuizPreparation prep = new QuizPreparation();
         
         Gson g = gb.create();
         
@@ -135,22 +136,52 @@ public class QuizDispatcher
             q = qe.getLinkedQuiz();
         }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {
-            System.err.println("Quiz Dispatcher: Unable to locate quiz by Quiz Event Id");
-            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
-            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Quiz Events Found", "No quiz events were found"));
-            qe = null;
-            q = null;
-            return response;
+            System.err.println("Database Error: Unable to locate Quiz by id");
+            System.err.println(ex.getMessage());
+            // If we get an error, set the package to null and let the client deal with the error.
+            //
+            quizPackage.setStartMessage(null);
+            quizPackage.setEndMessage(null);
+            quizPackage.setQuizJSON(null);
+            return quizPackage;
         }
         
         q.calcTotalMarks();
         
+        prep.setQuiz(q);
+        prep.setQuizEvent(qe);
+        try
+        {
+            q = prep.processQuiz();
+        }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.CannotGenerateQuizException ex)
+        {
+            System.err.println("Quiz Generation Error: Cannot process quiz");
+            
+            quizPackage.setStartMessage(null);
+            quizPackage.setEndMessage(null);
+            quizPackage.setQuizJSON(null);
+            return quizPackage;
+        }
+           
+        if(q.getQuizMessages().isEmpty())
+        {
+            quizPackage.setStartMessage(QuizPackage.setDefaultStartMessage());
+            quizPackage.setEndMessage(QuizPackage.setDefaultEndMessage());               
+        }else
+        {
+            //Find and set start quiz message then find and set end quiz message
+        
+        }
+        
         quizJson = g.toJson(q, Quiz.class);
         
-        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
-        response.setClientJson(quizJson);
-        
-        return response;
+        // Complete configuration of quiz package by setting event and user id
+        //
+        quizPackage.setEventId(eventId);
+        quizPackage.setUserId(userId);
+        quizPackage.setQuizJSON(quizJson);
+
+        return quizPackage;
     }
     
     /**
@@ -195,13 +226,23 @@ public class QuizDispatcher
             paramMap.put(emailParam, emailValue);
             paramMap.put(dateParam, dateValue);
             eventList = qem.getObjectList(query, paramMap);
+            
+            // Surgically attach the user id to the QuizEvent object
+            // Bit of a kludge but necessary because at the moment
+            // Groups are associate with QuizEvents, not individual students
+            // Future change will be to allow QuizEvents to be set for individual
+            // Students
+            for(QuizEvent currentEvent: eventList)
+            {
+                currentEvent.setUserId(SelectedUser.getUserId());
+            }
+            
         }catch (uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {
             System.err.println("Quiz Event: No quiz events found.");
             System.err.println(ex.getMessage());
             response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
             response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Quiz Events Found", "No quiz events were found"));
-            eventList = null;
             return response;
         }
         

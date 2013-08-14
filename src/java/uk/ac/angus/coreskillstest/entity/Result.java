@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Result implements Serializable
     private QuizUser LinkedUser;
     
     @Expose
-    @OneToOne(optional=true, targetEntity=Feedback.class)
+    @ManyToOne(optional=true, targetEntity=Feedback.class)
     @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
     private Feedback LinkedFeedback;
     
@@ -62,7 +63,7 @@ public class Result implements Serializable
     @Column(name="process_status")
     private String ResultStatus;
     
-    @OneToOne
+    @OneToOne(optional=false, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     

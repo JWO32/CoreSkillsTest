@@ -1,3 +1,5 @@
+<%@page import="uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage"%>
+
 <!doctype html> 
 <html>
     <head>    
@@ -25,8 +27,8 @@
             <p>{{Mark}} points</p>
 
             <ul id="options">
-                {{#each Options}}
-                <li><input id="{{this.OptionId}}" type="checkbox"/>{{this.OptionText}}</li>
+                {{#each QuestionOptions}}
+                <li><input id="{{this.QuestionOptionId}}" type="checkbox"/>{{this.OptionText}}</li>
                 {{/each}}
             </ul>
         </div>         
@@ -35,7 +37,6 @@
         <script id="start_quiz_template" type="text/x-handlebars-template">
             <h1>{{Title}}</h1>
             <p>{{Content}}</p>
-            <p>Pass Criteria: {{PassCriteria}}</p>
         </script>
             
         <script id="end_quiz_template" type="text/x-handlebars-template">
@@ -52,15 +53,30 @@
               
                 //Test data
                 // Replace with JSP property to insert Quiz Details
-                var QuizIntro = <%= session.getAttribute("StartMessage")%>;
-                var QuizData = <%= session.getAttribute("Quiz") %>;
-                var QuizEnd = <%= session.getAttribute("EndMessage") %>;
+                <% 
+                    QuizPackage quizPackage = (QuizPackage) request.getSession().getAttribute("QuizPackage"); 
+                %>
+                var UserId = <%= quizPackage.getUserIdJSON() %>;
+                var EventId = <%= quizPackage.getEventIdJSON() %>;
+                var QuizIntro = <%= quizPackage.getStartMessage()%>;
+                var QuizData = <%= quizPackage.getQuizJSON() %>;
+                var QuizEnd = <%= quizPackage.getEndMessage() %>;
                 
+                //For convenience, add the userId into the QuizData object
+                //Quiz data was added to the client side before the serverside was
+                //constructed - agile process can be a bit like stringing together
+                //prototypes...
+                //TODO: Refactor quiz object in quiz player.
+                QuizData.UserId = parseInt(UserId.UserId);
+                QuizData.QuizEventId = parseInt(EventId.QuizEventId);
+                
+                //TEST QUIZ OBJECT DATA
+                //
                 //var QuizIntro = '{"Title":"Test Quiz", "Content":"Welcome to the test quiz", "PassCriteria":"60%"}';
                 //var QuizData = '{"QuizEventId":30, "UserId":1,"QuizId":1,"QuizTitle":"Core Skills ICT","QuizDuration":45,"Questions":[{"QuestionId":1,"QuestionText":"What is a mouse?","Options":[{"OptionId":5,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":2,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":3,"OptionText":"Database software","OptionCorrect":false},{"OptionId":4,"OptionText":"Spreadsheet software","OptionCorrect":false}]},{"QuestionId":2,"QuestionText":"What is a keyboard?","Options":[{"OptionId":1,"OptionText":"A hardware device","OptionCorrect":true},{"OptionId":6,"OptionText":"Graphics software","OptionCorrect":false},{"OptionId":7,"OptionText":"Database software","OptionCorrect":false},{"OptionId":8,"OptionText":"Spreadsheet software","OptionCorrect":false}]}]}';
                 //var QuizEnd = '{"Title":"Quiz Complete", "Content":"Congratulations, you have now completed this quiz."}';
-                //
-                    
+                
+               
                 QuizManager.init(QuizData, QuizIntro, QuizEnd);
                
                 $('#submit_button').on('click', function()

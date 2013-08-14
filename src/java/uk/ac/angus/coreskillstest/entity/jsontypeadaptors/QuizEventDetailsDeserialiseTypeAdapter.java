@@ -40,6 +40,7 @@ public class QuizEventDetailsDeserialiseTypeAdapter implements JsonSerializer<Qu
        jo.addProperty("GroupName", src.getLinkedGroup().getGroupName());
        jo.addProperty("QuizId", src.getLinkedQuiz().getQuizId());
        jo.addProperty("GroupId", src.getLinkedGroup().getGroupID());
+       jo.addProperty("UserId", src.getUserId());
        
        return jo;       
     }

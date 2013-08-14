@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 import uk.ac.angus.coreskillstest.datamanagement.QuizDispatcher;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
 
 /**
  *
@@ -33,6 +34,7 @@ public class QuizDispatcherController extends HttpServlet {
         String [] pathComponents = path.split("/");
         ServerClientResponse response;
         QuizDispatcher dispatcher;
+        QuizPackage quizPackage;
         
         switch(pathComponents[3])
         {
@@ -48,16 +50,14 @@ public class QuizDispatcherController extends HttpServlet {
             case "doquiz":
                 HttpSession session = req.getSession();
                 dispatcher = new QuizDispatcher();
-                int quizId = Integer.parseInt(pathComponents[4]);
+                int userId = Integer.parseInt(pathComponents[4]);
                 int eventId = Integer.parseInt(pathComponents[5]);
-                String startJSON = null, quizJSON = null, endJSON = null;
                 
-                response = dispatcher.getQuizForEvent(quizId, eventId);
+                quizPackage = dispatcher.getQuizForEvent(userId, eventId);
                 
                 // Set the quiz along with the start and end message
-                session.setAttribute("StartMessage", startJSON);
-                session.setAttribute("Quiz", quizJSON);
-                session.setAttribute("EndMessage", endJSON);
+                session.setAttribute("QuizPackage", quizPackage);
+                
                 // Direct the browser to the quiz player.
                 // Wonder if there's a better way to deal with the base directory.
                 resp.sendRedirect("/CoreSkillsTest/quizplayer.jsp");

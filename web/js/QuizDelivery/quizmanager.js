@@ -106,6 +106,7 @@ QuizPlayerManager = function ()
 
             userChoices.QuizId = Model.getQuizId();
             userChoices.UserId = Model.getUserId();
+            userChoices.QuizEventId = Model.getQuizEventId();
 
             userChoices.Responses = Model.getResponses();
 

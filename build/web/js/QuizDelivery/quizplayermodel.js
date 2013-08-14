@@ -18,9 +18,18 @@ QuizPlayerModel = function()
       },
       setQuizJson: function(newQuiz, startDetails, endDetails)
       {          
-          Quiz = jQuery.parseJSON(newQuiz);
-          QuizIntroduction = jQuery.parseJSON(startDetails);
-          QuizEnd = jQuery.parseJSON(endDetails);
+          if(typeof newQuiz === "String")
+            Quiz = jQuery.parseJSON(newQuiz);
+          else
+            Quiz = newQuiz;
+          if(typeof startDetails === "String")
+            QuizIntroduction = jQuery.parseJSON(startDetails);
+          else
+            QuizIntroduction = startDetails;
+          if(typeof endDetails === "String")
+            QuizEnd = jQuery.parseJSON(endDetails);
+          else
+            QuizEnd = endDetails;
       },
       setSelectionDetails: function(quizId, userId)
       {
@@ -34,6 +43,10 @@ QuizPlayerModel = function()
       getUserId: function()
       {
         return Quiz.UserId;  
+      },
+      getQuizEventId: function()
+      {
+          return Quiz.QuizEventId;
       },
       setQuiz: function(newQuiz)
       {

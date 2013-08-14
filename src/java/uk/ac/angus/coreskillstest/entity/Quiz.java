@@ -60,7 +60,6 @@ public class Quiz implements Serializable
     @Column(name="total_marks")
     private int TotalMarks;
     
-    @Expose
     @Column(name="date_added")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar DateAdded = Calendar.getInstance();

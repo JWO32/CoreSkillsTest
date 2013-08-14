@@ -13,6 +13,7 @@ import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
 import uk.ac.angus.coreskillstest.entity.Feedback;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -54,8 +55,11 @@ public class ResultManager
      */
     public void getQuizResources(String resultJson) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
-        Gson gsn = new Gson();
+        GsonBuilder gb = new GsonBuilder();
+        gb.excludeFieldsWithoutExposeAnnotation();
+        Gson gsn = gb.create();
         boolean quizFound, userFound, configFound;
+       
         
         QuizResponse = gsn.fromJson(resultJson, QuizUserResponse.class);
         

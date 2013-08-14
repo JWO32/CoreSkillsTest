@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 /**
  *
+ * Utility class to hold the representation of the user's responses to the Quiz
+ * Allows appropriate resources to be loaded and results to be calculated.
  * @author JWO
  */
 public class QuizUserResponse 
@@ -19,7 +21,7 @@ public class QuizUserResponse
     private int UserId;
     
     @Expose
-    private int QuizConfigurationId;
+    private int QuizEventId;
     
     @Expose
     private List<QuestionUserResponse> Responses = new ArrayList<>();
@@ -46,12 +48,12 @@ public class QuizUserResponse
     
     public int getQuizConfigurationId()
     {
-        return QuizConfigurationId;
+        return QuizEventId;
     }
     
     public void setQuizConfigurationId(int newConfigId)
     {
-        QuizConfigurationId = newConfigId;
+        QuizEventId = newConfigId;
     }
     
     public void setUserId(int newUserId)

@@ -80,6 +80,9 @@ LoginView = function ()
       },
       cacheQuizEvents: function(eventList)
       {
+          //Reset the cache
+          cachedEvents = [];
+          
           var templateSource = $('#quiz_events_template').html();
           
           for(var i = 0; i < eventList.length; i++)

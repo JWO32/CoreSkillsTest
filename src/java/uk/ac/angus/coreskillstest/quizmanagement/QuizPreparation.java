@@ -55,7 +55,6 @@ public class QuizPreparation
     private void processQuizByQuizEvent()
     {
         List<Question> questionList;
-        List<ResultRule> resultRuleList;
         
         if(SelectedQuizEvent.getRandomOrder() == true)
         {
@@ -118,7 +117,4 @@ public class QuizPreparation
         
         return newList;
     }
-    
-    
-    
 }
