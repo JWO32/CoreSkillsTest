@@ -34,7 +34,6 @@ public class QuizDispatcherController extends HttpServlet {
         ServerClientResponse response;
         QuizDispatcher dispatcher;
         
-        
         switch(pathComponents[3])
         {
             case "getevents":

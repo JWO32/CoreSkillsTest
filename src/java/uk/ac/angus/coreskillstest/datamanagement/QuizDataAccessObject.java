@@ -22,19 +22,22 @@ import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDetailsDeserialise
  *
  * @author JWO
  */
+
+//TODO: Refactor and implement JSON interface for consistency of access.
+//
 public class QuizDataAccessObject 
 {
-    private EntityManagerFactory emf;
+    private EntityManagerFactory QuizEntityManagerFactory;
     
     
     public QuizDataAccessObject()
     {
-        emf = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
+        QuizEntityManagerFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
     }
     
     public void addNewQuizByJson(String json) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceException
     {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = QuizEntityManagerFactory.createEntityManager();
         Quiz newQuiz;
         GsonBuilder gb = new GsonBuilder();
         boolean serialiseSuccess = true;
@@ -78,9 +81,10 @@ public class QuizDataAccessObject
         
     }
     
-    public void editQuizById(int quizId)
+    public void editQuizById(int quizId, String amendedQuizJson)
     {
-        
+        // Find identified Quiz Object
+        // Merge Object created from amended quiz object.
     }
     
     /**
@@ -98,7 +102,7 @@ public class QuizDataAccessObject
     public String getShortQuizList()
     {
         String json;
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = QuizEntityManagerFactory.createEntityManager();
         List<Quiz> allQuizzes = new ArrayList<>();
         
         try
@@ -136,7 +140,7 @@ public class QuizDataAccessObject
      */
     public Quiz getQuizById(int id) throws javax.persistence.NoResultException
     {
-        EntityManager em = emf.createEntityManager();    
+        EntityManager em = QuizEntityManagerFactory.createEntityManager();    
         Quiz returnQuiz;
         
         try

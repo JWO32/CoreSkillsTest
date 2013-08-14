@@ -20,10 +20,11 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceEx
  * 
  */
 
+//TODO: Refactor to take ServerClientResponse into account
+//TODO: Refactor to return status and error messages to the client.
+
 public class QuizReceiverController extends HttpServlet 
-{
-	private static final long serialVersionUID = 1L;
-       
+{   
         /**
          * @see HttpServlet#HttpServlet()
          */

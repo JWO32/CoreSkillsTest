@@ -103,6 +103,13 @@ public class QuizDispatcher
     }
     
     /**
+     * Takes a quizEventId and returns the associated Quiz object as JSON.
+     * 
+     * TODO: QuizId is not necessary for this stage of the process as working
+     * from the specified quiz event.  Other details from quiz event are necessary so
+     * QuizEventId is required.
+     * 
+     * Final stage of Quiz dispatch process.
      * 
      * @param quizId 
      */
@@ -135,6 +142,8 @@ public class QuizDispatcher
             q = null;
             return response;
         }
+        
+        q.calcTotalMarks();
         
         quizJson = g.toJson(q, Quiz.class);
         
