@@ -168,9 +168,10 @@ public class ResultManager
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz or User resource not set call assignUser() and assignQuiz() before attempting to calculate the quiz result");
         }
         
-        QuestionUserResponse currentResponse;
+        QuestionUserResponse currentUserResponse;
         boolean questionIsCorrect;
         int totalMarks;
+        int currentQuestionId;
         
         //Ensure that the Quiz has its total marks added...
         SelectedQuiz.calcTotalMarks();
@@ -181,12 +182,12 @@ public class ResultManager
         
         for(Question currentQuestion : questionList)
         {
-            int currentQuestionId = currentQuestion.getQuestionId();
+            currentQuestionId = currentQuestion.getQuestionId();
             
-            currentResponse = QuizResponse.getResponseByQuestionId(currentQuestionId);
+            currentUserResponse = QuizResponse.getResponseByQuestionId(currentQuestionId);
 
             List<Integer> correctOptionIds = currentQuestion.getCorrectOptions();
-            List<Integer> userSelectionIds = currentResponse.getOptionIdList();
+            List<Integer> userSelectionIds = currentUserResponse.getOptionIdList();
             questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
          
             if(questionIsCorrect)
@@ -201,7 +202,7 @@ public class ResultManager
         }else
         {            
             //TODO: If there are no rules to apply - change this for a default feedback object.
-            //QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
+            QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
         }
         
         QuizResult.setScoreandPercentage(Score, totalMarks);

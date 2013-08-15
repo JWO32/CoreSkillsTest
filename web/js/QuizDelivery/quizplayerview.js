@@ -88,7 +88,14 @@ QuizPlayerView = function ()
         },
         renderResultMessage: function (resultDetails) 
         {
+            var resultMessageTemplate = $('#result_template').html();
+            var template = Handlebars.compile(resultMessageTemplate);
             
+            var templateHTML = template(resultDetails);
+            
+            $('#info_dialogue').html(templateHTML);
+            $('#info_dialogue_wrapper').show();
+            $('#info_dialogue_button').empty();
         },
         renderTime: function (hours, minutes, seconds) 
         {

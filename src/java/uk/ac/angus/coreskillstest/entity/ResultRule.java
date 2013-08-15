@@ -1,19 +1,14 @@
 package uk.ac.angus.coreskillstest.entity;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
@@ -53,7 +48,7 @@ public class ResultRule implements Serializable
     
     //@OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedResultRule", fetch=FetchType.LAZY)
     @Transient
-    private StoredFeedback LinkedFeedback;
+    private String LinkedFeedback;
     
     public ResultRule()
     {
@@ -110,12 +105,12 @@ public class ResultRule implements Serializable
         LinkedQuiz = newQuiz;
     }
     
-    public StoredFeedback getFeedback()
+    public String getFeedback()
     {
         return LinkedFeedback;
     }
     
-    public void setFeedback(StoredFeedback newFeedback)
+    public void setFeedback(String newFeedback)
     {
         LinkedFeedback = newFeedback;
     }

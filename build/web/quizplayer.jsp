@@ -45,6 +45,14 @@
             <p>Please close this window when you are finished.</p>
         </script>
         
+        <script id="result_template" type="text/x-handlesbars-template">
+            <h1>Quiz Result</h1>
+            <p>For user: {{FirstName}} {{SecondName}}</p>
+            <p>Score: {{QuizScore}}</p>
+            <p>Percentage: {{QuizPercentage}}</p>
+            <p>Category: {{Feedback}}</p>          
+        </script>
+        
         
         <script type="text/javascript">               
             $(document).ready(function()
@@ -82,7 +90,7 @@
                 $('#submit_button').on('click', function()
                 {
                     QuizManager.endQuiz();
-                    QuizManager.submitToServer();
+                    QuizManager.submitToServer(QuizManager);
                 });
                 
                 // Find user's response

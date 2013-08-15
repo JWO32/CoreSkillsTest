@@ -48,11 +48,12 @@ public class StoredFeedback implements Serializable
     /**
      * Create a default feedback object if no feedback is provided by the Quiz
      * 
+     * Simplified with a String for Version 1 of the Quiz System
      * @return 
      */
-    public static StoredFeedback getDefaultFeedback()
+    public static String getDefaultFeedback()
     {
-        StoredFeedback defaultFeedback = new StoredFeedback("No feedback was provided for this quiz.");
+        String defaultFeedback = "No lecturer feedback was provided for this quiz.";
         
         return defaultFeedback;
     }

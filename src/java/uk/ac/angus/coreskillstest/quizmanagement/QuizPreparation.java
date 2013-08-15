@@ -76,7 +76,7 @@ public class QuizPreparation
      */
     private void setDefaultFeedback(List<ResultRule> results)
     {
-        StoredFeedback newFeedback = StoredFeedback.getDefaultFeedback();
+        String newFeedback = StoredFeedback.getDefaultFeedback();
         
         for(ResultRule currentRule : results)
         {
@@ -97,12 +97,14 @@ public class QuizPreparation
         
         Random randomNumber = new Random();
         int chosenQ = 0;
-        boolean invalidNumber = true;
+        boolean invalidNumber;
         
         //TODO: Double check logic used in picking random questions.
         
         for(int i = 1; i <= numberOfQuestions; i++)
         {    
+            invalidNumber = true;
+            
             while(invalidNumber == true)
             {
                 chosenQ = randomNumber.nextInt(numberOfQuestions);

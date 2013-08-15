@@ -100,7 +100,11 @@ QuizPlayerManager = function ()
                 View.addQuestionTemplate(questionList[i]);
             }
         },
-        submitToServer: function ()
+        displayResultEvent: function (resultData)
+        {
+            View.renderResultMessage(resultData);
+        },
+        submitToServer: function (controllerReference)
         {
             var userChoices = new UserSelection();
 
@@ -121,7 +125,7 @@ QuizPlayerManager = function ()
                 dataType: 'json',
                 success: function(data)
                 {
-
+                    controllerReference.displayResultEvent(data);
                 },
                 error: function(data)
                 {
