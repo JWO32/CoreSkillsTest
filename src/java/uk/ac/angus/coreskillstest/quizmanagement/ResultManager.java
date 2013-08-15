@@ -10,12 +10,13 @@ import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.QuizEventDataAccessObject;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 import uk.ac.angus.coreskillstest.datamanagement.ResultDataAccessObject;
-import uk.ac.angus.coreskillstest.entity.Feedback;
+import uk.ac.angus.coreskillstest.entity.StoredFeedback;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
+import uk.ac.angus.coreskillstest.entity.ResultFeedback;
 
 
 /**
@@ -198,9 +199,9 @@ public class ResultManager
         {
             applyQuizRules();
         }else
-        {
+        {            
             //TODO: If there are no rules to apply - change this for a default feedback object.
-            QuizResult.setLinkedFeedback(Feedback.getDefaultFeedback());
+            //QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
         }
         
         QuizResult.setScoreandPercentage(Score, totalMarks);
@@ -217,7 +218,7 @@ public class ResultManager
     {
         // Check to see if the current quiz configuration allows the result to be returned.
         // If it does, we need:
-        // Feedback (if any)
+        // String (if any)
         // Score
         // Number of questions
         // Percentage
@@ -266,13 +267,13 @@ public class ResultManager
     private void applyQuizRules()
     {
         List<ResultRule> ResultRuleList = SelectedQuiz.getResultRules();
-        Feedback ruleFeedback = null;
+        String ruleFeedback = null;
         
         for(ResultRule currentRule : ResultRuleList)
         {
             if(currentRule.appliesTo(Score))
             {
-                ruleFeedback = currentRule.getFeedback();
+                //ruleFeedback = currentRule.getFeedback();
             }
         }
         
@@ -281,7 +282,7 @@ public class ResultManager
         else
         {
             //Set default feedback
-            QuizResult.setLinkedFeedback(Feedback.getDefaultFeedback());
+            //QuizResult.setLinkedFeedback(String.getDefaultFeedback());
         }
     }
     

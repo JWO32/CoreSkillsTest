@@ -1,13 +1,12 @@
 package uk.ac.angus.coreskillstest.datamanagement.clientinterface;
 
-import java.util.List;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 
 /**
  *
  * @author JWO
  */
-public interface JSONInterface<T>
+public interface JSONInterface <T>
 {
     ServerClientResponse addItemJson(String jsonString);
     

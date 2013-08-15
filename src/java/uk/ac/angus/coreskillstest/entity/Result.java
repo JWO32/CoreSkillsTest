@@ -46,10 +46,18 @@ public class Result implements Serializable
     @JoinColumn(name="user_id", referencedColumnName="user_id")
     private QuizUser LinkedUser;
     
+//    @Expose
+//    @ManyToOne(optional=true, targetEntity=String.class)
+//    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
+//    private String LinkedFeedback;
+    
+//    @Expose
+//    @ManyToOne(optional=true, targetEntity=String.class)
+//    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
+    
     @Expose
-    @ManyToOne(optional=true, targetEntity=Feedback.class)
-    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
-    private Feedback LinkedFeedback;
+    @Column(name="feedback_text")
+    private String LinkedFeedback;
     
     @Expose
     @Column(name="quiz_score")
@@ -112,12 +120,12 @@ public class Result implements Serializable
         LinkedUser = newLinkedUser;
     }
     
-    public Feedback getLinkedFeedback()
+    public String getLinkedFeedback()
     {
         return LinkedFeedback;
     }
     
-    public void setLinkedFeedback(Feedback newLinkedFeedback)
+    public void setLinkedFeedback(String newLinkedFeedback)
     {
         LinkedFeedback = newLinkedFeedback;
     }

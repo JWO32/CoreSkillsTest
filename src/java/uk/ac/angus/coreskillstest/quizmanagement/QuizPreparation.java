@@ -4,7 +4,7 @@ package uk.ac.angus.coreskillstest.quizmanagement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import uk.ac.angus.coreskillstest.entity.Feedback;
+import uk.ac.angus.coreskillstest.entity.StoredFeedback;
 import uk.ac.angus.coreskillstest.entity.Question;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
@@ -76,7 +76,7 @@ public class QuizPreparation
      */
     private void setDefaultFeedback(List<ResultRule> results)
     {
-        Feedback newFeedback = Feedback.getDefaultFeedback();
+        StoredFeedback newFeedback = StoredFeedback.getDefaultFeedback();
         
         for(ResultRule currentRule : results)
         {

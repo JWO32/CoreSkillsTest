@@ -1,19 +1,13 @@
 
 package uk.ac.angus.coreskillstest.datamanagement;
 
-import uk.ac.angus.coreskillstest.entity.Result;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 
-import java.util.List;
  
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import uk.ac.angus.coreskillstest.entity.Result;
 
