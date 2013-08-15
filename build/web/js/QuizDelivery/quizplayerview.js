@@ -93,8 +93,9 @@ QuizPlayerView = function ()
             
             var templateHTML = template(resultDetails);
             
-            $('#info_dialogue').html(templateHTML);
+            $('#result_dialogue').html(templateHTML);
             $('#info_dialogue_wrapper').show();
+            $('#result_dialogue').show();
             $('#info_dialogue_button').empty();
         },
         renderTime: function (hours, minutes, seconds) 

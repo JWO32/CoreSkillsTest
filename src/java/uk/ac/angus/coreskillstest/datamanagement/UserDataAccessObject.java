@@ -66,7 +66,13 @@ public class UserDataAccessObject
         return true;
     }
     
-    
+    /**
+     * This will involve adding a list of students from a source such as a 
+     * CSV file.
+     * 
+     * @param userList
+     * @return 
+     */
     public boolean addMultipleUsers(List<String> userList)
     {
         
