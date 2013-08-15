@@ -99,16 +99,20 @@ public class QuizPreparation
         int chosenQ = 0;
         boolean invalidNumber = true;
         
+        //TODO: Double check logic used in picking random questions.
+        
         for(int i = 1; i <= numberOfQuestions; i++)
         {    
             while(invalidNumber == true)
             {
                 chosenQ = randomNumber.nextInt(numberOfQuestions);
                 Integer checkNumber = chosenQ;
-                chosenNumbers.add(checkNumber);
-                
+                 
                 if(!chosenNumbers.contains(checkNumber))
+                {
                     invalidNumber = false;
+                    chosenNumbers.add(checkNumber);
+                }
             }
             Question currentQ = questionList.get(chosenQ);
             
