@@ -14,7 +14,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
-import javax.persistence.PrimaryKeyJoinColumn;
+import java.util.Calendar;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -65,6 +67,10 @@ public class Result implements Serializable
     @OneToOne(optional=false, targetEntity=Quiz.class)
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
+    
+    @Column(name="result_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar ResultDate;
     
     public Result()
     {
@@ -146,5 +152,15 @@ public class Result implements Serializable
     public int getQuizScore()
     {
         return QuizScore;
+    }
+    
+    public Calendar getResultDate()
+    {
+        return ResultDate;
+    }
+    
+    public void setResultDate(Calendar newResultDate)
+    {
+        ResultDate = newResultDate;   
     }
 }

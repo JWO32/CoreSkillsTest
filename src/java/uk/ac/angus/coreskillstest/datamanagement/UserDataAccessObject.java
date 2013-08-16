@@ -19,6 +19,8 @@ import uk.ac.angus.coreskillstest.entity.QuizGroup;
  * This class is responsible for receiving User and Group XML files, marshalling and unmarshalling 
  * and serialisation to the database.
  * 
+ * TODO: Refactor and implement JSON interface to allow cleaner separation between Data marshalling/conversion object (this)
+ * and database access object.
  * @author JWO
  */
 
