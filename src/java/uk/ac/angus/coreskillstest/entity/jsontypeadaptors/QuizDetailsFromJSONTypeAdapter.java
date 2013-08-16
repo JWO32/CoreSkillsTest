@@ -20,7 +20,7 @@ import uk.ac.angus.coreskillstest.entity.Quiz;
  * question options for each question.
  * @author JWO
  */
-public class QuizDeserialiseTypeAdapter implements JsonDeserializer<Quiz>
+public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
 {
     @Override
     public Quiz deserialize(final JsonElement json, Type typeOf, JsonDeserializationContext context) throws JsonParseException

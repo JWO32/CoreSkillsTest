@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 import uk.ac.angus.coreskillstest.entity.Result;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.ResultToJSONTypeAdapter;
 
 /**
  *
@@ -29,6 +30,7 @@ public class ResultDataAccessObject
         String resultJson;
         
         GsonBuilder gb = new GsonBuilder();
+        gb.registerTypeAdapter(Result.class, new ResultToJSONTypeAdapter());
         Gson gsn = gb.excludeFieldsWithoutExposeAnnotation().create();
         
         resultJson = gsn.toJson(resultObj, Result.class);

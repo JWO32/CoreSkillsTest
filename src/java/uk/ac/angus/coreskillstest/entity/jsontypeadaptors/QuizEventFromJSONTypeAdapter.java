@@ -23,10 +23,10 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
  * @author JWO
  */
 
-public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent>
+public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
 {
     
-    public QuizEventSerialiseTypeAdapter()
+    public QuizEventFromJSONTypeAdapter()
     {
         
     }
@@ -74,7 +74,7 @@ public class QuizEventSerialiseTypeAdapter implements JsonDeserializer<QuizEvent
         }catch (ParseException ex)
         {
             System.err.println("Quiz Event Error: cannot parse date");
-            
+            System.err.println(ex.getMessage());
             qe = null;
         }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {

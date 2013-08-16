@@ -46,7 +46,6 @@ public class ResultRule implements Serializable
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
-    //@OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedResultRule", fetch=FetchType.LAZY)
     @Transient
     private String LinkedFeedback;
     

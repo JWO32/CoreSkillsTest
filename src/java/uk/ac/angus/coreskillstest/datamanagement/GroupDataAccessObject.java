@@ -2,7 +2,7 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.GroupDeserialiseTypeAdaptor;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.GroupToJSONTypeAdaptor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -180,7 +180,7 @@ public class GroupDataAccessObject
     {
         String json;
         GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(QuizGroup.class, new GroupDeserialiseTypeAdaptor());
+        gb.registerTypeAdapter(QuizGroup.class, new GroupToJSONTypeAdaptor());
         gb.excludeFieldsWithoutExposeAnnotation();
         Gson gsn = gb.create();
         

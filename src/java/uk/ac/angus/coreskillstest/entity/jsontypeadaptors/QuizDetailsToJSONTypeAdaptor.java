@@ -11,7 +11,7 @@ import uk.ac.angus.coreskillstest.entity.Quiz;
  *
  * @author JWO
  */
-public class QuizDetailsDeserialiseTypeAdaptor implements JsonSerializer<Quiz>
+public class QuizDetailsToJSONTypeAdaptor implements JsonSerializer<Quiz>
 {
     @Override
     public JsonElement serialize(Quiz src, Type typeOfSrc, JsonSerializationContext context) 

@@ -15,8 +15,8 @@ import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientRespons
 
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsDeserialiseTypeAdapter;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventSerialiseTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsToJSONTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventFromJSONTypeAdapter;
 import uk.ac.angus.coreskillstest.datamanagement.clientinterface.JSONInterface;
 
 /**
@@ -75,7 +75,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
-        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsDeserialiseTypeAdapter());
+        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsToJSONTypeAdapter());
         
         Gson gsn = gb.create();
         
@@ -125,7 +125,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         GroupDataAccessObject gDAO = new GroupDataAccessObject();
         QuizDataAccessObject qDAQ = new QuizDataAccessObject();
         GsonBuilder gsb = new GsonBuilder();
-        gsb.registerTypeAdapter(QuizEvent.class, new QuizEventSerialiseTypeAdapter());
+        gsb.registerTypeAdapter(QuizEvent.class, new QuizEventFromJSONTypeAdapter());
         
         Gson gsn = gsb.create();
         
@@ -156,7 +156,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         
         GsonBuilder gsb = new GsonBuilder();
         
-        gsb.registerTypeAdapter(QuizEvent.class, new QuizEventSerialiseTypeAdapter());
+        gsb.registerTypeAdapter(QuizEvent.class, new QuizEventFromJSONTypeAdapter());
         
         Gson gsn = gsb.create();
         
@@ -199,7 +199,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
-        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsDeserialiseTypeAdapter());
+        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsToJSONTypeAdapter());
         
         Gson gsn = gb.create();
         

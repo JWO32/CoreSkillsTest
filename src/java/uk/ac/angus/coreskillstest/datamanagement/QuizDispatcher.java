@@ -17,7 +17,7 @@ import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientRespons
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizMessage;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsDeserialiseTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsToJSONTypeAdapter;
 import uk.ac.angus.coreskillstest.quizmanagement.QuizPreparation;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
 import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
@@ -206,7 +206,7 @@ public class QuizDispatcher
         String eventJson;
         Type eventType = new TypeToken<List<QuizEvent>>(){}.getType();
         GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsDeserialiseTypeAdapter());
+        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsToJSONTypeAdapter());
         gb.excludeFieldsWithoutExposeAnnotation();
         
         Gson g = gb.create();

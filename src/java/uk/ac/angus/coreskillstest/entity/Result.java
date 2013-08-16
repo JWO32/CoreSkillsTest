@@ -45,16 +45,7 @@ public class Result implements Serializable
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="user_id")
     private QuizUser LinkedUser;
-    
-//    @Expose
-//    @ManyToOne(optional=true, targetEntity=String.class)
-//    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
-//    private String LinkedFeedback;
-    
-//    @Expose
-//    @ManyToOne(optional=true, targetEntity=String.class)
-//    @JoinColumn(name="feedback_id", referencedColumnName="feedback_id")
-    
+        
     @Expose
     @Column(name="feedback_text")
     private String LinkedFeedback;
@@ -134,7 +125,7 @@ public class Result implements Serializable
     {
         QuizScore = quizScore;
         
-        QuizPercentage = (float) quizScore / numberOfQuestions;
+        QuizPercentage = (float) ((float)quizScore / (float)numberOfQuestions) * 100f;
     }
     
     public void setQuizPercentage(float newPercentage)

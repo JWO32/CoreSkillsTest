@@ -17,7 +17,7 @@ import uk.ac.angus.coreskillstest.entity.Question;
  *
  * @author JWO
  */
-public class QuestionSerialiseAdapter implements JsonDeserializer<Question>
+public class QuestionFromJSONAdapter implements JsonDeserializer<Question>
 {
     @Override
     public Question deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException

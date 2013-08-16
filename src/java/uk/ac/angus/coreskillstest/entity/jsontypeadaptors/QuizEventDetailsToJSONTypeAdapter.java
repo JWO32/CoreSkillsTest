@@ -16,7 +16,7 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
  *
  * @author james
  */
-public class QuizEventDetailsDeserialiseTypeAdapter implements JsonSerializer<QuizEvent>
+public class QuizEventDetailsToJSONTypeAdapter implements JsonSerializer<QuizEvent>
 {
 
     @Override

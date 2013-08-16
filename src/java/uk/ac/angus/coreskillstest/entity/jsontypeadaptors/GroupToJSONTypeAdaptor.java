@@ -10,9 +10,9 @@ import uk.ac.angus.coreskillstest.entity.QuizGroup;
  *
  * @author JWO
  */
-public class GroupDeserialiseTypeAdaptor implements JsonSerializer<QuizGroup>
+public class GroupToJSONTypeAdaptor implements JsonSerializer<QuizGroup>
 {
-    public GroupDeserialiseTypeAdaptor()
+    public GroupToJSONTypeAdaptor()
     {
         
     }

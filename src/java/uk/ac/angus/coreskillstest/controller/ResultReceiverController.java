@@ -69,7 +69,6 @@ public class ResultReceiverController extends HttpServlet
                 {
                     rm.getQuizResources(quizResultJSON);
                     rm.processQuizResult();
-                    
                     quizResultJSON = rm.getResultJson();
                     
                     output.write(quizResultJSON);

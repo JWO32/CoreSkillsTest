@@ -5,7 +5,7 @@
         <h3>Quiz: {{QuizName}}</h3>
         <p>This quiz has <strong>{{NumberOfQuestions}}</strong> questions.</p>
         <p>You <strong>{{Feedback}}</strong> receive feedback when you have completed this quiz.</p>
-        <p><a class="doQuizLink" href="Dispatcher/doquiz/{{UserId}}/{{QuizEventId}}">Click here to attempt this quiz.</p>
+        <p><a class="doQuizLink" target="_blank" href="Dispatcher/doquiz/{{UserId}}/{{QuizEventId}}">Click here to attempt this quiz.</p>
     </div>
 
 </script>

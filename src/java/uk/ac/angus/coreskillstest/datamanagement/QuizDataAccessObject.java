@@ -14,8 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import javax.persistence.Query;
 
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDeserialiseTypeAdapter;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDetailsDeserialiseTypeAdaptor;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDetailsFromJSONTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizDetailsToJSONTypeAdaptor;
 
 
 /**
@@ -42,7 +42,7 @@ public class QuizDataAccessObject
         GsonBuilder gb = new GsonBuilder();
         boolean serialiseSuccess = true;
         
-        gb.registerTypeAdapter(Quiz.class, new QuizDeserialiseTypeAdapter());        
+        gb.registerTypeAdapter(Quiz.class, new QuizDetailsFromJSONTypeAdapter());        
         Gson g = gb.excludeFieldsWithoutExposeAnnotation().create();
         
         newQuiz = (Quiz) g.fromJson(json, Quiz.class);
@@ -123,7 +123,7 @@ public class QuizDataAccessObject
         //Probably better to remove this to another function
         //
         GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(Quiz.class, new QuizDetailsDeserialiseTypeAdaptor());
+        gb.registerTypeAdapter(Quiz.class, new QuizDetailsToJSONTypeAdaptor());
         
         Gson g = gb.create();
         
