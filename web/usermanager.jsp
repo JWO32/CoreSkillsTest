@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 
 <!-- JavaScript Library Imports -->
-<script type="text/javascript" src="js/UserManager/group.js"></script>
-<script type="text/javascript" src="js/UserManager/user.js"></script>
-<script type="text/javascript" src="js/UserManager/usermanagercontroller.js"></script>
-<script type="text/javascript" src="js/UserManager/usermanagermodel.js"></script>
-<script type="text/javascript" src="js/UserManager/usermanagerview.js"></script>
-<script type="text/javascript" src="js/UserManager/userdialogue.js"></script>
-<script type="text/javascript" src="js/UserManager/groupdialogue.js"></script>
+<script type="text/javascript" src="js/usermanager/group.js"></script>
+<script type="text/javascript" src="js/usermanager/user.js"></script>
+<script type="text/javascript" src="js/usermanager/usermanagercontroller.js"></script>
+<script type="text/javascript" src="js/usermanager/usermanagermodel.js"></script>
+<script type="text/javascript" src="js/usermanager/usermanagerview.js"></script>
+<script type="text/javascript" src="js/usermanager/userdialogue.js"></script>
+<script type="text/javascript" src="js/usermanager/groupdialogue.js"></script>
 
 <!-- jQuery and JQuery UI Imports -->
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->

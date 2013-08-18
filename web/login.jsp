@@ -1,3 +1,10 @@
+
+<!-- Add the page title to the header template using the server session this is only
+ a temporary solution, long term solution will be to implement the FrontController pattern.
+ time is not available to do this for version 1. -->
+
+<% pageContext.getSession().setAttribute("PageTitle", "Log In to Quiz Session"); %>
+
 <jsp:include page="inc/header-inc.jsp" flush="false" />
 
 <script id="quiz_events_template" type="text/x-handlebars-template">
@@ -7,7 +14,6 @@
         <p>You <strong>{{Feedback}}</strong> receive feedback when you have completed this quiz.</p>
         <p><a class="doQuizLink" target="_blank" href="Dispatcher/doquiz/{{UserId}}/{{QuizEventId}}">Click here to attempt this quiz.</p>
     </div>
-
 </script>
     
 
@@ -20,8 +26,6 @@
           Controller.loginEvent(); 
        });
        
-       $()
-
        $('input[type="button"]').button();
     });
 </script>

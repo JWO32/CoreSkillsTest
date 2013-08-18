@@ -34,7 +34,7 @@
                 <label>Select Start Date:</label>
                 <input type="text" id="start_date" />
                 <label>Select End Date:</label>
-                <input type="text0" id="end_date" />
+                <input type="text" id="end_date" />
                 
                 <input type="button" id="find_results_button" value="Find Results" />
                 <input type="button" id="clear_results_button" value="Clear Results" />

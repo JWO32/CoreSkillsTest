@@ -6,9 +6,9 @@
         <link rel="stylesheet" href="css/setupquiz.css" type="text/css"/>
         <link rel="stylesheet" href="css/main.css" type="text/css"/>
         
-        <script type="text/javascript" src="js/SetupQuiz/setupquizcontroller.js"></script>
-        <script type="text/javascript" src="js/SetupQuiz/setupquizmodel.js"></script>
-        <script type="text/javascript" src="js/SetupQuiz/setupquizview.js"></script>
+        <script type="text/javascript" src="js/setupquiz/setupquizcontroller.js"></script>
+        <script type="text/javascript" src="js/setupquiz/setupquizmodel.js"></script>
+        <script type="text/javascript" src="js/setupquiz/setupquizview.js"></script>
       
         <!-- jQuery and JQuery UI Imports -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

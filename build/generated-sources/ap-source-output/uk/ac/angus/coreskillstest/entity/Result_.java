@@ -1,12 +1,13 @@
 package uk.ac.angus.coreskillstest.entity;
 
+import java.util.Calendar;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-15T17:07:24")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-18T15:11:10")
 @StaticMetamodel(Result.class)
 public class Result_ { 
 
@@ -16,6 +17,7 @@ public class Result_ {
     public static volatile SingularAttribute<Result, Quiz> LinkedQuiz;
     public static volatile SingularAttribute<Result, Float> QuizPercentage;
     public static volatile SingularAttribute<Result, String> LinkedFeedback;
+    public static volatile SingularAttribute<Result, Calendar> ResultDate;
     public static volatile SingularAttribute<Result, String> ResultStatus;
 
 }

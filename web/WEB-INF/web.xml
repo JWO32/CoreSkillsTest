@@ -15,7 +15,7 @@
         <servlet-name>QuizReceiverController</servlet-name>
         <servlet-class>uk.ac.angus.coreskillstest.controller.QuizReceiverController</servlet-class>
     </servlet>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>QuizReceiverController</servlet-name>
         <url-pattern>/Quiz/*</url-pattern>
     </servlet-mapping>
@@ -36,15 +36,5 @@
     <servlet-mapping>
         <servlet-name>UserReceiverController</servlet-name>
         <url-pattern>/User/*</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <description/>
-        <display-name>ResultReceiverController</display-name>
-        <servlet-name>ResultReceiverController</servlet-name>
-        <servlet-class>uk.ac.angus.coreskillstest.controller.ResultReceiverController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ResultReceiverController</servlet-name>
-        <url-pattern> /Result/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -19,10 +19,10 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <!-- Custom Imports: TODO: Reduce for final version! -->
-<script type="text/javascript" src="js/QuizManager/Customlib.js"></script>
-<script type="text/javascript" src="js/QuizManager/QuizController.js"></script>
-<script type="text/javascript" src="js/QuizManager/QuizModel.js"></script>
-<script type="text/javascript" src="js/QuizManager/QuizView.js"></script>
+<script type="text/javascript" src="js/quizmanager/Customlib.js"></script>
+<script type="text/javascript" src="js/quizmanager/QuizController.js"></script>
+<script type="text/javascript" src="js/quizmanager/QuizModel.js"></script>
+<script type="text/javascript" src="js/quizmanager/QuizView.js"></script>
 
 <!-- Controller Class -->
 <script type="text/javascript">

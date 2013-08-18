@@ -8,15 +8,19 @@ import com.google.gson.GsonBuilder;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.datamanagement.clientinterface.JSONInterface;
 
 import uk.ac.angus.coreskillstest.entity.Result;
 import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.ResultToJSONTypeAdapter;
 
 /**
  *
+ * TODO: Refactor to implement the JSON interface.
+ * 
  * @author JWO
  */
-public class ResultDataAccessObject 
+public class ResultDataAccessObject implements JSONInterface<Result>
 {  
     private EntityManagerFactory ResultManagerFactory;
     
@@ -63,4 +67,41 @@ public class ResultDataAccessObject
         
         return true;
     }
+
+    @Override
+    public ServerClientResponse addItemJson(String jsonString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse addItemsJson(String jsonArrayString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse getSingleItem(Result itemObject) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse getAllItems() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse deleteSingleItem(int itemId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse deleteMultipleItems(String jsonString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse updateItem(String jsonString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

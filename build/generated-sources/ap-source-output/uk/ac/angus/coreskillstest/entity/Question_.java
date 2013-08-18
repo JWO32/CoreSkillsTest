@@ -8,7 +8,7 @@ import uk.ac.angus.coreskillstest.entity.QuestionCategory;
 import uk.ac.angus.coreskillstest.entity.QuestionOption;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-15T17:07:24")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-18T15:11:10")
 @StaticMetamodel(Question.class)
 public class Question_ { 
 

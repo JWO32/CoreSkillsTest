@@ -4,6 +4,15 @@
  */
 package uk.ac.angus.coreskillstest.datamanagement;
 
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
+import uk.ac.angus.coreskillstest.entity.Quiz;
+import uk.ac.angus.coreskillstest.entity.QuizUser;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsToJSONTypeAdapter;
+import uk.ac.angus.coreskillstest.quizmanagement.QuizPreparation;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
+import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,18 +21,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
-import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
-import uk.ac.angus.coreskillstest.entity.Quiz;
-import uk.ac.angus.coreskillstest.entity.QuizMessage;
-import uk.ac.angus.coreskillstest.entity.QuizUser;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventDetailsToJSONTypeAdapter;
-import uk.ac.angus.coreskillstest.quizmanagement.QuizPreparation;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
-import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
 
 /**
- *
+ * Quiz Disptacher
+ * 
+ * Locates and then prepares a quiz for transmission to the client
  * @author JWO
  */
 public class QuizDispatcher 
@@ -185,6 +187,7 @@ public class QuizDispatcher
     }
     
     /**
+     * Use the currently assigned User to locate valid quiz events
      * 
      * @return 
      */
@@ -229,7 +232,7 @@ public class QuizDispatcher
             
             // Surgically attach the user id to the QuizEvent object
             // Bit of a kludge but necessary because at the moment
-            // Groups are associate with QuizEvents, not individual students
+            // Groups are associated with QuizEvents, not individual students
             // Future change will be to allow QuizEvents to be set for individual
             // Students
             for(QuizEvent currentEvent: eventList)

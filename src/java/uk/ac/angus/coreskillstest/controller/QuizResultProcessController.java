@@ -3,6 +3,7 @@ package uk.ac.angus.coreskillstest.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +15,11 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundE
  *
  * @author JWO
  */
-public class ResultReceiverController extends HttpServlet
+
+@WebServlet(name = "QuizResultProcessController", urlPatterns = {"/ProcessResult/*"})
+public class QuizResultProcessController extends HttpServlet
 {
-    public ResultReceiverController()
+    public QuizResultProcessController()
     {
         super();
     }
@@ -37,13 +40,21 @@ public class ResultReceiverController extends HttpServlet
                 String resultIdParam = pathComponents[4];
                 int resultId = Integer.parseInt(resultIdParam);
                
-            break;
+                break;
+            case "getgroup":
+                String groupIdParam = pathComponents[4];
+                int groupId = Integer.parseInt(groupIdParam);
+                
+                
+                break;
         }
     }
     
     /**
      * 
      * TODO: Refactor to take ServerClientResponse object into account
+     * 
+     * Process a new result with the 'add' command.
      * 
      * @param req
      * @param resp
