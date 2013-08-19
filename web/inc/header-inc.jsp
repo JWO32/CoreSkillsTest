@@ -4,6 +4,14 @@
 <!DOCTYPE html>
 <html>
     <head>     
+        <!-- jQuery and JQuery UI Imports -- these remain static-->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
+        <script type="text/javascript" src="js/handlebars.js"/></script>
+        <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
+      
     <%
         //
         // Try to make loading of script resources automatic.
@@ -28,13 +36,6 @@
         }
      %>
         
-         <!-- jQuery and JQuery UI Imports -- these remain static-->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
-        <script type="text/javascript" src="js/handlebars.js"/></script>
-    
         <!-- Stylesheets -->
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
         <!-- Customised page stylesheet -->

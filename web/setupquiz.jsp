@@ -15,6 +15,8 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="js/handlebars.js"/></script>
+    
+        <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
 
         <script id="quiz_event_template" type="text/x-handlebars-template">                 
             <div class="quiz_event ui-widget"> 
@@ -38,11 +40,6 @@
         <script type="text/javascript">
         $(document).ready(function()
         {
-            $.ajaxSetup ({
-                // Disable caching of AJAX responses
-                cache: false
-              });
-              
             var controller = QuizSetupController();
 
             controller.downloadQuizList();

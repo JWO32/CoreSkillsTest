@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 
 /**
  *
+ * Represents a comlpeted result that has been processed by the system.
+ * 
  * @author JWO
  */
 
@@ -30,7 +32,7 @@ import javax.persistence.TemporalType;
         @NamedQuery(name="Result.deleteResultById",
         query="DELETE FROM QUIZ_RESULT r WHERE r.ResultId=:id"),
         @NamedQuery(name="Result.getResultsByGroupId",
-        query="SELECT r FROM QUIZ_RESULT r WHERE r.LinkedUser.Group.GroupID = :groupId"),
+        query="SELECT r FROM QUIZ_RESULT r JOIN r.LinkedUser lu JOIN lu.Group g WHERE g.GroupID = :groupId"),
         @NamedQuery(name="Result.getResultByUserId",
         query="SELECT r FROM QUIZ_RESULT r WHERE r.LinkedUser.UserId = :userId")
 })

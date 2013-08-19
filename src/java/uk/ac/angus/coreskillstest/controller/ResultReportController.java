@@ -18,11 +18,9 @@ import uk.ac.angus.coreskillstest.datamanagement.ReportDataAccessObject;
  *
  * @author JWO
  */
-@WebServlet(name = "ResultReportController", urlPatterns = {"/Result/*"})
+@WebServlet(name = "ResultReportController", urlPatterns = {"/Report/*"})
 public class ResultReportController extends HttpServlet 
 {
-
-
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -38,7 +36,7 @@ public class ResultReportController extends HttpServlet
         String path = req.getRequestURI();
         String[] pathComponents = path.split("/");
         ReportDataAccessObject repDAO = new ReportDataAccessObject();
-        ServerClientResponse clientResponse = null;
+        ServerClientResponse clientResponse;
         
         switch(pathComponents[3])
         {
@@ -47,17 +45,28 @@ public class ResultReportController extends HttpServlet
                 int groupId = Integer.parseInt(groupParam);
                 clientResponse = repDAO.getSingleItem(groupId);
                 
-                processResponse(clientResponse, resp);
+                setResponse(clientResponse, resp);
                 
                 break;
         }    
     }
 
-    private void processResponse(ServerClientResponse response, HttpServletResponse resp)
+    private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
-        
+        try (PrintWriter output = resp.getWriter()) {
+            if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_ERROR)
+            {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getStatusMessage());
+            }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_OK)
+            {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getClientJson());
+            }
+        }
     }
-    
     
     /**
      * Handles the HTTP

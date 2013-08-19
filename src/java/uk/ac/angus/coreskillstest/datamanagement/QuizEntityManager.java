@@ -240,6 +240,9 @@ public class QuizEntityManager<T>
                 }else if(Date.class.isAssignableFrom(valueObj.getClass()))
                 {
                     value = (Date) valueObj;
+                }else if(Integer.class.isAssignableFrom(valueObj.getClass()))
+                {
+                    value = (Integer) valueObj;
                 }
                 
                 q.setParameter(currentKey, value);

@@ -43,7 +43,7 @@ public class ReportDataAccessObject implements JSONInterface
     {
         ServerClientResponse response = new ServerClientResponse();
         QuizEntityManager<Result> em = new QuizEntityManager<>(Result.class);
-        String query = "Result.getResultByGroupId";
+        String query = "Result.getResultsByGroupId";
         HashMap queryParameter = new HashMap();
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
@@ -51,7 +51,7 @@ public class ReportDataAccessObject implements JSONInterface
         
         Gson g = gb.create();
         
-        List<Result> resultList = null;
+        List<Result> resultList;
         String resultListJSON;
         
         queryParameter.put("groupId", new Integer(itemId));
@@ -64,7 +64,7 @@ public class ReportDataAccessObject implements JSONInterface
             System.err.println("Error: Cannot fetch results for group id");
             System.err.println(ex.getMessage());
             response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
-            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Cannot fetch results for group"));
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Results Available", "No results are available for this group."));
             return response;
         }
         

@@ -1,3 +1,6 @@
+<jsp:include page="inc/header-inc.jsp" flush="false" />
+
+
 
 <h1>Core Skills Quiz Update - Version 1.0</h1>
 <p>

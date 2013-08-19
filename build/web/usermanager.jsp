@@ -1,6 +1,5 @@
 <!doctype html>
 <head>
-
 <!-- Stylesheets -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
 <link rel="stylesheet" href="css/usermanager.css" type="text/css"/>
