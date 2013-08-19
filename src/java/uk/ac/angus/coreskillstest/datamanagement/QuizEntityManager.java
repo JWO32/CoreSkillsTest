@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
@@ -16,12 +15,19 @@ import javax.persistence.Query;
  * Implemented during refactoring to provide a consistent set of methods for all
  * data access objects.  Can be used in combination with the JSON interface so that
  * only JSON is returned to servlets and this is returned to the client.
+ * 
+ * All database interaction will go through this class.  Queries and parameters are
+ * passed in to methods as strings and hashmaps, methods determine data types using 
+ * Java type introspection.
+ * 
+ * Exceptions are thrown when errors occur so that appropriate messages can be returned
+ * to the client.
  * @author JWO
  */
 public class QuizEntityManager<T>
 {
     private EntityManagerFactory EntityManagerFactory;
-    String persistenceUnit;
+    String PersistenceUnit;
     
     private Class Type;
     
@@ -33,7 +39,8 @@ public class QuizEntityManager<T>
     }
     
     /**
-     * Allows the runtime class of the generic type to be determined
+     * Allows the runtime class of the generic type to be determined for operations when
+     * the class type is required, such as serialising and deserialising JSON.
      * @return 
      */
     private Class getType()
@@ -43,6 +50,19 @@ public class QuizEntityManager<T>
     
     /**
      * 
+     * @param newPersistenceUnit 
+     */
+    public void setPersistenceUnit(String newPersistenceUnit)
+    {
+        PersistenceUnit = newPersistenceUnit;
+    }
+    
+    /**
+     * Takes an object of the generically specified type and serialises it to the database
+     * 
+     * Throws an UnableToCommitException is the operation is unsuccessful.
+     * 
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
      * @param objectToCommit 
      */
     public void commitObject(T objectToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
@@ -67,7 +87,8 @@ public class QuizEntityManager<T>
     
     /**
      * 
-     * @param objectsToCommit 
+     * @param objectsToCommit
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException 
      */
     public void commitObjectList(List<T> objectsToCommit) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException
     {
@@ -94,6 +115,13 @@ public class QuizEntityManager<T>
         
     }
     
+    /**
+     * 
+     * @param query
+     * @param parameters
+     * @return
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException 
+     */
     public T getSingleObjectByNonKey(String query, Map parameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException
     {
         T object;
@@ -236,22 +264,66 @@ public class QuizEntityManager<T>
         return objectList;
     }
     
-    public void deleteObject(String deleteQuery, String parameter, int objectId) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException
+    /**
+     * 
+     * @param namedQuery
+     * @param queryParameters
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException 
+     */
+    public void editObject(String namedQuery, Map queryParameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException
+    {
+        
+    }
+    
+    /**
+     * 
+     * @param namedQuery
+     * @param queryParameters
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException 
+     */
+    public void deleteObject(String namedQuery, Map queryParameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
         int numberOfItemsDeleted = 0;
+        Object value = null;
+        
+         q = em.createNamedQuery(namedQuery);
+        
+        if(queryParameters != null)
+        {
+            Object[] keys = queryParameters.keySet().toArray();
+            for(Object key : keys)
+            {
+                String currentKey = (String) key;
+                
+                Object parameterValue = queryParameters.get(currentKey);
+                
+                if(String.class.isAssignableFrom(parameterValue.getClass()))
+                {
+                    value = (String) parameterValue;
+                }else if(Date.class.isAssignableFrom(parameterValue.getClass()))
+                {
+                    value = (Date) parameterValue;
+                }else if(Integer.class.isAssignableFrom(parameterValue.getClass()))
+                {
+                    value = (Integer) parameterValue;
+                }
+                
+                q.setParameter(currentKey, value);
+            }  
+        }
         
         try
         {
-            em.getTransaction().begin();
-            q = em.createNamedQuery(deleteQuery).setParameter(parameter, objectId);
+            em.getTransaction().begin();           
             numberOfItemsDeleted = q.executeUpdate();
             em.getTransaction().commit();
         }catch(Exception ex)
         {
             System.err.println("Exception Occured: unable to delete specified object");
             System.err.println(ex.getMessage());
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Database Error: Unable to delete object");  
         }finally
         {
             em.close();

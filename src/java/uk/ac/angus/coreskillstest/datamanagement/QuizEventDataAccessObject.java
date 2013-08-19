@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.Date;
+import java.util.HashMap;
 
 import java.util.List;
 import javax.persistence.Persistence;
@@ -20,29 +22,32 @@ import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.QuizEventFromJSONTypeA
 import uk.ac.angus.coreskillstest.datamanagement.clientinterface.JSONInterface;
 
 /**
- *
+ * Handles requests for data for the QuizEventController.  Provides parameters to 
+ * 
+ * TODO: Remove commented code if it is clear there will be no -ve effects.
  * @author JWO
  */
 public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
-{
-    private EntityManagerFactory QuizConfigEntityManager;
-    
+{ 
     /**
      * 
      */
     public QuizEventDataAccessObject()
     {
-        QuizConfigEntityManager = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
+        
     }
     
     /**
+     * This method is implemented outside of the interface for convenience.
      * 
+     * TODO: Refactor to use QuizEventManager
      * @param quizConfigId
      * @return 
      */
     public QuizEvent getQuizEventByIdObject(int quizConfigId)
     {
         QuizEvent qc;
+        EntityManagerFactory QuizConfigEntityManager = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         
         EntityManager em = QuizConfigEntityManager.createEntityManager();
         
@@ -52,99 +57,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         
         return qc;
     }
-    
-    /**
-     * 
-     * @param quizConfigid
-     * @return 
-     */
-    public String getQuizEventByIdJSON(int quizConfigid)
-    {
-        String json = null;
-        
-        return json;
-    }
-    
-    /**
-     * 
-     * @return 
-     */
-    public String getAllQuizEventsJSON()
-    {
-        String json = null;
-        EntityManager em = QuizConfigEntityManager.createEntityManager();
-        GsonBuilder gb = new GsonBuilder();
-        gb.excludeFieldsWithoutExposeAnnotation();
-        gb.registerTypeAdapter(QuizEvent.class, new QuizEventDetailsToJSONTypeAdapter());
-        
-        Gson gsn = gb.create();
-        
-        try
-        {
-            Query q = em.createNamedQuery("QuizEvent.getAllEvents");
-            Type eventType = new TypeToken<List<QuizEvent>>(){}.getType();
-            
-            List<QuizEvent> eventList = q.getResultList();
-            
-            if(eventList.isEmpty())
-            {
-                //
-                json = ServerClientResponseFactory.getEmptyJSONObject();//Empty json array - might not be the best way to do this. TODO: Setup a static constant.
-            }else
-            {              
-                json = gsn.toJson(eventList, eventType);
-            }         
-        }finally
-        {
-            em.close();
-        }
-        
-        return json;
-    }
-    
-    /**
-     * 
-     * @param event 
-     */
-    public void addQuizEventObject(QuizEvent event)
-    {
-        EntityManager em = QuizConfigEntityManager.createEntityManager();
-        
-        em.getTransaction().begin();
-        em.persist(event);
-        em.getTransaction().commit();
-    }
-    
-    /**
-     * 
-     * @param jsonEvent 
-     */
-    public void addQuizEventJSON(String jsonEvent)
-    {
-        EntityManager em = QuizConfigEntityManager.createEntityManager();
-        GroupDataAccessObject gDAO = new GroupDataAccessObject();
-        QuizDataAccessObject qDAQ = new QuizDataAccessObject();
-        GsonBuilder gsb = new GsonBuilder();
-        gsb.registerTypeAdapter(QuizEvent.class, new QuizEventFromJSONTypeAdapter());
-        
-        Gson gsn = gsb.create();
-        
-        QuizEvent qe;
-        
-        qe = gsn.fromJson(jsonEvent, QuizEvent.class);
-        
-        try
-        {
-            em.getTransaction().begin();
-            em.persist(qe);
-            em.getTransaction().commit();
-        }finally
-        {
-            em.close();
-        } 
-        
-    }
-   
+
     //Implement interface functionality here...
     // REFACTORING STARTS HERE
     //
@@ -236,15 +149,16 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
     {
        ServerClientResponse response = new ServerClientResponse();
        QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
-       String query;
-       String parameter;
+       String query = "QuizEvent.deleteEvent";
+       String parameter = "id";
        
-       query="QuizEvent.deleteEvent";
-       parameter="id";
+       HashMap queryParameters = new HashMap();
        
+       queryParameters.put(parameter, new Integer(itemId));
+
        try
        {
-           qem.deleteObject(query, parameter, itemId);
+           qem.deleteObject(query, queryParameters);
            response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
            response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Quiz Event Deleted", "Quiz event has been successfully deleted."));
        
@@ -253,7 +167,6 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Records Deleted", "No records were deleted"));
        }
-       
        
        return response;
     }
@@ -273,12 +186,28 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         
         return response;
     }
+    
+    @Override
+    public ServerClientResponse updateItem(String jsonObject, int itemId)
+    {
+        ServerClientResponse resp = null;
+        
+        return resp;
+    }
 
     @Override
     public ServerClientResponse getSingleItem(QuizEvent itemObject) 
     {
         ServerClientResponse response = null;
         
+        return response;
+    }
+    
+    @Override
+    public ServerClientResponse getSingleItem(int itemId)
+    {
+        ServerClientResponse response = null;
+         
         return response;
     }
     
@@ -290,7 +219,20 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
     private void deleteExpiredQuizEvents()
     { 
         QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
+        Date  currentDate = new Date();
+        String deleteQuery = "QuizEvent.deleteExpiredEvents";
         
+        HashMap queryParameters = new HashMap();
         
+        queryParameters.put("currentDate", currentDate);
+        
+        try
+        {
+            qem.deleteObject(deleteQuery, queryParameters);
+        }catch (uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException ex)
+        {
+            System.err.println("Unable to delete expired query events");
+            System.err.println(ex.getMessage()); 
+        }
     }
 }

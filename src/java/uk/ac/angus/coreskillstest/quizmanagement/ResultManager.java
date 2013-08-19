@@ -137,7 +137,7 @@ public class ResultManager
     {
         QuizEvent qc;
         QuizEventDataAccessObject qcDAO = new QuizEventDataAccessObject();
-        
+      
         int quizConfigurationId = QuizResponse.getQuizConfigurationId();
         
         qc = qcDAO.getQuizEventByIdObject(quizConfigurationId);

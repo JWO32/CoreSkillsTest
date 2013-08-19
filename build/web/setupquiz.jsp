@@ -119,7 +119,7 @@
                                 <legend>Quiz and Group:</legend>
                                 <ol>
                                     <li>
-                                        <label>Select a Quiz</label>
+                                        <label>Select a Quiz:</label>
                                     </li>
                                     <li>
                                         <select id="quiz_list">
@@ -129,7 +129,7 @@
                                </ol>
                                 <ol>
                                     <li>
-                                        <label>Group Details</label>
+                                        <label>Select a Group:</label>
                                     </li>
                                     <li>
                                         <select id="group_list">

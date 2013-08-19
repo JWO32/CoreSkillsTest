@@ -23,7 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 /**
- *
+ * 
  * @author JWO
  */
 @Entity(name="QUIZ_EVENT")
@@ -36,7 +36,9 @@ import javax.persistence.Transient;
         @NamedQuery(name="QuizEvent.getLiveEventsByEmail",
         query="SELECT qe FROM QUIZ_EVENT qe JOIN qe.LinkedGroup lg JOIN lg.UserList qu WHERE qu.Email=:email AND :date BETWEEN qe.QuizOpenDate AND qe.QuizCloseDate"),
         @NamedQuery(name="QuizEvent.getQuizByEventId",
-        query="SELECT qe FROM QUIZ_EVENT qe JOIN FETCH qe.LinkedQuiz WHERE qe.QuizConfigId=:id")
+        query="SELECT qe FROM QUIZ_EVENT qe JOIN FETCH qe.LinkedQuiz WHERE qe.QuizConfigId=:id"),
+        @NamedQuery(name="QuizEvent.deleteExpiredEvents",
+        query="DELETE FROM QUIZ_EVENT qe WHERE qe.QuizCloseDate < :currentDate")
 })
 public class QuizEvent implements Serializable
 {

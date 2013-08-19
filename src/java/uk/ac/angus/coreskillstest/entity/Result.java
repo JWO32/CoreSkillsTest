@@ -28,7 +28,11 @@ import javax.persistence.TemporalType;
         @NamedQuery(name="Result.getResultById",
         query="SELECT r from QUIZ_RESULT r WHERE r.ResultId=:id"),
         @NamedQuery(name="Result.deleteResultById",
-        query="DELETE FROM QUIZ_RESULT r WHERE r.ResultId=:id")
+        query="DELETE FROM QUIZ_RESULT r WHERE r.ResultId=:id"),
+        @NamedQuery(name="Result.getResultsByGroupId",
+        query="SELECT r FROM QUIZ_RESULT r WHERE r.LinkedUser.Group.GroupID = :groupId"),
+        @NamedQuery(name="Result.getResultByUserId",
+        query="SELECT r FROM QUIZ_RESULT r WHERE r.LinkedUser.UserId = :userId")
 })
 
 public class Result implements Serializable

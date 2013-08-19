@@ -24,6 +24,8 @@ public class QuizResultProcessController extends HttpServlet
         super();
     }
     
+    
+    // TODO: Remove this method into a dedicate report generating servlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
@@ -36,15 +38,14 @@ public class QuizResultProcessController extends HttpServlet
         
         switch(pathComponents[3])
         {
-            case "get":
+            case "getuserresult":
                 String resultIdParam = pathComponents[4];
                 int resultId = Integer.parseInt(resultIdParam);
                
                 break;
-            case "getgroup":
+            case "getgroupresults":
                 String groupIdParam = pathComponents[4];
                 int groupId = Integer.parseInt(groupIdParam);
-                
                 
                 break;
         }

@@ -65,21 +65,22 @@ public class QuizEventController extends HttpServlet
     {
         String path = req.getRequestURI();
         String[] pathComponents = path.split("/");
- 
+        QuizEventDataAccessObject qeDAO = new QuizEventDataAccessObject();
         String eventJSON = req.getParameter("event");
         ServerClientResponse clientResponse;
         
         switch(pathComponents[3])
         {
-            case "addevent":
-                QuizEventDataAccessObject qeDAO = new QuizEventDataAccessObject();
-             
+            case "addevent":          
                 clientResponse = qeDAO.addItemJson(eventJSON);
                 
                 setResponse(clientResponse, resp);
                 
                 break;
             case "editevent":
+                clientResponse = qeDAO.updateItem(eventJSON);
+                
+                setResponse(clientResponse, resp);
                 
                 break;
         }     
@@ -87,21 +88,19 @@ public class QuizEventController extends HttpServlet
      
     private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
-        PrintWriter output = resp.getWriter();
-        
-        if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_ERROR)
-        {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.setContentType("text/json");
-            output.write(clientResponse.getStatusMessage());
-        }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_OK)
-        {
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.setContentType("text/json");
-            output.write(clientResponse.getClientJson());
+        try (PrintWriter output = resp.getWriter()) {
+            if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_ERROR)
+            {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getStatusMessage());
+            }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_OK)
+            {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getClientJson());
+            }
         }
-        
-        output.close();
     }
     
     /**
