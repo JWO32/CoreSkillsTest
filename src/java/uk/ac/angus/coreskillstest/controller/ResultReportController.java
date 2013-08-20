@@ -42,8 +42,12 @@ public class ResultReportController extends HttpServlet
         {
             case "getgroupresults":
                 String groupParam = req.getParameter("groupId");
+                String quizParam = req.getParameter("quizId");
                 int groupId = Integer.parseInt(groupParam);
-                clientResponse = repDAO.getSingleItem(groupId);
+                int quizId = Integer.parseInt(quizParam);
+                
+                clientResponse = repDAO.getSingleItem(groupId, quizId);
+                
                 
                 setResponse(clientResponse, resp);
                 

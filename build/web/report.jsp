@@ -57,9 +57,13 @@
         <form id="report_options">
             <fieldset>
                 <legend>Choose Report Options</legend>
-                <label>Select a Group</label>
+                <label>Select a Group:</label>
                 <select id="group_list">
                     <option value="0">No Groups</option>
+                </select>
+                <label>Select a Quiz:</label>
+                <select id="quiz_list">
+                    <option value="0">No Quiz</option>
                 </select>
                 <label>Select Start Date:</label>
                 <input type="datetime" id="start_date" />

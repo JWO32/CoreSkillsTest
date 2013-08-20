@@ -2,14 +2,13 @@ package uk.ac.angus.coreskillstest.datamanagement;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 import uk.ac.angus.coreskillstest.datamanagement.clientinterface.JSONInterface;
 import uk.ac.angus.coreskillstest.entity.Result;
-import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.ResultToJSONTypeAdapter;
+import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.ResultReportToJSONTypeAdapter;
 
 /**
  *
@@ -24,36 +23,40 @@ public class ReportDataAccessObject implements JSONInterface
     }
 
     @Override
-    public ServerClientResponse addItemJson(String jsonString) {
+    public ServerClientResponse addItemJson(String jsonString) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse addItemsJson(String jsonArrayString) {
+    public ServerClientResponse addItemsJson(String jsonArrayString) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse getSingleItem(Object itemObject) {
+    public ServerClientResponse getSingleItem(Object itemObject) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public ServerClientResponse getSingleItem(int itemId) 
+   
+    public ServerClientResponse getSingleItem(int itemId, int quizId) 
     {
         ServerClientResponse response = new ServerClientResponse();
         QuizEntityManager<Result> em = new QuizEntityManager<>(Result.class);
-        String query = "Result.getResultsByGroupId";
+        String query = "Result.getResultsByGroupIdAndQuizId";
         HashMap queryParameter = new HashMap();
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
-        gb.registerTypeAdapter(Result.class, new ResultToJSONTypeAdapter());
+        gb.registerTypeAdapter(Result.class, new ResultReportToJSONTypeAdapter());
         
         Gson g = gb.create();
         
         List<Result> resultList;
         String resultListJSON;
         
+        queryParameter.put("quizId", new Integer(quizId));
         queryParameter.put("groupId", new Integer(itemId));
         
         try
@@ -76,27 +79,38 @@ public class ReportDataAccessObject implements JSONInterface
     }
 
     @Override
-    public ServerClientResponse getAllItems() {
+    public ServerClientResponse getAllItems() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse deleteSingleItem(int itemId) {
+    public ServerClientResponse deleteSingleItem(int itemId) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse deleteMultipleItems(String jsonString) {
+    public ServerClientResponse deleteMultipleItems(String jsonString) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse updateItem(String jsonString) {
+    public ServerClientResponse updateItem(String jsonString) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ServerClientResponse updateItem(String jsonObject, int itemId) {
+    public ServerClientResponse updateItem(String jsonObject, int itemId)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ServerClientResponse getSingleItem(int itemId) 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

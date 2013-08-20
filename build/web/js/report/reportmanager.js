@@ -10,6 +10,7 @@ ReportManager = (function($)
         init: function ()
         {
             this.downloadGroupsEvent();
+            this.downloadQuizEvent();
         },
         updateGroupList: function (groupList)
         {
@@ -36,9 +37,35 @@ ReportManager = (function($)
                }
             });
         },
+        updateQuizList: function (quizList)
+        {
+            ReportManager.Model.setQuizList(quizList);
+            ReportManager.View.renderQuizList(quizList);
+        },
+        downloadQuizEvent: function ()
+        {
+            $.ajax({
+               url: 'Quiz/quizlist',
+               method: 'GET',
+               dataType: 'json',
+               success: this.updateQuizList,
+               error: function(data)
+               {
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  if(errorTitle !== null && errorMsg !== null)
+                    $.alert(errorTitle, errorMsg);
+                  else
+                    $.alert("Group Download Error", "Unable to download group list");
+               }
+            });
+        },
         downloadReportEvent: function()
         {
-            var groupId = this.View.getCurrentGroup();
+            var groupId = parseInt(this.View.getSelectedGroup());
+            var quizId = parseInt(this.View.getSelectedQuiz());
             
             if(groupId === 0)
             {
@@ -46,13 +73,19 @@ ReportManager = (function($)
                 return;
             }
             
-            this.downloadReportForGroup(groupId);
+            if(quizId === 0)
+            {
+                $.alert("No Quiz Selected", "Please select a quiz to view a report");
+                return;
+            }
+            
+            this.downloadReportForGroup(groupId, quizId);
         },
-        downloadReportForGroup: function(groupId)
+        downloadReportForGroup: function(groupId, quizId)
         {
             $.ajax({
                url: 'Report/getgroupresults', 
-               data:'groupId='+groupId,
+               data:'groupId='+groupId+'&quizId='+quizId,
                method: 'GET',
                dataType: 'json',
                success: function()
@@ -83,6 +116,7 @@ ReportManager = (function($)
 ReportManager.Model = (function()
 {
     var GroupList = [];
+    var QuizList = [];
     var Results = [];
  
     return {
@@ -93,6 +127,14 @@ ReportManager.Model = (function()
       setGroupList: function (groupList)
       {
           GroupList = groupList;
+      },
+      setQuizList: function (quizList)
+      {
+        QuizList = quizList;  
+      },
+      getQuizList: function ()
+      {
+          return QuizList;
       },
       getResults: function ()
       {
@@ -120,13 +162,27 @@ ReportManager.View = (function ()
                 $('#group_list').append('<option value="'+val.GroupId+'">'+val.GroupName+'</option>');
             });
         },
+        renderQuizList: function (quizList)
+        {
+            $('#quiz_list').empty();
+            $('#quiz_list').append('<option value="0">Select Quiz</option>');
+            
+            $.each(quizList, function(key, val)
+            {
+                $('#quiz_list').append('<option value="'+val.QuizId+'">'+val.QuizTitle+'</option>');
+            });
+        },
         cacheResults: function (resultList)
         {
-
+            
         },
-        getCurrentGroup: function ()
+        getSelectedGroup: function ()
         {
             return $('#group_list').val();
+        },
+        getSelectedQuiz: function ()
+        {
+            return $('#quiz_list').val();
         }
     };
 })(ReportManager);

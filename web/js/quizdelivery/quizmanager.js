@@ -120,7 +120,7 @@ QuizPlayerManager = function ()
             //
             $.ajax({
                 type: 'POST',
-                url: 'Result/add',
+                url: 'ProcessResult/add',
                 data: "response="+userSelections,
                 dataType: 'json',
                 success: function(data)
@@ -129,7 +129,7 @@ QuizPlayerManager = function ()
                 },
                 error: function(data)
                 {
-                    $('#result_dialogue').append('<h3>Server Error</h3>')
+                    $('#result_dialogue').append('<h3>Server Error</h3>');
                     $('#result_dialogue').append('<p>'+data.responseText+'</p>').show();
                 }
             });             
