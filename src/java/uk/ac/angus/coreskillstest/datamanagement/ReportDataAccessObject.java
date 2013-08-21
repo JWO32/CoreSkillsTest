@@ -2,6 +2,8 @@ package uk.ac.angus.coreskillstest.datamanagement;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
@@ -47,6 +49,7 @@ public class ReportDataAccessObject implements JSONInterface
         QuizEntityManager<Result> em = new QuizEntityManager<>(Result.class);
         String query = "Result.getResultsByGroupIdAndQuizId";
         HashMap queryParameter = new HashMap();
+        Type resultType = new TypeToken<List<Result>>(){}.getType();
         GsonBuilder gb = new GsonBuilder();
         gb.excludeFieldsWithoutExposeAnnotation();
         gb.registerTypeAdapter(Result.class, new ResultReportToJSONTypeAdapter());
@@ -70,8 +73,7 @@ public class ReportDataAccessObject implements JSONInterface
             response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Results Available", "No results are available for this group."));
             return response;
         }
-        
-        resultListJSON = g.toJson(resultList, Result.class);
+        resultListJSON = g.toJson(resultList, resultType);
         
         response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
         response.setClientJson(resultListJSON);
