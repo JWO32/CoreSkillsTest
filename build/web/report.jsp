@@ -1,6 +1,9 @@
 <% pageContext.getSession().setAttribute("PageTitle", "Generate Result Report"); %>
+<% pageContext.getSession().setAttribute("PageHeading", "Quiz Reporting");%>
 
 <jsp:include page="inc/header-inc.jsp" flush="false" />
+<jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
+<jsp:include page="inc/navigation-inc.jsp" flush="false" />
 
 <script type="text/javascript">
     $(document).ready(function()
@@ -14,7 +17,7 @@
         
         $('#clear_results_button').on('click', function()
         {
-        
+            ReportManager.clearCurrentReportEvent();
         });
         
        //Configure datepicker and date representation options
@@ -25,54 +28,66 @@
         $('input [type="checkbox"]').button();
 
         $('input[type="button"]').button();
-    
     });
     
 </script>
 
 <script id="result_template" type="text/x-handlebars-template">
-<div id="r_{{GroupId}}">
+<div id="r_{{ResultId}}">
 <ul>
-    <li><strong>Group Name:</strong>{{GroupName}}</li>
-    {{#each user}}
-    <ul>
-        <li><strong>Name:</strong>{{FirstName}} {{LastName}}</li>
-        {{#each result}}
-            <ul>
-                <li>Quiz: {{QuizName}}</li>
-                <li>Marks: {{Score}}</li>
-                <li>Percentage: {{Percentage}}</li>
-                <li>Category: {{Feedback}}</li>
-            </ul>
-        {{/each}}
-     </ul>
-     {{/each}}
+    <li><strong>Name:</strong>{{FirstName}} {{LastName}}</li>
+        <ul>
+            <li>Marks: {{Score}}</li>
+            <li>Percentage: {{Percentage}}%</li>
+            <li>Category: {{Category}}</li>
+        </ul>
 </ul>
 
 </div>    
 </script>
 
-<div id="MainContent">
     <div id="report_options_wrapper">
         <form id="report_options">
             <fieldset>
                 <legend>Choose Report Options</legend>
-                <label>Select a Group:</label>
-                <select id="group_list">
-                    <option value="0">No Groups</option>
-                </select>
-                <label>Select a Quiz:</label>
-                <select id="quiz_list">
-                    <option value="0">No Quiz</option>
-                </select>
-                <label>Select Start Date:</label>
-                <input type="datetime" id="start_date" />
-                <label>Select End Date:</label>
-                <input type="datetime" id="end_date" />
-                
-                <input type="button" id="find_results_button" value="Find Results" />
-                <input type="button" id="clear_results_button" value="Clear Results" />
-                
+                <div id="report_details">
+                    <ul>
+                        <li><label>Select a Group:</label></li>
+                        <li>
+                            <select id="group_list">
+                                <option value="0">No Groups</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>Select a Quiz:</label>
+                        </li>
+                        <li>
+                            <select id="quiz_list">
+                                <option value="0">No Quiz</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <div id="report_dates">
+                    <ul>
+                        <li>
+                            <label>Select Start Date:</label>
+                        </li>
+                        <li>
+                            <input type="datetime" id="start_date" />
+                        </li>
+                        <li>
+                            <label>Select End Date:</label>
+                        </li>
+                        <li>
+                            <input type="datetime" id="end_date" />
+                        </li>
+                </div>
+                </ul>
+                <div id="buttons">
+                    <input type="button" id="find_results_button" value="Find Results" />
+                    <input type="button" id="clear_results_button" value="Clear Results" />
+                </div>
             </fieldset>    
         </form>   
     </div>
@@ -82,7 +97,6 @@
     
     
     </div>
-</div>
 
 
 <jsp:include page="inc/footer-inc.jsp" flush="false" />

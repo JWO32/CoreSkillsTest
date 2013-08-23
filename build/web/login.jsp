@@ -16,7 +16,6 @@
     </div>
 </script>
     
-
 <script type="text/javascript">
     $(document).ready(function()
     {
@@ -29,25 +28,24 @@
        $('input[type="button"]').button();
     });
 </script>
+<div id="login_wrapper">
+    <section id="login_details">
+        <h1>Quiz Login</h1>
+        <p>Please enter your e-mail address into the text box below and click the 'Find Quiz Sessions' button to see if you have any quizzes
+            available to sit.</p>
+        <form id="login_form">
+            <fieldset id="details">
+                <legend>Enter your E-mail Address</legend>
+                <label><img src="images/icons/email.jpg"/> E-mail Address:</label>
+                <input id="email" type="text" />
+                <input type="button" id="submit_button" value="Find Quiz Sessions"/>
+            </fieldset>
+        </form>  
+    </section>
+
+    <section id="quiz_event_list">
 
 
-<section id="login_details">
-    <h1>Quiz Login</h1>
-    <p>Please enter your e-mail address into the text box below and click the 'Find Quiz Sessions' button to see if you have any quizzes
-        available to sit.</p>
-    <form id="login_form">
-        <fieldset id="details">
-            <legend>Enter your E-mail Address</legend>
-            <label><img src="images/icons/email.jpg"/> E-mail Address:</label>
-            <input id="email" type="text" />
-            <input type="button" id="submit_button" value="Find Quiz Sessions"/>
-        </fieldset>
-    </form>  
-</section>
-
-<section id="quiz_event_list">
-    
-    
-</section>
-
+    </section>
+</div>
 <jsp:include page="inc/footer-inc.jsp" flush="false" />

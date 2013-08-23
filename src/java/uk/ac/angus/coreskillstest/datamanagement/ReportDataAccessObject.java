@@ -80,41 +80,41 @@ public class ReportDataAccessObject implements JSONInterface
         return response;
     }
 
+    
+    // Stub Code: Full implementation of interface is not required at this stage.
     @Override
     public ServerClientResponse getAllItems() 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public ServerClientResponse deleteSingleItem(int itemId) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //
     }
 
     @Override
     public ServerClientResponse deleteMultipleItems(String jsonString) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //
     }
 
     @Override
     public ServerClientResponse updateItem(String jsonString) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //
     }
 
     @Override
     public ServerClientResponse updateItem(String jsonObject, int itemId)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public ServerClientResponse getSingleItem(int itemId) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    
 }

@@ -1,26 +1,19 @@
-<!doctype html>
+<% pageContext.getSession().setAttribute("PageTitle", "Home Page"); %>
+<% pageContext.getSession().setAttribute("PageHeading", "Core Skills Quiz System");%>
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Quiz System Homepage</title>
-</head>
-<body>
-    <section id="Main Heading">
-        <!-- Include page header here -->
-    </section>
-    <section id="Navigation">
-        <nav id="TabbedLinks">
-            <ul>
-                <li>Create a New Quiz</li>
-                <li>Manage Quizzes</li>
-                <li>Manage Users</li>
-                <li>Create a Quiz Event</li>
-            </ul>  
-        </nav>
-    </section>
-    <section id="body">
-        
-        
-    </section>
-</body>
-</html>
+<jsp:include page="inc/header-inc.jsp" flush="false" />
+<jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
+<jsp:include page="inc/navigation-inc.jsp" flush="false" />
+
+<h1>Core Skills Testing System</h1>
+
+<h2>What is the Core Skills Testing System?</h2>
+<p>The purpose of this system is as a replacement for the current Core Skills Test used at Angus College.  This version represents
+    version 1.0, which has been defined as the minimum viable product.  This is the minimum set of functionality required for a 
+    working and useful quiz system.  The system is rather basic, but a road-map of further features has been discussed and agreed to
+    extend the functionality of the system in subsequent versions of the software.</p>
+
+<p>Welcome to the Core Skills testing system.  Please select an option from the menu to begin.</p>
+
+
+<jsp:include page="inc/footer-inc.jsp" flush="false" />

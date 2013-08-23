@@ -20,6 +20,7 @@
         // First deal with loading JavaScript resources
         String scriptResource = request.getRequestURI();
         String[] pathParameters = scriptResource.split("/");
+
         String directoryName = pathParameters[2].replaceAll(".jsp", "");
         String jsPath = "/js/"+directoryName;
         String cssPath = "css/"+directoryName+".css";

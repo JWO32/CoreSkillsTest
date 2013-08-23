@@ -1,39 +1,20 @@
-<!doctype html>
+<% pageContext.getSession().setAttribute("PageTitle", "Quiz Creator"); %>
+<% pageContext.getSession().setAttribute("PageHeading", "Create/Edit Quiz");%>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<jsp:include page="inc/header-inc.jsp" flush="false" />
+<jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
+<jsp:include page="inc/navigation-inc.jsp" flush="false" />
 
-<title>Create a Quiz</title>
-
-<!-- Stylesheets -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
-<link rel="stylesheet" href="css/quizcreate.css" type="text/css"/>
-<link rel="stylesheet" href="css/main.css" type="text/css"/>
-
-<!-- JavaScript Library Imports -->
-
-<!-- jQuery and JQuery UI Imports -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script type="text/javascript"  src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-<!-- Custom Imports: TODO: Reduce for final version! -->
-<script type="text/javascript" src="js/quizmanager/Customlib.js"></script>
-<script type="text/javascript" src="js/quizmanager/QuizController.js"></script>
-<script type="text/javascript" src="js/quizmanager/QuizModel.js"></script>
-<script type="text/javascript" src="js/quizmanager/QuizView.js"></script>
-
-<!-- Controller Class -->
+<!-- Controller -->
 <script type="text/javascript">
 $(document).ready(function()
 {	
 	var QuestionListElement = $('#QuestionList');
 
 	CurrentQuiz =  new Quiz(); //Declare the model
-	QLM = new QuestionListManager(QuestionListElement); //Declare View Manager
+	var QLM = new QuestionListManager(QuestionListElement); //Declare View Manager
 
-	Controller = new QuizController(CurrentQuiz, QLM); // Declare the App Controller
+	var Controller = new QuizController(CurrentQuiz, QLM); // Declare the App Controller
 	
 	Controller.init();
 	
@@ -75,24 +56,18 @@ $(document).ready(function()
 	
 });
 </script>
-</head>
-<body>
-<div id="mainbody">
-<header>
-<h1>Create a New Quiz</h1>
-</header>
 <section id="QuizConfiguration">
 <form id="quiz_details">
 <fieldset>
 <legend> Quiz Details:</legend>
 <div id="quiz_details_leftcolumn">
-<ol>
+<ul>
 	<li>
 		<label>Title:</label>
 		<input type="text" size="50" name="quiz_title"  class="text ui-widget-content ui-corner-all"></input>
 	</li>
 	<li>
-		<label>Level:</label>
+		<label>Quiz Category:</label>
 		<!-- Download these values from the server -->
 		<select name="quiz_level" class="text ui-widget-content ui-corner-all">
 			<option>No Level</option>
@@ -102,21 +77,27 @@ $(document).ready(function()
 			<option>SCQF Level 6</option>
 		</select>
 	</li>
-</ol>
+</ul>
 </div>
 <div id="quiz_details_rightcolumn">
-<ol>
+<ul>
 	<li>
 		<label>Subject:</label>
+        </li>
+        <li>
 		<input type="text" size="50" name="quiz_subject" class="text ui-widget-content ui-corner-all"></input>
 	</li>
 	<li>
 		<label>Duration:</label>
+        </li>
+        <li>
 		<input type="number" name="quiz_hours" value="0" class="text ui-widget-content ui-corner-all"></input> hour
-		<input type="number" name="quiz_minutes" value="45" class="text ui-widget-content ui-corner-all"></input> minute
+		<input type="number" name="quiz_minutes" value="45" class="text ui-widget-content ui-corner-all"></input> minute/s
 	</li>
-</ol>
-
+</ul>
+    <div>
+        <input type="button" id="add_quiz_rule" value="Add New Rule"></input>
+    </div>
 </div>
 </fieldset>
 <div id="quiz_buttons">
@@ -140,11 +121,9 @@ $(document).ready(function()
 
 </div>
 
-<footer>
-Copyright &copy James Oliver and Dundee University 2013
-</footer>
-
+<div id="ResultRuleDialog" style="display:none">
+    
+    
 </div>
 
-</body>
-</html>
+<jsp:include page="inc/footer-inc.jsp" flush="false" />

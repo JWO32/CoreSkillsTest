@@ -1,26 +1,11 @@
-<!doctype html>
-<head>
-<!-- Stylesheets -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
-<link rel="stylesheet" href="css/usermanager.css" type="text/css"/>
-<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<% pageContext.getSession().setAttribute("PageTitle", "Manage Quiz Users"); %>
+<% pageContext.getSession().setAttribute("PageHeading", "Manage Users");%>
 
-<!-- JavaScript Library Imports -->
-<script type="text/javascript" src="js/usermanager/group.js"></script>
-<script type="text/javascript" src="js/usermanager/user.js"></script>
-<script type="text/javascript" src="js/usermanager/usermanagercontroller.js"></script>
-<script type="text/javascript" src="js/usermanager/usermanagermodel.js"></script>
-<script type="text/javascript" src="js/usermanager/usermanagerview.js"></script>
-<script type="text/javascript" src="js/usermanager/userdialogue.js"></script>
-<script type="text/javascript" src="js/usermanager/groupdialogue.js"></script>
-
-<!-- jQuery and JQuery UI Imports -->
-<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
-<script type="text/javascript"  src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<jsp:include page="inc/header-inc.jsp" flush="false" />
+<jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
+<jsp:include page="inc/navigation-inc.jsp" flush="false" />
 
 <script type="text/javascript" src="js/jstree-plugin/jquery.jstree.js"></script>
-<!--    -->
 
 <script type="text/javascript">
     $(document).ready(function()
@@ -67,28 +52,6 @@
         
     });
 </script>
-<title>Quiz Management: User Management</title>
-</head>
-
-<body>
-    <div id="MainContent">
-    <section id="MainHeading">        
-        <!-- Include page header here --> 
-        <header>
-            <h1>Manage Users and Groups</h1>
-        </header>
-    </section>
-    <section id="Navigation">
-        <nav id="TabbedLinks">
-            <ul>
-                <li><a href="#">Home Page</a></li>
-                <li><a href="#">Create a New Quiz</a></li>
-                <li><a href="#">Manage Quizzes</a></li>
-                <li><a href="#">Manage Users</a></li>
-                <li><a href="#">Create a Quiz Event</a></li>
-            </ul>  
-        </nav>
-    </section>
    
     <section id="content_body">
         <form>

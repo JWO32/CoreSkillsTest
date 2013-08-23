@@ -5,13 +5,13 @@
     <head>    
         <!-- Stylesheets -->
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css"/>
-        <link rel="stylesheet" href="css/quizdelivery.css" type="text/css"/>
+        <link rel="stylesheet" href="css/quizplayer.css" type="text/css"/>
         <link rel="stylesheet" href="css/main.css" type="text/css"/>
         
-        <script type="text/javascript" src="js/quizdelivery/quizmanager.js"></script>
-        <script type="text/javascript" src="js/quizdelivery/quizplayermodel.js"></script>
-        <script type="text/javascript" src="js/quizdelivery/quizplayerview.js"></script>
-        <script type="text/javascript" src="js/quizdelivery/quizresult.js"></script>
+        <script type="text/javascript" src="js/quizplayer/quizmanager.js"></script>
+        <script type="text/javascript" src="js/quizplayer/quizplayermodel.js"></script>
+        <script type="text/javascript" src="js/quizplayer/quizplayerview.js"></script>
+        <script type="text/javascript" src="js/quizplayer/quizresult.js"></script>
       
         <!-- jQuery and JQuery UI Imports -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

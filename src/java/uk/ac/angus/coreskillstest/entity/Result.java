@@ -32,7 +32,7 @@ import javax.persistence.TemporalType;
         @NamedQuery(name="Result.deleteResultById",
         query="DELETE FROM QUIZ_RESULT r WHERE r.ResultId=:id"),
         @NamedQuery(name="Result.getResultsByGroupIdAndQuizId",
-        query="SELECT r FROM QUIZ_RESULT r JOIN r.LinkedUser lu JOIN lu.Group g JOIN r.LinkedQuiz q WHERE g.GroupID = :groupId AND q.QuizId = :quizId"),
+        query="SELECT r FROM QUIZ_RESULT r JOIN r.LinkedUser lu JOIN lu.Group g JOIN r.LinkedQuiz q WHERE g.GroupID = :groupId AND q.QuizId = :quizId ORDER BY lu.LastName"),
         @NamedQuery(name="Result.getResultByUserId",
         query="SELECT r FROM QUIZ_RESULT r WHERE r.LinkedUser.UserId = :userId")
 })

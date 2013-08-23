@@ -29,6 +29,7 @@ public class ResultReportToJSONTypeAdapter implements JsonSerializer<Result>
     {
         JsonObject jo = new JsonObject();
         
+        jo.addProperty("ResultId", src.getResultId());
         jo.addProperty("FirstName", src.getQuizUser().getFirstName());
         jo.addProperty("LastName", src.getQuizUser().getLastName());
         jo.addProperty("QuizTitle", src.getLinkedQuiz().getQuizTitle());

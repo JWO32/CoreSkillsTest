@@ -1,1 +1,26 @@
 
+#report_options ul
+{
+    list-style: none;
+}
+
+#report_details
+{
+    float: left;
+    width: 49%;
+    clear: none;
+    
+}
+
+
+#report_dates
+{
+    float: right;
+    width: 49%;
+    
+}
+
+#buttons
+{
+    clear: both;
+}

@@ -42,6 +42,15 @@ ReportManager = (function($)
             ReportManager.Model.setQuizList(quizList);
             ReportManager.View.renderQuizList(quizList);
         },
+        displayResultReport: function(results)
+        {
+            //Need to clear the current cache of results
+            ReportManager.View.clearCache();
+            //
+            ReportManager.View.cacheResults(results);
+            ReportManager.View.renderResults();
+            
+        },
         downloadQuizEvent: function ()
         {
             $.ajax({
@@ -88,10 +97,7 @@ ReportManager = (function($)
                data:'groupId='+groupId+'&quizId='+quizId,
                method: 'GET',
                dataType: 'json',
-               success: function()
-               {
-                   
-               },
+               success: this.displayResultReport,
                error: function(data)
                {
                   var errorObj = jQuery.parseJSON(data.responseText);
@@ -108,11 +114,15 @@ ReportManager = (function($)
         },
         clearCurrentReportEvent: function ()
         {
-            
+            ReportManager.View.clearReport();
         }
     };
 })(jQuery);
 
+
+// Requirement for a Model?
+// Probably better/more direct to allow the View to maintain a cache that is
+// replaced with every download
 ReportManager.Model = (function()
 {
     var GroupList = [];
@@ -152,6 +162,30 @@ ReportManager.View = (function ()
     var ReportCache = [];
     
     return{
+        renderResults: function ()
+        {
+            if(ReportCache.length === 0)
+            {
+                $.alert('Report Error','No Results to display');
+                return;
+            }
+            
+            $('#result_wrapper').empty();
+                
+            $('#result_wrapper').append('<h3>Results</h3>');
+            $('#result_wrapper').append('<p>Group: <strong><groupid></strong></p>');
+            $('#result_wrapper').append('<p>Quiz: <strong><quizid></strong></p>');
+            
+            for(var i = 0; i < ReportCache.length; i++)
+            {
+                $('#result_wrapper').append(ReportCache[i]);           
+            }
+            
+        },
+        clearCache: function ()
+        {
+            ReportCache = [];
+        },
         renderGroupList: function (groupList)
         {
             $('#group_list').empty();
@@ -174,7 +208,19 @@ ReportManager.View = (function ()
         },
         cacheResults: function (resultList)
         {
-            
+            for(var i = 0;i< resultList.length; i++)
+            {
+                var templateSource = $('#result_template').html();
+                var template = Handlebars.compile(templateSource);
+
+                var templateHTML = template(resultList[i]);
+                
+                ReportCache.push(templateHTML);
+            }
+        },
+        clearReport: function ()
+        {
+          $('#result_wrapper').empty();     
         },
         getSelectedGroup: function ()
         {

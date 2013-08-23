@@ -42,8 +42,7 @@ QuizController = function(model, view)
                         QuizModel.setTitle(allQuizDetails[0].value);
                         QuizModel.setQuizLevel(allQuizDetails[1].value);
                         QuizModel.setSubject(allQuizDetails[2].value);
-                        QuizModel.calcMinutes(allQuizDetails[3].value, allQuizDetails[4].value);
-                        
+                        QuizModel.calcMinutes(allQuizDetails[3].value, allQuizDetails[4].value);                      
                 },
 
                 /**
@@ -54,7 +53,6 @@ QuizController = function(model, view)
                  * for transmission when link returns.
                  * @returns
                  */
-
                 backgroundSaveEvent: function()
                 {
                         $.ajax({

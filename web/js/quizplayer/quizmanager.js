@@ -177,7 +177,7 @@ QuizPlayerManager = function ()
                     View.renderProgress(CurrentQuestion, Model.getNumberOfQuestions());
                 }
                 else
-                    alert('Reached end of Quiz'); // Blocks main thread!  Use jQuery dialogue
+                    $.alert('End of Quiz','You have reached the end of the quiz'); // Blocks main thread!  Use jQuery dialogue
 
                 nextQuestionResponse = Model.getResponse(nextQuestion);
 
@@ -188,7 +188,7 @@ QuizPlayerManager = function ()
 
             }else
             {
-                //Display jQuery Dialogue asking user for an answer
+                $.alert('No Answer Selected', 'Please select an option before continuing.');//Display jQuery Dialogue asking user for an answer
             }
         },
         previousQuestionEvent: function ()
@@ -210,7 +210,7 @@ QuizPlayerManager = function ()
                     View.renderProgress(CurrentQuestion, Model.getNumberOfQuestions());
                 }
                 else
-                    alert('At the start of Quiz!'); // Blocks main thread! Use jQuery dialogue
+                    $.alert('Start of Quiz', 'You are already at the start of the Quiz'); // Blocks main thread! Use jQuery dialogue
 
                 previousQuestionResponse = Model.getResponse(previousQuestion);
 
@@ -221,9 +221,8 @@ QuizPlayerManager = function ()
 
             }else
             {
-
+                $.alert('No Answer Selected', 'Please select an option before continuing.');
             }
-
         },
         updateTimeEvent: function ()
         {               
