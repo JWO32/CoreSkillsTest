@@ -10,7 +10,6 @@
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
         <script type="text/javascript" src="js/handlebars.js"/></script>
-        <script type="text/javascript" src="js/js-libs/jquery-extensions.js"></script>
       
     <%
         //
@@ -20,20 +19,28 @@
         // First deal with loading JavaScript resources
         String scriptResource = request.getRequestURI();
         String[] pathParameters = scriptResource.split("/");
-
-        String directoryName = pathParameters[2].replaceAll(".jsp", "");
-        String jsPath = "/js/"+directoryName;
-        String cssPath = "css/"+directoryName+".css";
-
-        Set<String> javaScriptFiles = pageContext.getServletContext().getResourcePaths(jsPath);
-
-        for(String currentFile : javaScriptFiles)
+        String cssPath = "";
+        
+        if(pathParameters.length < 3)
         {
-            //Need to remove the leading slash to get a relative path for the web browser to follow
-            //Bit of a hack but a better way will take too long to implement.
-            currentFile = currentFile.substring(1);
-            %><script type="text/javascript" src="<%=currentFile %>"></script>
-            <%
+            
+            
+        }else
+        {
+            String directoryName = pathParameters[2].replaceAll(".jsp", "");
+            String jsPath = "/js/"+directoryName;
+            cssPath = "css/"+directoryName+".css";
+
+            Set<String> javaScriptFiles = pageContext.getServletContext().getResourcePaths(jsPath);
+
+            for(String currentFile : javaScriptFiles)
+            {
+                //Need to remove the leading slash to get a relative path for the web browser to follow
+                //Bit of a hack but a better way will take too long to implement.
+                currentFile = currentFile.substring(1);
+                %><script type="text/javascript" src="<%=currentFile %>"></script>
+                <%
+            }
         }
      %>
         

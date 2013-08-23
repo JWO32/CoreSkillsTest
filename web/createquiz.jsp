@@ -66,17 +66,6 @@ $(document).ready(function()
 		<label>Title:</label>
 		<input type="text" size="50" name="quiz_title"  class="text ui-widget-content ui-corner-all"></input>
 	</li>
-	<li>
-		<label>Quiz Category:</label>
-		<!-- Download these values from the server -->
-		<select name="quiz_level" class="text ui-widget-content ui-corner-all">
-			<option>No Level</option>
-			<option>SCQF Level 3</option>
-			<option>SCQF Level 4</option>
-			<option>SCQF Level 5</option>
-			<option>SCQF Level 6</option>
-		</select>
-	</li>
 </ul>
 </div>
 <div id="quiz_details_rightcolumn">
@@ -95,17 +84,19 @@ $(document).ready(function()
 		<input type="number" name="quiz_minutes" value="45" class="text ui-widget-content ui-corner-all"></input> minute/s
 	</li>
 </ul>
-    <div>
-        <input type="button" id="add_quiz_rule" value="Add New Rule"></input>
-    </div>
+    
+<input type="button" id="add_quiz_rule" value="Add New Rule"></input>
+
 </div>
-</fieldset>
 <div id="quiz_buttons">
 <input type="button" id="quiz_add_question" value="Add Question"></input>
 <input type="button" id="quiz_edit_question" value="Edit Question"></input>
 <input type="button" id="quiz_delete_selected_question" value="Delete Question/s"></input>
 <input type="button" id="quiz_save" value="Save Quiz" value="Save Quiz"></input>
 </div>
+
+</fieldset>
+
 </form>
 </section>
 

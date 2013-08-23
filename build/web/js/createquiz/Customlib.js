@@ -45,7 +45,7 @@ var questionDialogue = function(callBack, edit, question)
 	 */
 	function checkAnswerSelected(checkboxGroup)
 	{
-		if (checkboxGroup.length == 0)
+		if (checkboxGroup.length === 0)
 		{
 			updateTip('Please select a correct answer to the question.');
 			return false;
@@ -55,7 +55,7 @@ var questionDialogue = function(callBack, edit, question)
 
 	/**
 	 * Check given input element against a regular expression - this might or
-	 * might not be needed.
+	 * might not be needed.  Retain for further development...
 	 * 
 	 * @param inputElement
 	 * @param regex
@@ -85,26 +85,35 @@ var questionDialogue = function(callBack, edit, question)
 	        .dialog(
                 {
                     autoOpen: false,
-                    height: 1000,
-                    width: 900,
+                    height: "auto",
+                    width: "auto",
                     modal: true,
                     title: 'Create/Edit Question',
                     show: 'blind',
                     hide: 'blind',
                     open: function()
                     {
-	                    // If the editable question is set then add the
-	                    // options into the form fields
+                        // If the editable question is set then add the
+                        // options into the form fields
                     	// If not, reset the form to default values
                     	//
-	                    if (editQuestion != null)
+	                    if (editQuestion !== null)
 	                    {
 	                    	$('#question_text').val(editQuestion.QuestionText);
 	                    	$('#scqf_level option:contains('+editQuestion.QuestionLevel+')').prop('selected', true);
 	                    	$('#category option:contains('+editQuestion.QuestionCategory+')').prop('selected', true);
 	                    	$('#mark').val(editQuestion.QuestionScore);
 	                    	
-	                    	
+                                for(var i=0; i < editQuestion.QuestionOptions.length; i++)
+                                {
+                                    var currentOption = i+1;
+                                    $('#option'+currentOption).val(editQuestion.QuestionOptions[i].OptionText);
+                                    
+                                    if(editQuestion.QuestionOptions[i].CorrectOption === true)
+                                        $('#option'+currentOption+'correct').prop('checked', true);
+                                    else
+                                        $('#option'+currentOption+'correct').prop('checked', false);
+                                }	
 	                    }else
 	                    {
 	                    	//Reset all Attributes (the quick way)
@@ -126,8 +135,8 @@ var questionDialogue = function(callBack, edit, question)
                         ValidationTip = $('#form_validation_tip');
 
                         /**
-						 * Validation
-						 */
+                        * Validation
+                        */
                         // The question text entered by the user or
                         // pre-inserted by editing
                         var QuestionTextElement = $('#question_text');
@@ -160,6 +169,12 @@ var questionDialogue = function(callBack, edit, question)
 	                                .serializeArray();
 	                        
 	                        var QuestionDetails = new Question();
+                                
+                                if(editQuestion !== null)
+                                {
+                                    QuestionDetails.QuestionId = editQuestion.QuestionId;
+                                }
+                                
 	                        QuestionDetails.QuestionText = AllQuestionDetails[0].value;
 	                        QuestionDetails.QuestionLevel = AllQuestionDetails[1].value;
 	                        QuestionDetails.QuestionCategory = AllQuestionDetails[2].value;
@@ -227,4 +242,37 @@ var questionDialogue = function(callBack, edit, question)
                     $(this).dialog("destroy");
             }
          }).dialog("open");
+};
+
+
+var ResultRuleDialog = function(callback, edit, rule)
+{
+    $('#result_rule_dialog').dialog({
+        autoOpen: false,
+        height: "auto",
+        width: "auto",
+        modal: true,
+        title: 'Create/Edit Question',
+        show: 'blind',
+        hide: 'blind',
+        open: function()
+        {
+            
+        },
+        buttons: {
+            "OK": function ()
+            {
+                
+                
+            },
+            "Cancel": function()
+            {
+                
+            }
+        },
+        close: function ()
+        {
+            $(this).dialog("destroy");
+        }
+    }).dialog("open");
 };

@@ -14,13 +14,9 @@
  * This static sets the available levels for quizzes, this will change to a list of levels downloaded from
  * the server, once the server component has been created.
  */
-var SCQFLevelDefinition = function()
+var SCQFLevelDefinition = 
 {
-        $.ajax(
-            
-        );
-    
-	Level: ["SCQF Level 3", "SCQF Level 4", "SCQF Level 5", "SCQF Level 6", "SCQF Level 7", "SCQF Level 8"]	
+	Level: ["SCQF Level 3", "SCQF Level 4", "SCQF Level 5", "SCQF Level 6", "SCQF Level 7", "SCQF Level 8"]
 };
 
 
@@ -56,7 +52,7 @@ Quiz.prototype.calcMinutes = function(hours, minutes)
 Quiz.prototype.setQuizLevel = function(level)
 {
     this.QuizLevel = level;
-}
+};
 
 Quiz.prototype.setTitle = function(title)
 {
@@ -82,6 +78,7 @@ Quiz.prototype.getNextUIKey = function()
 Quiz.prototype.addQuestion = function(newQuestion)
 {
 	var arrayIndex = this.getNextUIKey();
+        newQuestion.QuestionId = arrayIndex;
 	this.Questions[arrayIndex] = newQuestion;
 	this.NumberOfQuestions++;
 };
@@ -91,7 +88,7 @@ Quiz.prototype.deleteQuestion = function(questionID)
 	delete this.Questions[questionID];
 };
 
-Quiz.prototype.replaceQuestion = function(questionID, replacementQuestion)
+Quiz.prototype.updateQuestion = function(questionID, replacementQuestion)
 {
 	delete this.Questions[questionID];
 	

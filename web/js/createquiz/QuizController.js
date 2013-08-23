@@ -16,6 +16,7 @@ QuizController = function(model, view)
                         // Load the Question Designer form into designated element.
                         //
                         $('#QuestionDesigner').empty().load('js/templ/new_question.html');
+                        $('#ResultRuleDialog').empty().load('js/templ/result_rule.html');
                 },
 
                 addQuestionEvent: function(callBack)
@@ -38,7 +39,7 @@ QuizController = function(model, view)
                         var allQuizDetails = [];
 
                         allQuizDetails = QuizView.getQuizDetails();
-                        
+           
                         QuizModel.setTitle(allQuizDetails[0].value);
                         QuizModel.setQuizLevel(allQuizDetails[1].value);
                         QuizModel.setSubject(allQuizDetails[2].value);
@@ -65,12 +66,26 @@ QuizController = function(model, view)
                 */
                 deleteQuestionEvent: function()
                 {
-
-                        QuizView.render();
+                    var deleteQuestion = QuizView.getSelectedQuestionsId();
+                    
+                    if(Object.keys(QuizModel.Questions).length === 0)
+                    {
+                        $.alert('No Questions', 'Please enter some questions into your quiz.');
+                        return;
+                    }
+                    
+                    if(typeof deleteQuestion === 'undefined')
+                    {
+                        $.alert('No Question Selected', 'Please click on a question to delete.');
+                        return;
+                    }
+                    
+                    QuizModel.deleteQuestion(deleteQuestion);
+                    QuizView.render(QuizModel.Questions);
                 },
 
                 /*
-                * Compile the Quiz into XML format and send to the server.
+                * Compile the Quiz into JSON format and send to the server.
                 * 
                 * If everything works ok, set a timer to save the updated quiz every 60s
                 * 
@@ -83,7 +98,18 @@ QuizController = function(model, view)
                     //var quiz_xml = QuizModel.generateXML();
 
                     var jsonQuizModel = new Quiz();
-
+                    
+                    if(QuizModel.QuizTitle === '')
+                    {
+                        $.alert('No Title', 'Please enter a title for the quiz.');
+                        return;
+                    }
+                    
+                    if(QuizModel.QuizSubject === '')
+                    {
+                        $.alert('No Subject', 'Please enter a subject for the quiz');
+                    }
+                    
                     //Bit of a hack to make the JSON output a bit easier to manipulate on the server
                     //Copy all details into a new Quiz object but ensure that the Questions are an 
                     //array rather than a javascript object
@@ -93,12 +119,17 @@ QuizController = function(model, view)
                     
                     jsonQuizModel.Questions = [];
                     
+                    if(Object.keys(QuizModel.Questions).length === 0)
+                    {
+                        $.alert('No Questions', 'Please enter some questions into your quiz.');
+                        return;
+                    }
+                    
                     $.each(QuizModel.Questions, function(key, Question){
                        
                        arrayIndex = jsonQuizModel.Questions.length;
                        
                        jsonQuizModel.Questions[arrayIndex] = Question;
-                        
                     });
                     
 
@@ -113,12 +144,12 @@ QuizController = function(model, view)
                             error: function(data)
                             {
                                     // TODO: Replace with jQuery Dialogue
-                                    alert('Server reports an error - unable to save Quiz');
+                                    $.alert('Server Error', 'Unable to save quiz');
                             },
                             success: function()
                             {
                                     // TODO: Replace with jQuery Dialogue
-                                    alert('Server reports Quiz saved');
+                                    $.alert('Quiz Saved', 'Your quiz has been saved successfully');
                                     timerId = (backgroundSaveEvent, SaveTimer);
                             }				
                     });				
@@ -135,7 +166,7 @@ QuizController = function(model, view)
                 {			
                         if(Object.keys(CurrentQuiz.Questions).length === 0)
                         {
-                                alert('No Questions to Edit!');
+                                $.alert('Please add some Questions', 'There are no Questions to Edit!');
                                 return;
                         }else
                         {
@@ -155,14 +186,11 @@ QuizController = function(model, view)
                     QuizView.render(CurrentQuiz.Questions);
                 },
 
-                triggerEditQuestionCallback: function()
+                triggerEditQuestionCallback: function(editedQuestion)
                 {
-
-                },
-
-                triggerValidateQuizDetailsCallback: function()
-                {
-
+                    
+                    QuizModel.updateQuestion(editedQuestion.QuestionId, editedQuestion);
+                    QuizView.render(QuizModel.Questions);
                 }
         };
 };

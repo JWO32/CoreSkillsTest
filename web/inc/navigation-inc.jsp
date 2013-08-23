@@ -8,6 +8,7 @@
             <li><a href="usermanager.jsp">Manage Users</a></li>
             <li><a href="setupquiz.jsp">Create a Quiz Event</a></li>
             <li><a href="report.jsp">View Reports</a></li>
+            <li><a href="about.jsp">About the Core Skills Test</a></li>
         </ul>  
     </nav>
 </section>
