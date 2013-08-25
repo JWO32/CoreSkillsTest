@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 
 
 /**
@@ -92,7 +94,7 @@ public class ResultManager
         
         int quizId = QuizResponse.getQuizId();      
         
-        quiz = qDAO.getQuizById(quizId);
+        quiz = qDAO.getQuizObjectById(quizId);
 
         if(quiz == null)
         {
@@ -178,20 +180,41 @@ public class ResultManager
         totalMarks = SelectedQuiz.getTotalMarks();   
         
         List<Question> questionList = SelectedQuiz.getQuestions();
+        List<QuestionUserResponse> responseList = QuizResponse.getResponses();
         
-        for(Question currentQuestion : questionList)
-        {
-            currentQuestionId = currentQuestion.getQuestionId();
-            
-            currentUserResponse = QuizResponse.getResponseByQuestionId(currentQuestionId);
-
-            List<Integer> correctOptionIds = currentQuestion.getCorrectOptions();
-            List<Integer> userSelectionIds = currentUserResponse.getOptionIdList();
-            questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
+        //Bugfix: Deal with situations where the quiz is submitted when not complete.
+        //
+        // Go through each response.  Find the corresponding question (using primary key ids).
+        // Check to see if the ids of the options the user selected as correct are the same
+        // as the correct options from the database.
          
+        for(QuestionUserResponse currentResponse: responseList)
+        {
+            currentQuestionId = currentResponse.getQuestionId();
+            
+            Question currentQuestion = findQuestionById(questionList, currentQuestionId);
+            
+            List<Integer> correctOptionIds = currentQuestion.getCorrectOptions();
+            List<Integer> userSelectionIds = currentResponse.getOptionIdList();
+            questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
+            
             if(questionIsCorrect)
                 Score++;
-        }     
+        }
+        
+//        for(Question currentQuestion : questionList)
+//        {
+//            currentQuestionId = currentQuestion.getQuestionId();
+//            
+//            currentUserResponse = QuizResponse.getResponseByQuestionId(currentQuestionId);
+//
+//            List<Integer> correctOptionIds = currentQuestion.getCorrectOptions();
+//            List<Integer> userSelectionIds = currentUserResponse.getOptionIdList();
+//            questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
+//         
+//            if(questionIsCorrect)
+//                Score++;
+//        }     
         
         // If the quiz object has rules associated with it
         // run the rules to determine the feedback to the student
@@ -211,11 +234,38 @@ public class ResultManager
     }
     
     /**
+     * This method has been placed here for convenience, eventually remove to Quiz
+     * class
+     * 
+     * Search for the question that matches the question id.  Very simple implementation
+     * probably inefficient, but question lists are never going to be large enough that
+     * this becomes a serious problem.
+     * 
+     */
+    public Question findQuestionById(List<Question> questionList, int searchId)
+    {
+        Question q = null;
+        
+        for(Question currentQuestion : questionList)
+        {
+            if(currentQuestion.getQuestionId() == searchId)
+            {
+                q = currentQuestion;
+            }
+        }
+        
+        return q;
+    }
+    
+    /**
      * Return the current instance of the QuizResult Object
      * @return 
      */
-    public Result getClientResult()
+    public ServerClientResponse getClientResult()
     {
+        ServerClientResponse response = new ServerClientResponse();
+        String responseJson;
+        
         // Check to see if the current quiz configuration allows the result to be returned.
         // If it does, we need:
         // String (if any)
@@ -224,13 +274,19 @@ public class ResultManager
         // Percentage
         if(SelectedQuizConfiguration.getReturnResult())
         {
+            responseJson = ResultDataAccessObject.getResultObjectasJSON(QuizResult);
             QuizResult.setResultStatus(Result.SUCCESS_RESULT_AVAILABLE);
+            
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+            response.setClientJson(responseJson);
         }else
         {
             QuizResult.setResultStatus(Result.SUCCESS_RESULT_NOT_AVAILABLE);
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_RESPONSE);
+            response.setStatusMessage(ServerClientResponseFactory.formatStatusJSON("Result Not Available", "Your result has been processed but has been witheld.  Please close the window when you are ready."));
         }
         
-        return QuizResult;
+        return response;
     }
     
     /**
@@ -273,8 +329,20 @@ public class ResultManager
         {
             if(currentRule.appliesTo(Score))
             {
-                //ruleFeedback = currentRule.getFeedback();
+                // If the Rule is pass or fail
+                if(currentRule.getPassFail() == true)
+                {
+                    ruleFeedback = "Pass";
+                }else
+                {
+                    ruleFeedback = "Fail";
+                }
+                
+                //If the rule is not pass or fail then apply rule feedback
+                if(currentRule.getPassFail() == false)
+                    ruleFeedback = currentRule.getFeedback();
             }
+            
         }
         
         if(ruleFeedback != null)
@@ -282,7 +350,7 @@ public class ResultManager
         else
         {
             //Set default feedback
-            //QuizResult.setLinkedFeedback(String.getDefaultFeedback());
+            QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
         }
     }
     

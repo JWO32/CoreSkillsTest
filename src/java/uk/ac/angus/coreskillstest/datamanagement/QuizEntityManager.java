@@ -1,10 +1,13 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
@@ -273,9 +276,26 @@ public class QuizEntityManager<T>
      * @param queryParameters
      * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException 
      */
-    public void editObject(String namedQuery, Map queryParameters) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException
+    public void editObjectbyId(int objectId, T editedObject, Class<T> objClass) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException
     {
+        EntityManager em = EntityManagerFactory.createEntityManager();
+        T objectFromDB;
         
+        objectFromDB = (T) em.find(objClass, objectId);
+
+        try
+        {
+            em.getTransaction().begin();  
+            editedObject = em.merge(objectFromDB);
+            em.getTransaction().commit();
+        }catch(Exception ex)
+        {
+            System.err.println("Unable to edit object");
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException("Editing of Quiz was unsuccessful");
+        }finally
+        {
+            em.close();
+        }
     }
     
     /**

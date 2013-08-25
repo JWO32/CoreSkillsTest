@@ -94,7 +94,7 @@ public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
     {
         QuizDataAccessObject qDAO = new QuizDataAccessObject();
         
-        Quiz linkedQuiz = qDAO.getQuizById(quizId);
+        Quiz linkedQuiz = qDAO.getQuizObjectById(quizId);
         
         return linkedQuiz;
     }

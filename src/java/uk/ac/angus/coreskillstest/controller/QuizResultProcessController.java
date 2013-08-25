@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 
 import uk.ac.angus.coreskillstest.quizmanagement.*;
 import uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException;
@@ -67,8 +69,8 @@ public class QuizResultProcessController extends HttpServlet
     {
         String path;  
         path = req.getRequestURI();
-        PrintWriter output;
-        output = resp.getWriter();
+ 
+        ServerClientResponse response = new ServerClientResponse();
         ResultManager rm = new ResultManager();
         String[] pathComponents = path.split("/");
         String quizResultJSON;
@@ -76,32 +78,56 @@ public class QuizResultProcessController extends HttpServlet
         switch(pathComponents[3])
         {
             case "add":              
-                quizResultJSON = req.getParameter("response");               
+                quizResultJSON = req.getParameter("response");
+                //
+                // catching exceptions at this level so that errors can be returned to the client
+                // without missing any exceptions, should make it clear to the user when their
+                // quiz has not been processed.
+                //
                 try
                 {
                     rm.getQuizResources(quizResultJSON);
                     rm.processQuizResult();
-                    quizResultJSON = rm.getResultJson();
+
+                    response = rm.getClientResult();
                     
-                    output.write(quizResultJSON);
-                    resp.setStatus(HttpServletResponse.SC_OK);
-                    resp.setContentType("text/json");
+                    setResponse(response, resp);
+
                 }catch(QuizResourceNotFoundException ex)
                 {
-                    String errorMessage = ex.getMessage();
-                    output.write(errorMessage);
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    resp.setContentType("text/html");
+                    System.err.println("Error Processing Result");
+                    System.err.println(ex.getMessage());
+                    response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+                    response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Result Processing Error", "Quiz resource not found, cannot process result"));
+                    setResponse(response, resp);
                 }catch(Exception ex)
                 {
-                    System.err.println("Error processing result");
+                    System.err.println("Error Processing Result");
                     System.err.println(ex.getMessage());
-                } finally
-                {
-                    output.close();
-                }
+                    response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+                    response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Result Processing Error", "Quiz resource not found, cannot process result"));
+                    setResponse(response, resp);
+                } 
                 break;
         }  
+    }
+    
+    
+    private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
+    {
+        try (PrintWriter output = resp.getWriter()) {
+            if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_ERROR)
+            {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getStatusMessage());
+            }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_OK)
+            {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getClientJson());
+            }
+        }
     }
     
     @Override

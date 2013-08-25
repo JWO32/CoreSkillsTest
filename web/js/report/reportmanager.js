@@ -184,6 +184,7 @@ ReportManager.View = (function ()
         },
         clearCache: function ()
         {
+            delete ReportCache;
             ReportCache = [];
         },
         renderGroupList: function (groupList)
@@ -208,11 +209,11 @@ ReportManager.View = (function ()
         },
         cacheResults: function (resultList)
         {
+            var templateSource = $('#result_template').html();
+            var template = Handlebars.compile(templateSource);
+                
             for(var i = 0;i< resultList.length; i++)
             {
-                var templateSource = $('#result_template').html();
-                var template = Handlebars.compile(templateSource);
-
                 var templateHTML = template(resultList[i]);
                 
                 ReportCache.push(templateHTML);

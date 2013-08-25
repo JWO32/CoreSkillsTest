@@ -54,6 +54,16 @@ public class ResultRule implements Serializable
         
     }
     
+    public void setPassFail(boolean passFail)
+    {
+        PassFail = passFail;
+    }
+    
+    public boolean getPassFail()
+    {
+        return PassFail;
+    }
+    
     public void setResultId(int newId)
     {
         ResultRuleId = newId;

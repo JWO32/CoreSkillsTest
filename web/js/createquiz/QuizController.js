@@ -17,6 +17,12 @@ QuizController = function(model, view)
                         //
                         $('#QuestionDesigner').empty().load('js/templ/new_question.html');
                         $('#ResultRuleDialog').empty().load('js/templ/result_rule.html');
+                        
+                        if(QuizModel.getEditing() === true)
+                        {
+                            $.alert('Editing Quiz', 'Quiz being edited!');
+                            this.editQuizEvent();
+                        }
                 },
 
                 addQuestionEvent: function(callBack)
@@ -45,7 +51,11 @@ QuizController = function(model, view)
                         QuizModel.setSubject(allQuizDetails[2].value);
                         QuizModel.calcMinutes(allQuizDetails[3].value, allQuizDetails[4].value);                      
                 },
-
+                editQuizEvent: function ()
+                {
+                    QuizView.setQuizForEdit(QuizModel);
+                    
+                },
                 /**
                  * After the initial save, set a timer so that the quiz is automatically
                  * saved every minute or so.
@@ -83,7 +93,10 @@ QuizController = function(model, view)
                     QuizModel.deleteQuestion(deleteQuestion);
                     QuizView.render(QuizModel.Questions);
                 },
-
+                addRuleEvent: function ()
+                {
+                    resultRuleDialog(this.triggerAddRuleCallback, null, null);
+                },
                 /*
                 * Compile the Quiz into JSON format and send to the server.
                 * 
@@ -96,6 +109,7 @@ QuizController = function(model, view)
                     this.validateQuizDetailsEvent();
 
                     //var quiz_xml = QuizModel.generateXML();
+                    var editing = QuizModel.getEditing();
 
                     var jsonQuizModel = new Quiz();
                     
@@ -134,12 +148,16 @@ QuizController = function(model, view)
                     
 
                     var quiz_json = jsonQuizModel.generateJSON();
-
-                    $.ajax({
+                    
+                    if(editing === true)
+                    {
+                        var quizId = QuizModel.QuizId;
+                        
+                        $.ajax({
                             type:'POST',
-                            url:'Quiz/add/',
+                            url:'Quiz/edit/',
                             dataType: 'json',
-                            data: "quiz="+quiz_json,
+                            data: "quiz="+quiz_json+"&quizId="+quizId,
                             cache: false,
                             error: function(data)
                             {
@@ -151,8 +169,31 @@ QuizController = function(model, view)
                                     // TODO: Replace with jQuery Dialogue
                                     $.alert('Quiz Saved', 'Your quiz has been saved successfully');
                                     timerId = (backgroundSaveEvent, SaveTimer);
-                            }				
-                    });				
+                            }
+                        });
+                        
+                        
+                    }else
+                    {
+                        $.ajax({
+                                type:'POST',
+                                url:'Quiz/add/',
+                                dataType: 'json',
+                                data: "quiz="+quiz_json,
+                                cache: false,
+                                error: function(data)
+                                {
+                                        // TODO: Replace with jQuery Dialogue
+                                        $.alert('Server Error', 'Unable to save quiz');
+                                },
+                                success: function()
+                                {
+                                        // TODO: Replace with jQuery Dialogue
+                                        $.alert('Quiz Saved', 'Your quiz has been saved successfully');
+                                        timerId = (backgroundSaveEvent, SaveTimer);
+                                }				
+                        });
+                    }
                 },
 
                 /*
@@ -191,6 +232,11 @@ QuizController = function(model, view)
                     
                     QuizModel.updateQuestion(editedQuestion.QuestionId, editedQuestion);
                     QuizView.render(QuizModel.Questions);
+                },
+                triggerAddRuleCallback: function(rule)
+                {
+                    QuizModel.addRule(rule);
+                    $.alert('Rule Added', 'Rule has been added.  Please note edit functionality is not present in this version');
                 }
         };
 };

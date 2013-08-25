@@ -25,6 +25,15 @@ QuestionListManager = function(QListElement)
 			
 			return quizDetails;
 		},
+                        
+                setQuizForEdit: function(Quiz)
+                {
+                  $('#quiz_title').val(Quiz.getTitle());
+                  $('#quiz_level option:contains('+Quiz.getQuizLevel()+')').attr('selected', 'selected');
+                  $('#quiz_subject').val(Quiz.getSubject());
+                  
+                  this.render(Quiz.Questions);
+                },
 		
 		/**
 		 * Redraw the List of Questions
@@ -55,9 +64,9 @@ QuestionListManager = function(QListElement)
 					// If the question is correct then display a ticked check box next to it.
 					//
 					html+='<li>';
-					html+=currentOption.getOptionText();
+					html+=currentOption.OptionText;
 					
-					if(currentOption.getCorrectOption() === true)
+					if(currentOption.CorrectOption === true)
 					{
 						html+='<img src="images/icons/icon_tick.jpg"/> ';
 					}
@@ -70,8 +79,8 @@ QuestionListManager = function(QListElement)
 				
 			});
 
-			QuestionListElement.append(html);
-			QuestionListElement.selectable('refresh').find("li.q");
+			$('#QuestionList').append(html);
+			$('#QuestionList').selectable('refresh').find("li.q");
 		}
 	};
 };

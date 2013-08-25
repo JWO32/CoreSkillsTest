@@ -23,14 +23,28 @@ var SCQFLevelDefinition =
 //Quiz constructor with all details
 Quiz = function(title, duration, subject, level)
 {
-	this.QuizName = title;
+	this.QuizTitle = title;
 	this.QuizDuration =  duration; // Set default duration to 45 minutes
 	this.QuizSubject = subject;
         this.TotalMarks = 0;
 	this.Questions = {}; //Key-value store of questions
 	this.QuizLevel = level; //Quiz level, this might be set by taking an average of the level of the Questions in due course
 	this.NumberOfQuestions = 0;
+        this.Editing = false;
+        
+        //Only one result rule in this version, future versions will allow chains of result rules.
+        this.QuizRule = '';
 };
+
+Quiz.prototype.setEditing= function(editing)
+{
+    this.Editing = editing;
+};
+
+Quiz.prototype.getEditing = function()
+{
+    return this.Editing;
+}
 
 Quiz.prototype.init = function()
 {
@@ -49,9 +63,24 @@ Quiz.prototype.calcMinutes = function(hours, minutes)
         this.setDuration(numberOfMins);
 };
 
+Quiz.prototype.addRule = function (rule)
+{
+    this.QuizRule = rule;
+};
+
+Quiz.prototype.getRule = function ()
+{
+    return this.QuizRule;
+};
+
 Quiz.prototype.setQuizLevel = function(level)
 {
     this.QuizLevel = level;
+};
+
+Quiz.prototype.getQuizLevel = function()
+{
+    return this.QuizLevel;
 };
 
 Quiz.prototype.setTitle = function(title)
@@ -59,14 +88,29 @@ Quiz.prototype.setTitle = function(title)
 	this.QuizTitle = title;
 };
 
+Quiz.prototype.getTitle = function()
+{
+    return this.QuizTitle;
+};
+
 Quiz.prototype.setDuration =  function(duration)
 {
 	this.QuizDuration = duration;
 };
 
+Quiz.prototype.getDuration = function ()
+{
+    return this.QuizDuration;
+};
+
 Quiz.prototype.setSubject= function(subject)
 {
-	this.QuizSubject = subject;
+    this.QuizSubject = subject;
+};
+
+Quiz.prototype.getSubject = function ()
+{
+    return this.QuizSubject;
 };
 
 Quiz.prototype.getNextUIKey = function()
@@ -234,6 +278,15 @@ var QuestionOption = function()
     };
 };
 
+
+Rule = function()
+{
+    this.RuleName = '';
+    this.HighMarkBoundary = 0;
+    this.LowMarkBoundary = 0;
+    this.Category = '';
+    this.PassFail = false;
+};
 
 /**
  * Defines a MultipleChoice Question

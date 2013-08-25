@@ -25,6 +25,29 @@ $.extend({alertdownload: function(title, message)
 }
 });
 
+$.extend({alertconfirmation: function(title, message, callback)
+    {
+        $('<div id="Download_Modal"></div>').dialog(
+       {
+            close: function (event, ui) { $(this).remove(); },
+            resizable: false,
+            title: title,
+            modal: true,
+            buttons:{
+                Yes: function ()
+                {
+                    callback();
+                    $(this).dialog("close");
+                },
+                No: function ()
+                {
+                    $(this).dialog("close");
+                }
+            }
+       }).text(message);
+    }
+});
+
 $.ajaxSetup ({
     // Disable caching of AJAX responses
     cache: false

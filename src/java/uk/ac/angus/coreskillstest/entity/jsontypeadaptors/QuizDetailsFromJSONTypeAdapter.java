@@ -12,6 +12,7 @@ import java.util.List;
 import uk.ac.angus.coreskillstest.entity.Question;
 import uk.ac.angus.coreskillstest.entity.QuestionOption;
 import uk.ac.angus.coreskillstest.entity.Quiz;
+import uk.ac.angus.coreskillstest.entity.ResultRule;
 
 /**
  * Constructs a Quiz Object from JSON.
@@ -35,14 +36,34 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         q.setDuration(QuizObject.get("QuizDuration").getAsInt());
         
         processQuestions(q, QuizObject);
-             
+        processRule(q, QuizObject);
+               
         return q;
     }
     
-    private void processQuestions(final Quiz quiz, final JsonObject jsonQuestion)
+    private void processRule(final Quiz q, final JsonObject jsonQuiz)
+    {
+        ResultRule r = new ResultRule();
+        
+        if(jsonQuiz.get("QuizRule").isJsonObject())
+        {
+            JsonObject rule = jsonQuiz.getAsJsonObject("QuizRule");
+
+            r.setQuiz(q);
+            r.setRuleName(rule.get("RuleName").getAsString());
+            r.setHighMarkBoundary(rule.get("HighMarkBoundary").getAsInt());
+            r.setLowMarkBoundary(rule.get("LowMarkBoundary").getAsInt());
+            r.setFeedback(rule.get("Category").getAsString());
+            r.setPassFail(rule.get("PassFail").getAsBoolean());
+
+            q.getResultRules().add(r);
+        }
+    }
+    
+    private void processQuestions(final Quiz quiz, final JsonObject jsonQuiz)
     {
         final List<Question> questions = new ArrayList<>();
-        final JsonArray questionArray = jsonQuestion.get("Questions").getAsJsonArray();
+        final JsonArray questionArray = jsonQuiz.get("Questions").getAsJsonArray();
         
         for(int i = 0; i < questionArray.size(); i++)
         {

@@ -245,29 +245,49 @@ var questionDialogue = function(callBack, edit, question)
 };
 
 
-var ResultRuleDialog = function(callback, edit, rule)
+var resultRuleDialog = function(callback, edit, rule)
 {
-    $('#result_rule_dialog').dialog({
+    $('#result_rule').dialog({
         autoOpen: false,
         height: "auto",
         width: "auto",
         modal: true,
-        title: 'Create/Edit Question',
+        title: 'Create Result Rule',
         show: 'blind',
         hide: 'blind',
         open: function()
         {
-            
+            if(edit !== null)
+            {
+
+
+            }else
+            {
+                
+            }
         },
         buttons: {
             "OK": function ()
             {
+                var resultRule = new Rule();
                 
+                resultRule.RuleName = $('#rule_name').val();
+                resultRule.HighMarkBoundary = $('#maximum_score').val();
+                resultRule.LowMarkBoundary = $('#minimum_score').val();
                 
+                if($('#pass_fail').is(':checked'))
+                    resultRule.PassFail = true;
+                else
+                    resultRule.PassFail = false;
+                
+                resultRule.Category = $('#category option:selected').val();
+                
+                $(this).dialog("destroy");
+                callback(resultRule);
             },
             "Cancel": function()
             {
-                
+                $(this).dialog("destroy");
             }
         },
         close: function ()

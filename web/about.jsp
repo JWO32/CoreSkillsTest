@@ -17,9 +17,22 @@
 <h3>Road-map</h3>
 <p>The road-map for further development of the quiz system has been agreed and is outlined below:</p>
 
-<ol>
+<ul>
+    <li>Version 1.1</li>
+    <ul>
+        <li>Ability to add media such as images to questions.</li>
+        <li>Ability to bulk import users from external sources.</li>
+        <li>Ability to add multiple result rules to one quiz.</li>
+        <li>Ability to distinctly add multiple choice and multiple selection questions.</li>
+    </ul>
+    <li>Version 1.2</li>
+    <ul>
+        <li>Ability to retrieve data for integration to external systems.</li>
+        <li>Ability to add gap-fill and "point and click" type questions.</li>
+        <li>Ability to add sounds and videos to questions.</li>
+        <li>Ability to prepare reports on individual student progress</li>
+    </ul>
     
-    
-</ol>
+</ul>
 
 <jsp:include page="inc/footer-inc.jsp" flush="false" />

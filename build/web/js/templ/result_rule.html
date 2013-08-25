@@ -4,6 +4,12 @@
             <legend>Create Result Rule</legend>
             <ul>
                 <li>
+                    <label>Enter a name for this Rule:</label>
+                </li>
+                <li>
+                    <input type="text" id="rule_name" />
+                </li>
+                <li>
                     <label>Enter minimum percentage score:</label>
                 </li>
                 <li>
@@ -21,19 +27,13 @@
                 </li>
                 <label>Quiz Category:</label>
 
-		<select name="quiz_level" class="text ui-widget-content ui-corner-all">
+		<select name="quiz_level" id="category"class="text ui-widget-content ui-corner-all">
 			<option>No Level</option>
 			<option>SCQF Level 3</option>
 			<option>SCQF Level 4</option>
 			<option>SCQF Level 5</option>
 			<option>SCQF Level 6</option>
 		</select>
-                <li>
-                    <label>Please enter the category the result will fall into if the rule applies: (e.g. PASS/SCQF LEVEL/GRADE)</label>
-                </li>
-                <li>
-                    <input type="text" id="category" />
-                </li>
             </ul> 
         </fieldset>
     </form> 

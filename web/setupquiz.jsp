@@ -8,73 +8,73 @@
 <jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
 <jsp:include page="inc/navigation-inc.jsp" flush="false" />
 
-        <script id="quiz_event_template" type="text/x-handlebars-template">                 
-            <div class="quiz_event ui-widget"> 
-                <div class="select_box">          
-                        <input type="checkbox" id="qe_{{QuizEventId}}"/>          
-                </div>                
-                <h3 class="ui-widget-header ui-corner-all">Quiz Event: {{QuizName}}</h3>
-                    <div class="event_details ui-widget-content">  
-                    Open From {{OpenDate}} to {{CloseDate}}
-                    <h4>Quiz Options:</h4>
-                        <ul>
-                            <li><strong>Group: {{GroupName}}</strong></li>
-                            <li>Number of Questions: {{NumberOfQuestions}}</li>
-                            <li>Randomize Questions: {{RandomQuestions}}</li>
-                            <li>Feedback to User: {{Feedback}}</li>
-                        </ul> 
-                    </div>
+<script id="quiz_event_template" type="text/x-handlebars-template">                 
+    <div class="quiz_event ui-widget"> 
+        <div class="select_box">          
+                <input type="checkbox" id="qe_{{QuizEventId}}"/>          
+        </div>                
+        <h3 class="ui-widget-header ui-corner-all">Quiz Event: {{QuizName}}</h3>
+            <div class="event_details ui-widget-content">  
+            Open From {{OpenDate}} to {{CloseDate}}
+            <h4>Quiz Options:</h4>
+                <ul>
+                    <li><strong>Group: {{GroupName}}</strong></li>
+                    <li>Number of Questions: {{NumberOfQuestions}}</li>
+                    <li>Randomize Questions: {{RandomQuestions}}</li>
+                    <li>Feedback to User: {{Feedback}}</li>
+                </ul> 
             </div>
-        </script>
+    </div>
+</script>
         
-        <script type="text/javascript">
-        $(document).ready(function()
-        {
-            var controller = QuizSetupController();
+<script type="text/javascript">
+$(document).ready(function()
+{
+    var controller = QuizSetupController();
 
-            controller.downloadQuizList();
-            controller.initAllDetails();
-          
-            $('#add_quiz_button').on('click', function()
-            {
-                 controller.addQuizEvent();
-            });
+    controller.downloadQuizList();
+    controller.initAllDetails();
 
-            $('#delete_quiz_button').on('click', function()
-            {
-                 controller.deleteQuizEvent();
-            });
+    $('#add_quiz_button').on('click', function()
+    {
+         controller.addQuizEvent();
+    });
 
-            $('#edit_quiz_button').on('click', function()
-            {
-                 controller.editQuizEvent();
-            });
+    $('#delete_quiz_button').on('click', function()
+    {
+         controller.deleteQuizEvent();
+    });
 
-            $('clear_quiz_button').on('click', function()
-            {
-                controller.clearForm();
-            });
+    $('#edit_quiz_button').on('click', function()
+    {
+         controller.editQuizEvent();
+    });
 
-            $('#number_questions').on('change', function()
-            {
-                controller.checkNumberOfQuestionsEvent();
-            });
+    $('clear_quiz_button').on('click', function()
+    {
+        controller.clearForm();
+    });
 
-            $('#quiz_list').on('change', function()
-            {
-                controller.changeQuizEvent();
-            });
+    $('#number_questions').on('change', function()
+    {
+        controller.checkNumberOfQuestionsEvent();
+    });
 
-            //Configure datepicker and date representation options
-            $('input[type="datetime"]').datepicker();
-            $('input[type="datetime"]').datepicker('setDate', new Date());
-            $('input[type="datetime"]').datepicker('option', 'dateFormat', 'dd/mm/yy');
-            $('input [type="text"]').addClass('text ui-widget ui-widget-content ui-corner-all');
-            $('input [type="checkbox"]').button();
+    $('#quiz_list').on('change', function()
+    {
+        controller.changeQuizEvent();
+    });
 
-            $('input[type="button"]').button();
-        });  
-        </script>
+    //Configure datepicker and date representation options
+    $('input[type="datetime"]').datepicker();
+    $('input[type="datetime"]').datepicker('setDate', new Date());
+    $('input[type="datetime"]').datepicker('option', 'dateFormat', 'dd/mm/yy');
+    $('input [type="text"]').addClass('text ui-widget ui-widget-content ui-corner-all');
+    $('input [type="checkbox"]').button();
+
+    $('input[type="button"]').button();
+});  
+</script>
         
     <section id="event_form">
         <form id="new_event_form">
@@ -146,9 +146,9 @@
                 <input type="button" id="clear_quiz_button" value="Clear Form"/>
             </div>
         </section>
+
         <section id="quiz_events">
 
         </section>
-        </div>
-    </body>
-</html>
+        
+<jsp:include page="inc/footer-inc.jsp" flush="false" />

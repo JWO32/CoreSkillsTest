@@ -15,6 +15,8 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
 
 /**
  *
+ * The quiz dispatcher controller is responsible for managing quiz events and
+ * quiz 'packages'.
  * @author JWO
  */
 @WebServlet(name = "QuizDispatcherController", urlPatterns = {"/Dispatcher/*"})
