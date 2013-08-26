@@ -90,7 +90,7 @@ public class QuizDataAccessObject
     {
         ServerClientResponse response = new ServerClientResponse();
         QuizEntityManager qem = new QuizEntityManager(Quiz.class);
-        String deleteQuery = "Quiz.deleteQuizById";
+        String deleteQuery = "Quiz.getQuizById";
         HashMap deleteParameters = new HashMap();
         
         deleteParameters.put("id", quizId);
@@ -172,6 +172,9 @@ public class QuizDataAccessObject
             System.err.println("Unable to edit quiz");
             System.err.println(ex.getMessage());
         }
+        
+        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+        response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Edit Success", "The quiz has been successfully edited."));
         
         return response;
     }

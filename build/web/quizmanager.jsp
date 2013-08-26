@@ -43,11 +43,15 @@ $(document).ready(function ()
 });
 </script>
 
-<input type="button" id="delete_quiz" value="Delete Quiz" />
-<input type="button" id="edit_quiz" value="Edit Quiz" />
+<form>
+    <fieldset>
+        <legend>Quiz Management Options:</legend>
+        <input type="button" id="delete_quiz" value="Delete Quiz" />   
+    </fieldset>
+</form>
 
 <div id="quiz_wrapper">
-    
+    <h3>No Quizzes</h3>
     
 </div>
 

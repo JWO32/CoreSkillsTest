@@ -30,6 +30,9 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         
         Quiz q = new Quiz();
 
+        if(QuizObject.has("QuizId"))
+            q.setQuizId(QuizObject.get("QuizId").getAsInt());
+        
         q.setQuizName(QuizObject.get("QuizTitle").getAsString());
         q.setQuizSubject(QuizObject.get("QuizSubject").getAsString());
         q.setQuizLevel(QuizObject.get("QuizLevel").getAsString());

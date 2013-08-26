@@ -21,10 +21,10 @@
         
         <script id="question_template" type="text/x-handlebars-template">           
         <div class="display_question" id="{{QuestionId}}">
-            <h1>Question {{CurrentQuestion}}</h1>
+            <h1>Quiz</h1>
 
             <p>{{QuestionText}}</p>
-            <p>{{Mark}} points</p>
+            <p>{{QuestionScore}} points</p>
 
             <ul id="options">
                 {{#each QuestionOptions}}
@@ -150,9 +150,9 @@
             <div id ="info_dialogue_button">
                 <input type="button" id="dialogue_continue" value="Begin"/>
             </div>
-        </div>
-         <div id="result_dialogue" style="display: none">
+            <div id="result_dialogue" style="display: none">
                 <h1>Result</h1>
-         </div>
+            </div>
+        </div>       
     </body>
 </html>

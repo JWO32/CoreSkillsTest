@@ -94,7 +94,7 @@
     </div>
     
     <div id="result_wrapper">
-    
+        <h3>No Report</h3>
     
     
     </div>

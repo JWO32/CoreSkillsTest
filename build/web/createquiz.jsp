@@ -5,7 +5,8 @@
 <%
     String quizJSON = (String) pageContext.getSession().getAttribute("Quiz");
     //Reset the session
-    pageContext.getSession().setAttribute("Quiz", null);
+    if(quizJSON != null)
+        pageContext.getSession().setAttribute("Quiz", null);
 %>
 <jsp:include page="inc/header-inc.jsp" flush="false" />
 <jsp:include page="inc/pageheader-inc.jsp" flush="false"/>
@@ -34,7 +35,7 @@ $(document).ready(function()
     
     if(editQuiz !== null)
     {
-        CurrentQuiz = new Quiz(editQuiz.QuizTitle, editQuiz.Duration, editQuiz.subject, editQuiz.level);
+        CurrentQuiz = new Quiz(editQuiz.QuizTitle, editQuiz.Duration, editQuiz.QuizSubject, editQuiz.QuizLevel);
        
         for(var i = 0; i < editQuiz.Questions.length; i++)
         {

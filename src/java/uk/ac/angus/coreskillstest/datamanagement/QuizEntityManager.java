@@ -286,7 +286,7 @@ public class QuizEntityManager<T>
         try
         {
             em.getTransaction().begin();  
-            editedObject = em.merge(objectFromDB);
+            objectFromDB = em.merge(editedObject);
             em.getTransaction().commit();
         }catch(Exception ex)
         {
@@ -299,6 +299,9 @@ public class QuizEntityManager<T>
     }
     
     /**
+     * 
+     * TODO: Cascade behaviour is unpredictable using JPA queries, use a select Query to
+     * find objects and the entity manager remove operation.
      * 
      * @param namedQuery
      * @param queryParameters
@@ -339,8 +342,14 @@ public class QuizEntityManager<T>
         
         try
         {
+            T deleteObject;
             em.getTransaction().begin();           
-            numberOfItemsDeleted = q.executeUpdate();
+            
+            deleteObject = (T) q.getSingleResult();
+            //Have to use the ENITYMANAGER remove rather objects than QUERY so that Relationships cascade correctly...
+            em.remove(deleteObject);
+            
+            //numberOfItemsDeleted = q.executeUpdate();
             em.getTransaction().commit();
         }catch(Exception ex)
         {

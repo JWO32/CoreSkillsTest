@@ -30,9 +30,16 @@ LoginController = function()
                 dataType: 'json',
                 data: 'email='+emailAddress,
                 success: this.updateQuizList,
-                error: function ()
+                error: function (data)
                 {
-                    
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  if(errorTitle !== null && errorMsg !== null)
+                    $.alert(errorTitle, errorMsg);
+                  else
+                    $.alert("Group Download Error", "Unable to download group list");
                     
                 }
             });
@@ -45,9 +52,16 @@ LoginController = function()
              dataType: 'json',
              data:'quizid='+quizId+"&quizeventid="+quizEventId,
              success: this.updateEventList,
-             error: function ()
+             error: function (data)
              {
-                 
+                  var errorObj = jQuery.parseJSON(data.responseText);
+                  var errorTitle = errorObj.Status;
+                  var errorMsg = errorObj.Message;
+                  
+                  if(errorTitle !== null && errorMsg !== null)
+                    $.alert(errorTitle, errorMsg);
+                  else
+                    $.alert("Group Download Error", "Unable to download group list");
              }
            });
         }
@@ -80,24 +94,25 @@ LoginView = function ()
       },
       cacheQuizEvents: function(eventList)
       {
-          //Reset the cache
-          cachedEvents = [];
-          
-          var templateSource = $('#quiz_events_template').html();
-          
-          for(var i = 0; i < eventList.length; i++)
-          {
-              //Small hack to change the value of Feedback to something human readable.
-              if(eventList[i].Feedback === true)
-                  eventList[i].Feedback = "will";
-              else
-                  eventList[i].Feedback = "will not";
-              
-              var template = Handlebars.compile(templateSource);
-              var eventHTML = template(eventList[i]);
-              
-              cachedEvents.push(eventHTML);
-          }   
+        
+        //Reset the cache
+        cachedEvents = [];
+        
+        var templateSource = $('#quiz_events_template').html();
+
+        for(var i = 0; i < eventList.length; i++)
+        {
+            //Small hack to change the value of Feedback to something human readable.
+            if(eventList[i].Feedback === true)
+                eventList[i].Feedback = "will";
+            else
+                eventList[i].Feedback = "will not";
+
+            var template = Handlebars.compile(templateSource);
+            var eventHTML = template(eventList[i]);
+
+            cachedEvents.push(eventHTML);
+        }
       }
     };
 };

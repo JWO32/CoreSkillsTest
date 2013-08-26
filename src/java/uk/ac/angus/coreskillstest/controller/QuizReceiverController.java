@@ -148,8 +148,7 @@ public class QuizReceiverController extends HttpServlet
                     response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Unable to Edit Quiz", "There has been an error updating the quiz, please try again"));
                 }
                 
-                setResponse(response, resp);
-                
+                setResponse(response, resp);                
             break;
         }
     }
