@@ -55,7 +55,7 @@ $.ajaxSetup ({
 
 $(document).ajaxStart(function()
 {
-        $.alertdownload('Downloading', 'Downloading data from server');
+        $.alertdownload('Downloading', 'Downloading data...');
 });
 
 $(document).ajaxComplete(function()

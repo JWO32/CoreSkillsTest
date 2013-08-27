@@ -1,13 +1,10 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
@@ -252,6 +249,8 @@ public class QuizEntityManager<T>
             }
         }
 
+        // Catch any exception that occurs while trying to fetch the result list...
+        // if the object list is empty at the end of the operation, throw a no resource found exception
         try
         {                       
             objectList = q.getResultList();
@@ -279,9 +278,7 @@ public class QuizEntityManager<T>
     public void editObjectbyId(int objectId, T editedObject, Class<T> objClass) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
-        T objectFromDB;
-        
-        objectFromDB = (T) em.find(objClass, objectId);
+        T  objectFromDB = (T) em.find(objClass, objectId);
 
         try
         {
@@ -291,7 +288,8 @@ public class QuizEntityManager<T>
         }catch(Exception ex)
         {
             System.err.println("Unable to edit object");
-            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException("Editing of Quiz was unsuccessful");
+            System.err.println(ex.getMessage());
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToEditObjectException("Editing operation unsuccessful");
         }finally
         {
             em.close();
@@ -311,7 +309,6 @@ public class QuizEntityManager<T>
     {
         EntityManager em = EntityManagerFactory.createEntityManager();
         Query q;
-        int numberOfItemsDeleted = 0;
         Object value = null;
         
          q = em.createNamedQuery(namedQuery);
@@ -355,15 +352,16 @@ public class QuizEntityManager<T>
         {
             System.err.println("Exception Occured: unable to delete specified object");
             System.err.println(ex.getMessage());
-            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Database Error: Unable to delete object");  
+            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Database Error: Unable to delete object ");  
         }finally
         {
             em.close();
         }
         
-        if(numberOfItemsDeleted == 0)
-        {
-            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Delete Error: no objects deleted");
-        }
+        // If no results are found exception will be caught above...
+//        if(numberOfItemsDeleted == 0)
+//        {
+//            throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException("Delete Error: no objects deleted");
+//        }
     }
 }

@@ -31,11 +31,22 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
       },
       deleteUserEvent: function()
       {
+          var userKey = UserView.getSelectedItem();
           
-      },
-      editUserEvent: function()
-      {
+          if(typeof userKey === 'undefined')
+          {
+              $.alert('Nothing Selected', 'Please select the user that you wish to delete');
+              return;  
+          }
+          else if(userKey.charAt(0) === 'g')
+          {
+              $.alert('Group Selected', 'You have selected a group, please select a user');
+              return;
+          }
           
+          var userId = userKey.replace('u_','');
+          
+          UserModel.deleteUser(userId, controller.deleteUserCallback);
       },
       addGroupEvent: function(addGroupCallback)
       {
@@ -43,10 +54,22 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
       },
       deleteGroupEvent: function()
       {
+          var groupKey = UserView.getSelectedItem();
           
-      },
-      editGroupEvent: function()
-      {
+          if(typeof groupKey === 'undefined')
+          {
+             $.alert('Nothing Selected', 'Please select the group you wish to delete');
+             return; 
+          }
+          if(groupKey.charAt(0) === 'u')
+          {
+              $.alert('User Selected', 'You have selected a user, please select a group');
+              return;
+          }
+          
+          var groupId = groupKey.replace('g_','');
+          
+          UserModel.deleteGroup(groupId, controller.deleteGroupCallback)
           
       },
       downloadGroupsandUsersEvent: function()
@@ -68,19 +91,42 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
       },
       downloadGroups: function()
       {
-          
+          $.ajax({
+             type: 'GET',
+             url: 'Groups/get/getgroups',
+             dataType:'json',
+             success: function()
+             {
+                 
+             },
+             error: function ()
+             {
+                 
+             }
+          });
       },
       addUserCallback: function(userDetails)
       {
           UserModel.addUser(userDetails);
-          
-          UserModel.sendUserToServer(userDetails);
+          $.alert('User Added', 'The user has been added');
+          UserModel.sendUserToServer(userDetails, controller.downloadGroupsandUsersEvent);
       },
       addGroupCallback: function(groupDetails)
       {
           UserModel.addGroup(groupDetails);
-          
-          UserModel.sendGroupToServer(groupDetails);
+          $.alert('Group Added', 'The group has been added');
+          UserModel.sendGroupToServer(groupDetails, controller.downloadGroupsandUsersEvent);
+      },
+      deleteUserCallback: function()
+      {
+          //Trigger download of updated users and groups
+          $.alert('User Deleted', 'User has been successfully deleted');
+          controller.downloadGroupsandUsersEvent();
+      },
+      deleteGroupCallback: function()
+      {
+          $.alert('Group Deleted', 'Group has been successfully deleted');
+          controller.downloadGroupsandUsersEvent();
       }
     };
     

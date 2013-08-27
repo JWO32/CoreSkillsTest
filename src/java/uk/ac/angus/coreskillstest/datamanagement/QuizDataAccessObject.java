@@ -57,6 +57,9 @@ public class QuizDataAccessObject
         
         newQuiz = (Quiz) g.fromJson(json, Quiz.class);
         
+        //Ensure the total number of marks is calculated.
+        newQuiz.calcTotalMarks();
+        
         try
         {
             em.getTransaction().begin();

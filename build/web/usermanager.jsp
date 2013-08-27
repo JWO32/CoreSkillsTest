@@ -21,32 +21,35 @@
         var $newGroupDialogueElem = $('#new_group_dialogue');
         var $newUserDialogueElem = $('#new_user_dialogue');
 
-        var controller = new UserManagerController($treeList, $newUserDialogueElem, $newGroupDialogueElem);
+        controller = new UserManagerController($treeList, $newUserDialogueElem, $newGroupDialogueElem);
         
         controller.init();
 
-        $('#add_user_button').on('click', function()
+        $('#add_user_button').on('click', function ()
         {
             controller.addUserEvent(controller.addUserCallback);
         });
         
-        $('#add_group_button').on('click', function()
+        $('#add_group_button').on('click', function ()
         {
             controller.addGroupEvent(controller.addGroupCallback);
         });
         
-        $('#delete_selected_user').on('click', function()
+        $('#delete_selected_user').on('click', function ()
         {
-            alert('Warning: This user will be permanently deleted.');
+            $.alertconfirmation('Are you sure?', 'If you delete this user, all results will also be deleted.', controller.deleteUserEvent);
+            //controller.deleteUserEvent();
         });
         
-        $('#delete_selected_group').on('click', function()
+        $('#delete_selected_group').on('click', function ()
         {
-            alert('Warning: Current behaviour is to delete group and ALL users.'); 
+            $.alertconfirmation('Are you sure?', 'If you delete this group, all users and their results will also be deleted.', controller.deleteGroupEvent);
+            //controller.deleteGroupEvent();
         });
 
         $('input[type="button"]').button();
         
+        $('#buttons').tabs();
         // Download users and groups.
         controller.downloadGroupsandUsersEvent();
         
@@ -54,16 +57,25 @@
 </script>
    
     <section id="content_body">
-        <form>
-            <fieldset>
-                <legend>Manage Users and Groups</legend>
-                <input type="button" id="add_user_button" value="Add User"></input>
-                <input type="button" id="add_group_button" value="Add Group"></input>
-                <input type="button" id="delete_selected_user" value="Delete User"></input>
-                <input type="button" id="delete_selected_group" value="Delete Group"></input>
-            </fieldset>         
-        </form>
-        
+        <div id="buttons">
+            <ul>
+                <li>Manage Users and Groups</li>
+            </ul>
+            <div id="buttons-1">
+                <div id="user_buttons">
+                    <legend>User Options</legend>
+                    <img src="images/icons/user.jpg"/>
+                    <input type="button" id="add_user_button" value="Add User"></input>
+                    <input type="button" id="delete_selected_user" value="Delete User"></input>
+                </div>
+                <div id="group_buttons">
+                    <legend>Group Options</legend>
+                    <img src="images/icons/group.jpg"/>
+                    <input type="button" id="add_group_button" value="Add Group"></input>
+                    <input type="button" id="delete_selected_group" value="Delete Group"></input>
+                </div>
+            </div>
+        </div>
         
         <h3>Student and Group List</h3>
         
@@ -73,12 +85,11 @@
         </div>
     
     </section>
-    </div>
    
     <!--jQuery Dialogues for use on the page -- inline style to hide-->
     <div id="new_user_dialogue" style="display: none;">       
     </div>
     <div id="new_group_dialogue" style="display: none;">       
     </div>
-</body>
-</html>
+    
+<jsp:include page="inc/footer-inc.jsp" flush="false" />

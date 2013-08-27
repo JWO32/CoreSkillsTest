@@ -12,3 +12,23 @@
 {
     border: 1px solid #000000;
 }
+
+#group_form
+{
+    list-style-type: none;
+}
+
+#user_form
+{
+    list-style-type: none;
+}
+
+#user_buttons
+{
+    margin: 0.2em;
+}
+
+#group_buttons
+{
+    margin: 0.2em;
+}

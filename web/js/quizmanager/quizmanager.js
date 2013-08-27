@@ -152,6 +152,8 @@ QuizManagerController.View = (function ()
       },
       renderQuizList: function ()
       {
+          $('#quiz_wrapper').empty();
+          
           for(var i = 0; i < QuizCache.length; i++)
           {
               $('#quiz_wrapper').append(QuizCache[i]);

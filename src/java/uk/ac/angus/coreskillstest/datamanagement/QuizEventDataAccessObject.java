@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 
 
@@ -137,7 +136,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {
             response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
-            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error Fetching Quiz Events", "Unable to fetch Quiz Events"));
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("No Events", "There are no Quiz Events to display"));
             response.setClientJson(ServerClientResponseFactory.EMPTY_JSON_OBJECT);
         }
         
@@ -149,7 +148,7 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
     {
        ServerClientResponse response = new ServerClientResponse();
        QuizEntityManager<QuizEvent> qem = new QuizEntityManager<>(QuizEvent.class);
-       String query = "QuizEvent.deleteEvent";
+       String query = "QuizEvent.getQuizByEventId";
        String parameter = "id";
        
        HashMap queryParameters = new HashMap();
@@ -171,6 +170,11 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
        return response;
     }
 
+    /**
+     *  delete multiple items is not required for current implementation.
+     * @param jsonString
+     * @return 
+     */
     @Override
     public ServerClientResponse deleteMultipleItems(String jsonString) 
     {
@@ -179,6 +183,11 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         return response;
     }
 
+    /**
+     * editing/updating of quiz events is not required for current implementation.
+     * @param jsonString
+     * @return 
+     */
     @Override
     public ServerClientResponse updateItem(String jsonString) 
     {
@@ -186,7 +195,12 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         
         return response;
     }
-    
+    /**
+     * editing/updating of quiz events is not required for current implementation
+     * @param jsonObject
+     * @param itemId
+     * @return 
+     */
     @Override
     public ServerClientResponse updateItem(String jsonObject, int itemId)
     {
@@ -195,6 +209,11 @@ public class QuizEventDataAccessObject implements JSONInterface<QuizEvent>
         return resp;
     }
 
+    /**
+     * 
+     * @param itemObject
+     * @return 
+     */
     @Override
     public ServerClientResponse getSingleItem(QuizEvent itemObject) 
     {

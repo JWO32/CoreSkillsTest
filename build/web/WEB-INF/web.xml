@@ -31,7 +31,7 @@
         <description/>
         <display-name>UserReceiverController</display-name>
         <servlet-name>UserReceiverController</servlet-name>
-        <servlet-class>uk.ac.angus.coreskillstest.controller.UserReceiverController</servlet-class>
+        <servlet-class>uk.ac.angus.coreskillstest.controller.UserController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserReceiverController</servlet-name>

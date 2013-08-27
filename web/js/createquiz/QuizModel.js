@@ -1,5 +1,3 @@
-
-
 /**
  * Quiz Prototype Object
  * 
@@ -113,18 +111,40 @@ Quiz.prototype.getSubject = function ()
     return this.QuizSubject;
 };
 
-Quiz.prototype.getNextUIKey = function()
+Quiz.prototype.getNextUIKey = function(questionId)
 {
-	var q = 'q_'+Object.keys(this.Questions).length;
-	return q;
+    if(questionId !== null)
+    {
+        var q = 'q_'+questionId;
+    }else
+    {
+        var q = 'q_'+Object.keys(this.Questions).length;   
+    }
+   
+    return q;
 };
 
 Quiz.prototype.addQuestion = function(newQuestion)
 {
-	var arrayIndex = this.getNextUIKey();
+    if(typeof newQuestion.QuestionId !== 'undefined')
+    {
+        var arrayIndex = this.getNextUIKey(newQuestion.QuestionId);
+        this.Questions[arrayIndex] = newQuestion;
+        this.NumberOfQuestions++;
+    }else
+    {
+        var arrayIndex = this.getNextUIKey(null);
         newQuestion.QuestionId = arrayIndex;
-	this.Questions[arrayIndex] = newQuestion;
-	this.NumberOfQuestions++;
+        this.Questions[arrayIndex] = newQuestion;
+        this.NumberOfQuestions++;        
+    }
+    
+    
+};
+
+Quiz.prototype.getNonUIKey = function ()
+{
+    return this.QuestionId.replace('q_','');
 };
 
 Quiz.prototype.deleteQuestion = function(questionID)
@@ -251,6 +271,7 @@ Question.prototype.addOption = function(newOption)
  */
 var QuestionOption = function()
 {
+    this.OptionId = '';
     this.OptionText = '';
     this.CorrectOption = false;
 

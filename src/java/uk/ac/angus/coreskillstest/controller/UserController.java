@@ -6,13 +6,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 
 import uk.ac.angus.coreskillstest.datamanagement.UserDataAccessObject;
 import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
 
 
 /**
- * Servlet implementation class UserReceiverController
+ * Servlet implementation class UserController
  * 
  * Users and groups created by the user are sent to this servlet as XML.
  * XML is parsed and stored in database.
@@ -40,14 +41,14 @@ import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
 // TODO: Refactor this class to use QuizEntityManager and Client JSON interface.
 //
 
-public class UserReceiverController extends HttpServlet 
+public class UserController extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
         
         /**
          * @see HttpServlet#HttpServlet()
          */
-        public UserReceiverController() 
+        public UserController() 
         {
             super();
         }
@@ -150,6 +151,7 @@ public class UserReceiverController extends HttpServlet
             String[] pathComponents = path.split("/");
             UserDataAccessObject uDAO = new UserDataAccessObject();
             GroupDataAccessObject gDAO = new GroupDataAccessObject();
+            ServerClientResponse response;
             
             if(!pathComponents[2].equals("User"))
             {
@@ -165,30 +167,18 @@ public class UserReceiverController extends HttpServlet
                   {
                       case "user":
                           String userJson = req.getParameter("user");
-                          uDAO.addSingleUser(userJson);
+                          String groupParam = req.getParameter("groupId");
+                          int groupId = Integer.parseInt(groupParam);
                           
-                          //
-                          // TODO: Move this code into a function to avoid repetition
-                          //
-                          resp.setStatus(HttpServletResponse.SC_OK);
-                          resp.setContentType("text");
-                          resp.setContentLength(0);
-                      break;
-                          
-                      case "users":
-                          
-                          
+                          response = uDAO.addSingleUser(userJson, groupId);
+
+                          setResponse(response, resp);
                       break;
                       case "group":
                           String groupJson = req.getParameter("group");
-                          gDAO.addSingleGroup(groupJson);
+                          response = gDAO.addSingleGroup(groupJson);
                           
-                          //
-                          // TODO: Move this code into function to avoid repetition
-                          //
-                          resp.setStatus(HttpServletResponse.SC_OK);
-                          resp.setContentType("text");
-                          resp.setContentLength(0);                         
+                          setResponse(response, resp);                      
                       break;                         
                   }
             }   
@@ -207,17 +197,67 @@ public class UserReceiverController extends HttpServlet
                 }  
             }
 	}
+    
+    /**
+     * Incorporated during refactoring - not all methods take advantage of setResponse
+     * 
+     * TODO: refactor class to use setResponse to return data to client
+     * @param clientResponse
+     * @param resp
+     * @throws IOException 
+     */
+    private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
+    {
+        try (PrintWriter output = resp.getWriter()) {
+            if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_ERROR)
+            {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getStatusMessage());
+            }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_OK)
+            {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getClientJson());
+            }
+        }
+    }
         
+        
+        /**
+         * Refactored to use the setResponse method
+         * @param req
+         * @param resp
+         * @throws ServletException
+         * @throws IOException 
+         */
         @Override
         protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
         {
             String path = req.getRequestURI();
             String[] pathComponents = path.split("/");
+            UserDataAccessObject uDAO = new UserDataAccessObject();
+            GroupDataAccessObject gDAO = new GroupDataAccessObject();
+            ServerClientResponse response;
             
-            if (pathComponents[2].equals("delete"))
+            if (pathComponents[3].equals("delete"))
             {
-                
-            }
-            
+                switch(pathComponents[4])
+                {
+                    case "user":                     
+                        String userIdParam = pathComponents[5];
+                        int userId = Integer.parseInt(userIdParam);
+                        response = uDAO.deleteUser(userId);
+
+                        setResponse(response, resp);
+                        break;
+                    case "group":
+                        String groupIdparam = pathComponents[5];
+                        int groupId = Integer.parseInt(groupIdparam);
+                        response = gDAO.deleteGroup(groupId);
+                        
+                        setResponse(response, resp);
+                }
+            }    
         }
 }

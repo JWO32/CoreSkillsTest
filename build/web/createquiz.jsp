@@ -158,7 +158,7 @@ $(document).ready(function()
 </form>
 </section>
 
-<section>
+<section id="QuestionListWrapper">
 <ul id="QuestionList">
 
 

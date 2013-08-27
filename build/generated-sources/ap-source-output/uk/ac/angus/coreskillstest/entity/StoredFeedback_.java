@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.ResultRule;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-26T11:14:20")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-27T23:10:00")
 @StaticMetamodel(StoredFeedback.class)
 public class StoredFeedback_ { 
 

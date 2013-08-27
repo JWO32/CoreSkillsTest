@@ -10,6 +10,11 @@ UserManagerView = function($treeWidget, $groupForm, $userForm)
             //Initialise the jsTree
             //
             $TreeWidget.jstree({
+                "themes": {
+                    "theme": "default",
+                    "dots": false,
+                    "icons": false
+                },
            "plugins":["ui", "themes", "html_data"]});
        
         },
@@ -23,12 +28,11 @@ UserManagerView = function($treeWidget, $groupForm, $userForm)
              
             finalList+= '<ul>';
             
-            
             for(var i = 0; i < UserandGroupList.length; i++)
             {
                 var currentGroup = UserandGroupList[i];
-                finalList+= '<li>';
-                finalList += '<a>'+currentGroup.GroupName+'</a>';
+                finalList+= '<li id="g_'+currentGroup.GroupID+'">';
+                finalList += '<img src="images/icons/group.jpg" alt="icon of a group"/><a>'+currentGroup.GroupName+'</a>';
                 
                 if(currentGroup.UserList.length > 0)
                 {
@@ -37,8 +41,8 @@ UserManagerView = function($treeWidget, $groupForm, $userForm)
                     for(var j=0;j < currentGroup.UserList.length; j++)
                     {
                         var currentUser = currentGroup.UserList[j];
-                        finalList+='<li>';
-                        finalList+='<a>'+currentUser.FirstName+' '+currentUser.LastName+'</a>';
+                        finalList+='<li id="u_'+currentUser.UserId+'">';
+                        finalList+='<img src="images/icons/user.jpg" alt="icon of a user"/><a>'+currentUser.FirstName+' '+currentUser.LastName+'</a>';
                         finalList+='</li>';
                     }
                     finalList+='</ul>';
@@ -52,7 +56,13 @@ UserManagerView = function($treeWidget, $groupForm, $userForm)
             //
             $TreeWidget.jstree('destroy');
             $TreeWidget.html(finalList);
-            $TreeWidget.jstree();
+            $TreeWidget.jstree({
+                "themes": {
+                    "theme": "default",
+                    "dots": false,
+                    "icons": false
+                },
+           "plugins":["ui", "themes", "html_data"]});
         },
         displayNewGroupDialogue: function(htmlElement, callback, edit, group)
         {
@@ -65,6 +75,10 @@ UserManagerView = function($treeWidget, $groupForm, $userForm)
             $UserDialogue.empty().load('js/templ/new_user.html');
             
             UserDialogue(htmlElement, callback, edit, 0);
+        },
+        getSelectedItem: function()
+        {
+            return $TreeWidget.jstree('get_selected').attr('id');
         }
     };
 };

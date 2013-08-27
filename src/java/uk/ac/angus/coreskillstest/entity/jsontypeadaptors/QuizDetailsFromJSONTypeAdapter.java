@@ -51,7 +51,10 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         if(jsonQuiz.get("QuizRule").isJsonObject())
         {
             JsonObject rule = jsonQuiz.getAsJsonObject("QuizRule");
-
+            
+            if(rule.has("QuizRuleId"))
+                r.setResultId(rule.get("QuizRuleId").getAsInt());
+            
             r.setQuiz(q);
             r.setRuleName(rule.get("RuleName").getAsString());
             r.setHighMarkBoundary(rule.get("HighMarkBoundary").getAsInt());
@@ -72,11 +75,17 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         {
             JsonObject currentQuestion  = questionArray.get(i).getAsJsonObject();
             
+            
+                
+            
             String questionText = currentQuestion.get("QuestionText").getAsString();
             String questionLevel = currentQuestion.get("QuestionLevel").getAsString();
             int questionScore = currentQuestion.get("QuestionScore").getAsInt();
             
             Question newQuestion = new Question();
+            
+            if(currentQuestion.has("QuestionId"))
+                newQuestion.setQuestionId(currentQuestion.get("QuestionId").getAsInt());
             
             if(questionText != null)
                 newQuestion.setQuestiontext(questionText);
@@ -102,6 +111,9 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         {
             JsonObject currentOption = optionArray.get(i).getAsJsonObject();
             QuestionOption newOption = new QuestionOption();
+            
+            if(currentOption.has("QuestionOptionId"))
+                newOption.setOptionId(currentOption.get("QuestionOptionId").getAsInt());
             
             String optionText = currentOption.get("OptionText").getAsString();
             boolean optionCorrect = currentOption.get("CorrectOption").getAsBoolean();

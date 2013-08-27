@@ -114,5 +114,11 @@ footer
     bottom: 0px;
 }
 
-
-
+#angus_logo
+{
+    padding: 0.5em;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    font-weight: bold;  
+}

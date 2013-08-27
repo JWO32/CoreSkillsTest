@@ -8,12 +8,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
+import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException;
+import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException;
 
 /**
  *
@@ -73,17 +80,34 @@ public class GroupDataAccessObject
         em.close();
     }
     
-    public void addSingleGroup(String singleGroupJson)
+    /**
+     * 
+     * @param singleGroupJson 
+     */
+    public ServerClientResponse addSingleGroup(String singleGroupJson)
     {
         Gson JsonSerialiser = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        EntityManager em = GroupDataFactory.createEntityManager();
+        ServerClientResponse response = new ServerClientResponse();
+        QuizEntityManager qem = new QuizEntityManager(QuizGroup.class);
         
         QuizGroup ug = (QuizGroup) JsonSerialiser.fromJson(singleGroupJson, QuizGroup.class);
         
-        em.getTransaction().begin();
-        em.persist(ug);
-        em.getTransaction().commit();
-        em.close();
+        try 
+        {
+            qem.commitObject(ug);
+        } catch (UnableToCommitException ex) 
+        {
+            System.err.println("Unable to add group to database");
+            System.err.println(ex.getMessage());
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Unable to add group to database"));
+            return response;            
+        }
+        
+        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+        response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Group Added", "The group has been added"));
+        
+        return response;
     }
     
     /**
@@ -103,14 +127,36 @@ public class GroupDataAccessObject
      * from the deleted group to the default group (group ID 0)
      * @param groupId 
      */
-    public void deleteSingleGroup(int groupId)
+    public ServerClientResponse deleteGroup(int groupId)
     {
+        ServerClientResponse response = new ServerClientResponse();
+        QuizEntityManager qem = new QuizEntityManager(QuizGroup.class);
+        String query = "Groups.findGroupById";
+        HashMap parameters = new HashMap();
         
+        parameters.put("id", new Integer(groupId));
+        try 
+        {
+            qem.deleteObject(query, parameters);
+        } catch (UnableToDeleteObjectException ex) 
+        {
+           System.err.println("Database Error: Cannot delete group");
+           System.err.println(ex.getMessage());
+           response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+           response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Unable to delete selected group"));
+           return response;
+        }
+        
+        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+        response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Group Deleted", "The selected group has been deleted."));
+        
+        return response;
     }
     
     /**
      * Delete multiple groups indicated by the groupIdList parameter.
      * 
+     * Stub method: not implemented in the current version.
      * @param groupIdList 
      */
     public void deleteMultipleGroups(int[] groupIdList)

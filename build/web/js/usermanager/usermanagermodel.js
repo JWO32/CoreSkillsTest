@@ -9,10 +9,6 @@ UserManagerModel = function()
         {
             AllGroups.push(newGroup);
         },
-        removeGroup: function(delGroup)
-        {
-            
-        },
         getGroups: function()
         {
             return AllGroups;
@@ -20,10 +16,6 @@ UserManagerModel = function()
         addUser: function(newUser)
         {
             AllUsers.push(newUser);
-        },
-        removeUser: function(delUser)
-        {
-            
         },
         getUsers: function()
         {
@@ -42,7 +34,34 @@ UserManagerModel = function()
            // Assign all users and groups to 
            UsersAndGroups = data;
         },
-        sendUserToServer: function(user)
+        deleteUser: function(userId, successCallback)
+        {
+          
+            $.ajax({
+                type:'delete',
+                url:'User/delete/user'+userId,
+                dataType:'json',
+                success: successCallback,
+                error: function(data)
+                {     
+                    $.alert('User Delete Error', 'User could not be deleted');
+                }
+            });
+        },
+        deleteGroup: function(groupId, successCallback)
+        {
+            $.ajax({
+               type:'delete',
+               url: 'User/delete/group/'+groupId,
+               dataType: 'json',
+               success: successCallback,
+               error: function (data)
+               {
+                   $.alert('Group Delete Error', 'Group could not be deleted');
+               }              
+            });
+        },
+        sendUserToServer: function(user, successCallback)
         {
             var url = 'User/add/user';
             var data = JSON.stringify(user);
@@ -52,17 +71,14 @@ UserManagerModel = function()
                 url: url,
                 data: data,
                 dataType: 'json',
-                success: function(data)
+                success: successCallback,
+                error: function(data)
                 {
-                    alert('User Added');
-                },
-                error: function()
-                {
-                    alert('Server Error: User could not be added');
+                    $.alert('Add User Error', 'The user could not be added');
                 }
             });
         },
-        sendGroupToServer: function(group)
+        sendGroupToServer: function(group, successCallback)
         {
             var url = 'User/add/group';
             var data = JSON.stringify(group);
@@ -73,13 +89,10 @@ UserManagerModel = function()
                 url: url,
                 data: data,
                 dataType: 'json',
-                success: function()
+                success: successCallback,
+                error: function(data)
                 {
-                    alert('Group Added');
-                },
-                error: function()
-                {
-                    alert('Error: group coould not be added to server');
+                    $.alert('Add Group Error','The group could not be added');
                 }
             });
          }

@@ -10,16 +10,24 @@ import javax.persistence.TypedQuery;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
+import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
 
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
+import uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException;
+import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToCommitException;
+import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectException;
 
 /**
  *
  * This class is responsible for receiving User and Group XML files, marshalling and unmarshalling 
  * and serialisation to the database.
  * 
- * TODO: Refactor and implement JSON interface to allow cleaner separation between Data marshalling/conversion object (this)
+ * TODO: Refactor and implement JSON interface to allow cleaner separation between Data marshalling/conversion of objects
  * and database access object.
  * @author JWO
  */
@@ -41,37 +49,56 @@ public class UserDataAccessObject
      * @param userJson
      * @return 
      */
-    public boolean addSingleUser(String userJson)
+    public ServerClientResponse addSingleUser(String userJson, int groupId)
     {
-        QuizUser newUser = (QuizUser) gsn.fromJson(userJson, QuizUser.class);
-              
-        QuizGroup defaultGroup = GroupDataAccessObject.getDefaultGroup();
+        ServerClientResponse response = new ServerClientResponse();
+        QuizEntityManager userQEM = new QuizEntityManager(QuizUser.class);
+        QuizEntityManager groupQEM = new QuizEntityManager(QuizGroup.class);
         
-        if(defaultGroup == null)
+        QuizUser user = (QuizUser) gsn.fromJson(userJson, QuizUser.class);
+        
+        QuizGroup group;
+        
+        try 
         {
-            GroupDataAccessObject.createDefaultGroup();
-            return false;
+            group = (QuizGroup) groupQEM.getSingleObjectByPrimaryKey(groupId);
+        } catch (QuizResourceNotFoundException ex) 
+        {
+            System.err.println("Unable to add user - group cannot be found, attempting to set default group");
+            System.err.println(ex.getMessage());
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Cannot add user, group not found"));
+            // Attemp to set the default group, if this is not possible, return the error response to the client, otherwise continue.
+            group = GroupDataAccessObject.getDefaultGroup();
+            
+            if(group == null)
+                return response;
         }
         
-        newUser.setGroup(defaultGroup);
+        user.setGroup(group);
         
-        //defaultGroup.getUserList().add(newUser);
+        try 
+        {
+            userQEM.commitObject(user);
+        } catch (UnableToCommitException ex) 
+        {
+            System.err.println("Unable to add user - database error");
+            System.err.println(ex.getMessage());
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Cannot add user, database error"));
+        }
         
-        EntityManager em = UserDataFactory.createEntityManager();
-        em.getTransaction().begin();
+         response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+         response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("User Added", "The user has been added"));
         
-        em.persist(newUser);
-        
-        em.getTransaction().commit();
-        em.close();
-        
-        return true;
+        return response;
     }
     
     /**
      * This will involve adding a list of students from a source such as a 
      * CSV file.
      * 
+     * Stub - not required in current version.
      * @param userList
      * @return 
      */
@@ -81,6 +108,11 @@ public class UserDataAccessObject
         return true;
     }
     
+    /**
+     * Refactor to use the QuizEntityManager 
+     * @param userId
+     * @return 
+     */
     public QuizUser fetchSingleUserObject(int userId)
     {
         QuizUser user;
@@ -93,6 +125,7 @@ public class UserDataAccessObject
         }catch (javax.persistence.NoResultException ex)
         {
             System.err.println("Unable to locate specified user");
+            System.err.println(ex.getMessage());
             user = null;
         }finally
         {
@@ -102,6 +135,12 @@ public class UserDataAccessObject
         return user;
     }
     
+    /**
+     * TODO: Refactor to use the QuizEntityManger for uniform database access
+     * 
+     * @param userId
+     * @return 
+     */
     public String fetchSingleUserJson(int userId)
     {
         String json;
@@ -120,6 +159,10 @@ public class UserDataAccessObject
         return json;
     }
     
+    /**
+     * TODO: refactor to use QuizEntityManager for uniform database access
+     * @return 
+     */
     public List<QuizUser> fetchAllUsersObject()
     {
         List<QuizUser> users;
@@ -133,6 +176,10 @@ public class UserDataAccessObject
         return users;
     }
     
+    /**
+     * TODO: refactor to use QuizEnityManager for uniform database access
+     * @return 
+     */
     public String fetchAllUsersJson()
     {
         String json;
@@ -150,16 +197,46 @@ public class UserDataAccessObject
         return json;     
     }
     
-    public boolean deleteUser()
+    /**
+     * Refactored to use the QuizEntityManager()
+     * @return 
+     */
+    public ServerClientResponse deleteUser(int userId)
     {
+        ServerClientResponse response = new ServerClientResponse();
+        QuizEntityManager qem = new QuizEntityManager(QuizUser.class);
+        String query = "Users.findUserById";
+        HashMap queryParams = new HashMap();
         
-        return true;
+        queryParams.put("id", new Integer(userId));
+        try 
+        {
+            qem.deleteObject(query, queryParams);
+        } catch (UnableToDeleteObjectException ex) 
+        {
+            System.err.println("Unable to delete user");
+            System.err.println(ex.getMessage());
+            response.setResponse(ServerClientResponse.CLIENT_STATUS_ERROR);
+            response.setStatusMessage(ServerClientResponseFactory.formatErrorJSON("Database Error", "Unable to delete user"));
+            return response;
+        }
+        
+        response.setResponse(ServerClientResponse.CLIENT_STATUS_OK);
+        response.setStatusMessage(ServerClientResponseFactory.formatSuccessJSON("Delete Successful", "User has been deleted"));
+        
+        return response;
     }
     
-    public boolean deleteMultipleUsers()
+    /**
+     * Stub method - not implemented in the current version
+     * 
+     * @return 
+     */
+    public ServerClientResponse deleteMultipleUsers()
     {
+        ServerClientResponse response = new ServerClientResponse();
         
-        return true;
+        return response;
     }
 
 }

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.io.IOException;
@@ -13,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Implementation of a Servlet to manage global application settings.
+ * 
+ * Stub Only
  * @author JWO
  */
 @WebServlet(name = "ApplicationSettingsManager", urlPatterns = {"/Settings/*"})
