@@ -31,7 +31,11 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         Quiz q = new Quiz();
 
         if(QuizObject.has("QuizId"))
-            q.setQuizId(QuizObject.get("QuizId").getAsInt());
+        {
+            if(QuizObject.get("QuizId").getAsString().equals("") == false)
+                q.setQuizId(QuizObject.get("QuizId").getAsInt());
+        }
+            
         
         q.setQuizName(QuizObject.get("QuizTitle").getAsString());
         q.setQuizSubject(QuizObject.get("QuizSubject").getAsString());
@@ -53,7 +57,11 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
             JsonObject rule = jsonQuiz.getAsJsonObject("QuizRule");
             
             if(rule.has("QuizRuleId"))
-                r.setResultId(rule.get("QuizRuleId").getAsInt());
+            {
+                if(rule.get("QuizRuleId").getAsString().equals("") == false)
+                    r.setResultId(rule.get("QuizRuleId").getAsInt());
+            }
+                
             
             r.setQuiz(q);
             r.setRuleName(rule.get("RuleName").getAsString());
@@ -74,10 +82,7 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         for(int i = 0; i < questionArray.size(); i++)
         {
             JsonObject currentQuestion  = questionArray.get(i).getAsJsonObject();
-            
-            
-                
-            
+                          
             String questionText = currentQuestion.get("QuestionText").getAsString();
             String questionLevel = currentQuestion.get("QuestionLevel").getAsString();
             int questionScore = currentQuestion.get("QuestionScore").getAsInt();
@@ -85,7 +90,10 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
             Question newQuestion = new Question();
             
             if(currentQuestion.has("QuestionId"))
-                newQuestion.setQuestionId(currentQuestion.get("QuestionId").getAsInt());
+            {
+                if(currentQuestion.get("QuestionId").getAsString().equals("") == false)
+                    newQuestion.setQuestionId(currentQuestion.get("QuestionId").getAsInt());
+            }
             
             if(questionText != null)
                 newQuestion.setQuestiontext(questionText);
@@ -113,8 +121,11 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
             QuestionOption newOption = new QuestionOption();
             
             if(currentOption.has("QuestionOptionId"))
-                newOption.setOptionId(currentOption.get("QuestionOptionId").getAsInt());
-            
+            {
+                if(currentOption.get("QuestionOptionId").getAsString().equals("") == false)
+                    newOption.setOptionId(currentOption.get("QuestionOptionId").getAsInt());
+            }
+                
             String optionText = currentOption.get("OptionText").getAsString();
             boolean optionCorrect = currentOption.get("CorrectOption").getAsBoolean();
             

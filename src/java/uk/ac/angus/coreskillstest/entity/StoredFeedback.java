@@ -53,7 +53,7 @@ public class StoredFeedback implements Serializable
      */
     public static String getDefaultFeedback()
     {
-        String defaultFeedback = "No lecturer feedback was provided for this quiz.";
+        String defaultFeedback = "No Category";
         
         return defaultFeedback;
     }

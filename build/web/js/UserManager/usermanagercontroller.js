@@ -69,7 +69,7 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
           
           var groupId = groupKey.replace('g_','');
           
-          UserModel.deleteGroup(groupId, controller.deleteGroupCallback)
+          UserModel.deleteGroup(groupId, controller.deleteGroupCallback);
           
       },
       downloadGroupsandUsersEvent: function()
@@ -108,13 +108,11 @@ UserManagerController = function($treeWidget, $userDialogue, $groupDialogue)
       addUserCallback: function(userDetails)
       {
           UserModel.addUser(userDetails);
-          $.alert('User Added', 'The user has been added');
           UserModel.sendUserToServer(userDetails, controller.downloadGroupsandUsersEvent);
       },
       addGroupCallback: function(groupDetails)
       {
           UserModel.addGroup(groupDetails);
-          $.alert('Group Added', 'The group has been added');
           UserModel.sendGroupToServer(groupDetails, controller.downloadGroupsandUsersEvent);
       },
       deleteUserCallback: function()

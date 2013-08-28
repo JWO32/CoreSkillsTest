@@ -26,12 +26,12 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceEx
 //TODO: Refactor to take ServerClientResponse into account
 //TODO: Refactor to return status and error messages to the client.
 
-public class QuizReceiverController extends HttpServlet 
+public class QuizController extends HttpServlet 
 {   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuizReceiverController() 
+    public QuizController() 
     {
         super();
     }

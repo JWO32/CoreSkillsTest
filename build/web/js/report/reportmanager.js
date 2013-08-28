@@ -170,11 +170,14 @@ ReportManager.View = (function ()
                 return;
             }
             
+            var groupName = $('#group_list option:selected').text();
+            var quizName = $('#quiz_list option:selected').text();
+            
             $('#result_wrapper').empty();
                 
             $('#result_wrapper').append('<h3>Results</h3>');
-            $('#result_wrapper').append('<p>Group: <strong><groupid></strong></p>');
-            $('#result_wrapper').append('<p>Quiz: <strong><quizid></strong></p>');
+            $('#result_wrapper').append('<p>Group: <strong>'+groupName+'</strong></p>');
+            $('#result_wrapper').append('<p>Quiz: <strong>'+quizName+'</strong></p>');
             
             for(var i = 0; i < ReportCache.length; i++)
             {

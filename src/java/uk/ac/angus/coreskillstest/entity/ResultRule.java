@@ -46,7 +46,7 @@ public class ResultRule implements Serializable
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
-    @Transient
+    @Column(name="feedback")
     private String LinkedFeedback;
     
     public ResultRule()
@@ -151,38 +151,40 @@ public class ResultRule implements Serializable
      * TODO: look at the possibility of using a regular expression instead of 
      * if statements
      * 
-     * @param Score
+     * @param percentScore
      * @return 
      */
-    public boolean appliesTo(int Score)
+    public boolean appliesTo(float percent)
     {
         boolean applies = false;
+        //Convert to int for simplicity
+        int percentScore = (int) percent;
         
-        if(Score > LowMarkBoundary && PassFail == true)
+        if(percentScore > LowMarkBoundary && PassFail == true)
         {
             applies = true;
         }
         
-        if(Score > LowMarkBoundary && Score < HighMarkBoundary)
+        if(percentScore >= LowMarkBoundary && percentScore <= HighMarkBoundary)
         {
             applies = true;
         }
         
         if(HighMarkGtEq == true)
         {
-            if(Score > LowMarkBoundary && Score <=HighMarkBoundary)
+            if(percentScore > LowMarkBoundary && percentScore <=HighMarkBoundary)
             {
                 applies = true;
             }
         }else if(LowMarkGtEq == true)
         {
-            if(Score >= LowMarkBoundary && Score < HighMarkBoundary)
+            if(percentScore >= LowMarkBoundary && percentScore < HighMarkBoundary)
             {
                 applies = true;
             }
         }else if(HighMarkGtEq == true && LowMarkGtEq == true)
         {
-            if(Score >= LowMarkBoundary && Score <= HighMarkBoundary)
+            if(percentScore >= LowMarkBoundary && percentScore <= HighMarkBoundary)
             {
                 applies = true;
             }

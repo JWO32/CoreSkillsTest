@@ -39,7 +39,7 @@ UserManagerModel = function()
           
             $.ajax({
                 type:'delete',
-                url:'User/delete/user'+userId,
+                url:'User/delete/user/'+userId,
                 dataType:'json',
                 success: successCallback,
                 error: function(data)
@@ -65,7 +65,9 @@ UserManagerModel = function()
         {
             var url = 'User/add/user';
             var data = JSON.stringify(user);
-            data = 'user='+data;
+            var groupId = user.GroupId;
+            
+            data = 'user='+data+'&groupId='+groupId;
             $.ajax({
                 type:'POST',
                 url: url,

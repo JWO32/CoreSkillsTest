@@ -11,11 +11,9 @@ import javax.persistence.TypedQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponse;
 import uk.ac.angus.coreskillstest.controller.clientresponses.ServerClientResponseFactory;
-
 import uk.ac.angus.coreskillstest.entity.QuizUser;
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
 import uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException;

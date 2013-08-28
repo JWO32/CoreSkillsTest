@@ -37,7 +37,6 @@
 <ul>
     <li><strong>Name:</strong>{{FirstName}} {{LastName}}</li>
         <ul>
-            <li>Date: {{ResultDate}}</li>
             <li>Marks: {{Score}}</li>
             <li>Percentage: {{Percentage}}%</li>
             <li>Category: {{Category}}</li>

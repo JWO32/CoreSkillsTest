@@ -34,6 +34,7 @@ public class ResultManager
     private QuizEvent SelectedQuizConfiguration;
     private Result QuizResult;
     private int Score = 0;
+    private float PercentScore = 0f;
     
     public ResultManager()
     {
@@ -216,6 +217,12 @@ public class ResultManager
 //                Score++;
 //        }     
         
+        
+        QuizResult.setScoreandPercentage(Score, totalMarks);
+        //Use the local PercentScore to cache the Percentage Score for the result
+        PercentScore = QuizResult.getQuizPercentage();
+        
+        
         // If the quiz object has rules associated with it
         // run the rules to determine the feedback to the student
         if(SelectedQuiz.getResultRules().size() > 0)
@@ -226,8 +233,6 @@ public class ResultManager
             //TODO: If there are no rules to apply - change this for a default feedback object.
             QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
         }
-        
-        QuizResult.setScoreandPercentage(Score, totalMarks);
         
         // Quiz Result is complete - serialise to the database
         saveResult();
@@ -327,7 +332,7 @@ public class ResultManager
         
         for(ResultRule currentRule : ResultRuleList)
         {
-            if(currentRule.appliesTo(Score))
+            if(currentRule.appliesTo(PercentScore))
             {
                 // If the Rule is pass or fail
                 if(currentRule.getPassFail() == true)
@@ -339,6 +344,7 @@ public class ResultManager
                 }
                 
                 //If the rule is not pass or fail then apply rule feedback
+                //This will overwrite the 'fail' feedback.
                 if(currentRule.getPassFail() == false)
                     ruleFeedback = currentRule.getFeedback();
             }

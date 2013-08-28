@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-27T23:10:00")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-28T12:14:37")
 @StaticMetamodel(ResultRule.class)
 public class ResultRule_ { 
 
@@ -13,6 +13,7 @@ public class ResultRule_ {
     public static volatile SingularAttribute<ResultRule, Boolean> LowMarkGtEq;
     public static volatile SingularAttribute<ResultRule, Boolean> HighMarkGtEq;
     public static volatile SingularAttribute<ResultRule, Quiz> LinkedQuiz;
+    public static volatile SingularAttribute<ResultRule, String> LinkedFeedback;
     public static volatile SingularAttribute<ResultRule, Integer> ResultRuleId;
     public static volatile SingularAttribute<ResultRule, Integer> HighMarkBoundary;
     public static volatile SingularAttribute<ResultRule, Boolean> PassFail;

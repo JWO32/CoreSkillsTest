@@ -8,14 +8,44 @@ var UserDialogue = function(htmlElement, callback, edit, user)
         {
                 autoOpen: false,
                 height: 'auto',
-                width: '600',
+                width: 'auto',
                 modal: true,
-                title: 'Create/Edit User Details',
+                title: 'Create User',
                 show: 'blind',
                 hide: 'blind',
                 open: function()
                 {
-                    
+                     $.ajax({
+                        url: 'User/get/groupdetails',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            $('#group_list').empty();
+                            $('#group_list').append('<option value="0">Default Group</option>');
+
+                            $.each(data, function(key, val)
+                            {
+                                $('#group_list').append('<option value="'+val.GroupId+'">'+val.GroupName+'</option>');
+                            });
+                        },
+                        error: function(data)
+                        {
+                           var errorObj = jQuery.parseJSON(data.responseText);
+                           var errorTitle = errorObj.Status;
+                           var errorMsg = errorObj.Message;
+
+                           if(errorTitle !== null && errorMsg !== null)
+                             $.alert(errorTitle, errorMsg);
+                           else
+                             $.alert("Group Download Error", "Unable to download group list");
+                         
+                            $('#group_list').empty();
+                            $('#group_list').append('<option value="0">Default Group</option>');
+                        }
+                     });
+                        
+                      
                 },
                 buttons:
                 {

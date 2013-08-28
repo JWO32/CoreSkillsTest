@@ -280,7 +280,7 @@ var resultRuleDialog = function(callback, edit, rule)
                 else
                     resultRule.PassFail = false;
                 
-                resultRule.Category = $('#category option:selected').val();
+                resultRule.Category = $('#quiz_level option:selected').val();
                 
                 $(this).dialog("destroy");
                 callback(resultRule);

@@ -39,16 +39,18 @@ $(document).ready(function ()
     });
     
     $('input[type="button"]').button();
-    
+    $('#quiz_management').tabs();
 });
 </script>
-
-<form>
-    <fieldset>
-        <legend>Quiz Management Options:</legend>
+<div id="quiz_management">
+    <ul>
+        <li>Quiz Management Options</li>
+    </ul>
+    <div>
         <input type="button" id="delete_quiz" value="Delete Quiz" />   
-    </fieldset>
-</form>
+     </div>
+</div>
+
 
 <div id="quiz_wrapper">
     <h3>No Quizzes</h3>

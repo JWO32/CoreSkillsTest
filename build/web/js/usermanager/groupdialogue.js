@@ -10,7 +10,7 @@ var GroupDialogue = function(htmlElement, callback, edit, group)
         height: 'auto',
         width: 'auto',
         modal: true,
-        title:'Add/Edit a Group',
+        title:'Add a Group',
         show:'blind',
         hide:'blind',
         open: function()

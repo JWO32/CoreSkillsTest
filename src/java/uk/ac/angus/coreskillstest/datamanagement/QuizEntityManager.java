@@ -29,9 +29,9 @@ public class QuizEntityManager<T>
     private EntityManagerFactory EntityManagerFactory;
     String PersistenceUnit;
     
-    private Class Type;
+    private Class<T> Type;
     
-    public QuizEntityManager(Class type)
+    public QuizEntityManager(Class<T> type)
     {
         EntityManagerFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
         
@@ -45,7 +45,7 @@ public class QuizEntityManager<T>
      */
     private Class getType()
     {
-        return Type.getClass();
+        return Type;
     }
     
     /**
@@ -182,12 +182,14 @@ public class QuizEntityManager<T>
         T object = null;
         
         EntityManager em = EntityManagerFactory.createEntityManager();
+        
         try
         {
             object = (T) em.find(getType(), objectId);
         }catch(javax.persistence.NoResultException ex)
         {
             System.err.println("Locate resource by id: resource not found.  Object Type"+getType().getSimpleName());
+            System.err.println(ex.getMessage());
         }finally
         {
             em.close();

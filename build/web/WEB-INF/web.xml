@@ -13,7 +13,7 @@
         <description/>
         <display-name>QuizReceiverController</display-name>
         <servlet-name>QuizReceiverController</servlet-name>
-        <servlet-class>uk.ac.angus.coreskillstest.controller.QuizReceiverController</servlet-class>
+        <servlet-class>uk.ac.angus.coreskillstest.controller.QuizController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>QuizReceiverController</servlet-name>
