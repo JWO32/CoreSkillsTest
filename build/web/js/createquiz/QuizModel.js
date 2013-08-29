@@ -113,7 +113,7 @@ Quiz.prototype.getSubject = function ()
 
 Quiz.prototype.getNextUIKey = function(questionId)
 {
-    if(questionId !== null)
+    if(questionId !== "")
     {
         var q = 'q_'+questionId;
     }else

@@ -39,7 +39,7 @@ public class QuizController extends HttpServlet
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      * 
-     * Needs to be refactored
+     * Needs to be refactored to use setRespnse method
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
@@ -119,11 +119,12 @@ public class QuizController extends HttpServlet
 
         switch(pathComponents[3])
         {
+            //Refactored -- now uses setResponse
             case "add":  
                 json = req.getParameter("quiz");
                 try
                 {
-                    qDAO.addNewQuizByJson(json);
+                    response = qDAO.addNewQuizByJson(json);
                 }catch(UnabletoAddResourceException ex)
                 {
                     String returnMessage = ex.getMessage();
@@ -132,6 +133,7 @@ public class QuizController extends HttpServlet
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
                 break;
+                // Refactored -- now uses setResponse
             case "edit":
                 String quizParam = req.getParameter("quiz");
                 String quizIdParam = req.getParameter("quizId");
@@ -153,6 +155,15 @@ public class QuizController extends HttpServlet
         }
     }
 
+    
+    /**
+     * Handles delete requests.  Only required to deal with individual quiz deletes at the moment.
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {

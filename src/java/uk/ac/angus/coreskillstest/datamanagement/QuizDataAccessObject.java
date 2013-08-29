@@ -45,12 +45,13 @@ public class QuizDataAccessObject
         QuizEntityManagerFactory = Persistence.createEntityManagerFactory("CoreSkillsTestPU");
     }
     
-    public void addNewQuizByJson(String json) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceException
+    public ServerClientResponse addNewQuizByJson(String json) throws uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceException
     {
         EntityManager em = QuizEntityManagerFactory.createEntityManager();
         Quiz newQuiz;
         GsonBuilder gb = new GsonBuilder();
         boolean serialiseSuccess = true;
+        ServerClientResponse response = new ServerClientResponse();
         
         gb.registerTypeAdapter(Quiz.class, new QuizDetailsFromJSONTypeAdapter());        
         Gson g = gb.excludeFieldsWithoutExposeAnnotation().create();
@@ -81,6 +82,8 @@ public class QuizDataAccessObject
         
         if(serialiseSuccess == false)
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.UnabletoAddResourceException("Serialisation Error: Unable to Add Quiz to database");
+    
+        return response;
     }
     
     public boolean addNewQuizbyObject(Quiz quiz)

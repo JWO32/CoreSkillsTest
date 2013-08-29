@@ -1,3 +1,7 @@
+// Implementation of the module pattern
+// In this interation, all javascript modules will be kept in the same file to
+// reduce the number of GET requests made by the client. 
+
 QuizManagerController = (function ($)
 {
     var deleteQuiz = function ()
@@ -29,24 +33,7 @@ QuizManagerController = (function ($)
         });
     };
     
-    var editQuiz = function (quizId)
-    {
-        
-        $.ajax({
-           url:'Quiz/edit',
-           dataType: 'json',
-           data: 'quizId='+quizId,
-           method: 'get',
-           success: function (data, textStatus)
-           {
-               if(data.redirect)
-               {
-                   window.location.href = data.redirect;
-               }
-           }
-        });
-        
-    };
+    
     var updateQuizList = function (quizList)
     {
         QuizManagerController.View.cacheQuizList(quizList);
@@ -141,6 +128,9 @@ QuizManagerController.View = (function ()
       },
       cacheQuizList: function(quizList)
       {
+          delete QuizCache;
+          QuizCache = [];
+          
           var templateSource = $('#quiz_template').html();
           var template = Handlebars.compile(templateSource);
           

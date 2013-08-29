@@ -44,6 +44,10 @@ QuizSetupView = function()
           if(eventsList.length === 0)
               return;
           
+          //Reset the event cache
+          delete EventCache;
+          EventCache = [];
+          
           var eventTemplateSource = $('#quiz_event_template').html();
           
           for(i = 0; i < eventsList.length; i++)
@@ -69,6 +73,7 @@ QuizSetupView = function()
       },
       renderEventList: function()
       {
+          
           if(EventCache.length > 0)
           {
               $('#quiz_events').empty();
