@@ -29,17 +29,6 @@ QuizController = function(model, view)
                 {	
                         questionDialogue(callBack, null, null);
                 },
-
-                /**
-                 * TODO: Takes the current list of questions -- no longer needed!
-                 * @param reorderedList
-                 * @returns
-                 */
-                updateOrderEvent: function(reorderedList)
-                {
-
-                },
-
                 validateQuizDetailsEvent: function()
                 {
                         var allQuizDetails = [];

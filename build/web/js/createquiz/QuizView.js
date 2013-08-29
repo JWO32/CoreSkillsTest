@@ -38,8 +38,9 @@ QuestionListManager = function(QListElement)
 		/**
 		 * Redraw the List of Questions
 		 * 
-		 * TODO: Examine the possibility of replacing this code with a template
+		 * TODO: Refactor this code to replace with a template
 		 * 
+                 * 
 		 */
 		render: function(questionList)
 		{
@@ -56,7 +57,7 @@ QuestionListManager = function(QListElement)
 				html+='<li><em>Category: </em> '+currentQuestion.QuestionCategory+'</li>';
 				html+='<li><em>Level: </em>'+currentQuestion.QuestionLevel+'</li>';
 				html+='<li><em>Options:</em></li>';
-				html+='<ol class="options">';
+				html+='<ul class="options">';
 				for(var j = 0; j < currentQuestion.QuestionOptions.length; j++)
 				{
 					var currentOption = currentQuestion.QuestionOptions[j];
@@ -68,12 +69,12 @@ QuestionListManager = function(QListElement)
 					
 					if(currentOption.CorrectOption === true)
 					{
-						html+='<img src="images/icons/icon_tick.jpg"/> ';
+						html+=' <img width="22px" height="22px" src="images/icons/tick.png"/> ';
 					}
 					
 					html+='</li>';
 				}
-				html+='</ol>';
+				html+='</ul>';
 				html+='</ul>';
 				html+='</li>';
 				

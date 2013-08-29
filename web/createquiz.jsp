@@ -1,7 +1,6 @@
 <% pageContext.getSession().setAttribute("PageTitle", "Quiz Creator"); %>
 <% pageContext.getSession().setAttribute("PageHeading", "Create/Edit Quiz");%>
 
-
 <%
     String quizJSON = (String) pageContext.getSession().getAttribute("Quiz");
     //Reset the session
@@ -16,6 +15,8 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
+        var QuestionListElement = $('#QuestionList'); //Set the UI component where questions are displayed
+        
         var QLM = new QuestionListManager(QuestionListElement); //Declare View Manager
         
     <%
@@ -27,13 +28,14 @@ $(document).ready(function()
         }
         else
         {%>
-        var editQuiz = null;
+        var editQuiz = false;
         <%
         }
         %>
-    var QuestionListElement = $('#QuestionList');
     
-    if(editQuiz !== null)
+    
+    // Set up an editing event
+    if(editQuiz !== false)
     {
         CurrentQuiz = new Quiz(editQuiz.QuizTitle, editQuiz.Duration, editQuiz.QuizSubject, editQuiz.QuizLevel);
        
@@ -59,6 +61,7 @@ $(document).ready(function()
 
     /*
     * Bind events to controller functions
+    * 
     */
     $('#quiz_add_question').on('click', function()
     {
@@ -85,7 +88,9 @@ $(document).ready(function()
        Controller.addRuleEvent(); 
 
     });
-
+    
+    //Set the question list as sortable and selectable
+    //
     $('#QuestionList').sortable({
             update: function(event, ui)
             {
@@ -94,10 +99,15 @@ $(document).ready(function()
             },
             handle: ".handle"
     }).selectable().find("li.q");
-
+    
+    /*
+     * End of events
+     */
 
     // Set buttons and other widgets to have appropriate jQuery UI Styling
     $('input[type="button"]').button();
+    
+    // Initialise the controller
     Controller.init();
 	
 });

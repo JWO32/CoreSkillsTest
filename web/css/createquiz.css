@@ -137,6 +137,23 @@ fieldset label{
 
 .ui-button .ui-button-text
 {
-	line-height: 1.0;
-	
+	line-height: 1.0;	
+}
+
+
+/* Change the background colour of selected questions and child elements */
+#QuestionList .ui-selected
+{
+    background: #DDDDDD; 
+}
+
+#QuestionList .ui-selected > ul > li
+{
+    background: #DDDDDD;
+    
+}
+
+#QuestionList .ui-selected > ul > ul > li
+{
+    background: #DDDDDD;
 }
