@@ -84,7 +84,7 @@ QuizPlayerView = function ()
             $('#info_dialogue').html(templateHTML);
             $('#question_wrapper').hide();
             $('#info_dialogue_wrapper').show();
-            $('#info_dialogue_button').empty(); // Delete the dialogue button -- user muse close the window to finish     
+            $('#info_dialogue_button').empty(); // Delete the dialogue button -- user must close the window to finish     
         },
         renderResultMessage: function (resultDetails) 
         {

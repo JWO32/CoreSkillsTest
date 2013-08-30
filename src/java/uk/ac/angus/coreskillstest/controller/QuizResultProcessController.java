@@ -28,6 +28,7 @@ public class QuizResultProcessController extends HttpServlet
     
     
     // TODO: Remove this method into a dedicate report generating servlet
+    // Currently unused.
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
@@ -126,6 +127,11 @@ public class QuizResultProcessController extends HttpServlet
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.setContentType("text/json");
                 output.write(clientResponse.getClientJson());
+            }else if(clientResponse.getResponse() == ServerClientResponse.CLIENT_STATUS_RESPONSE)
+            {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("text/json");
+                output.write(clientResponse.getStatusMessage());
             }
         }
     }
