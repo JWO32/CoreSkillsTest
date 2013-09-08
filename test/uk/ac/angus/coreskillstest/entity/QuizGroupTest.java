@@ -19,11 +19,6 @@ public class QuizGroupTest
 {
     private QuizGroup group;
     
-    public QuizGroupTest() 
-    {
-    
-    }
-    
     @BeforeClass
     public static void setUpClass() 
     {

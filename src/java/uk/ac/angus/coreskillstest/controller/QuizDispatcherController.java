@@ -17,12 +17,18 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizPackage;
  *
  * The quiz dispatcher controller is responsible for managing quiz events and
  * quiz 'packages'.
+ * 
+ * This controller only needs to deal with GET requests.
+ * 
  * @author JWO
  */
 @WebServlet(name = "QuizDispatcherController", urlPatterns = {"/Dispatcher/*"})
 public class QuizDispatcherController extends HttpServlet {
 
     /**
+     * doGet Rest interface deals with two events:
+     * getEvents - gets all events for the supplied e-mail address and returns to the client
+     * doQuiz - gets the UserID and EventID and gets the quiz associated quiz and passes to
      * 
      * @param request
      * @param response
@@ -67,6 +73,13 @@ public class QuizDispatcherController extends HttpServlet {
         }   
     }
 
+    /**
+     * Takes the response obtained from the interaction in the GET or POST method and write the
+     * server response to the output that will be sent to the web browser
+     * @param clientResponse
+     * @param resp
+     * @throws IOException 
+     */
     private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
         try (PrintWriter output = resp.getWriter()) {
@@ -82,19 +95,6 @@ public class QuizDispatcherController extends HttpServlet {
                 output.write(clientResponse.getClientJson());
             }
         }
-    }
-    
-    /**
-     * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException 
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
-        
     }
 
 }

@@ -68,7 +68,7 @@ public class QuizGroup implements Serializable
     private List<QuizUser> UserList = new ArrayList<>();
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="LinkedGroup", targetEntity=QuizEvent.class, fetch=FetchType.LAZY)
-    private List<QuizEvent> QuizConfigurationList = new ArrayList<>();
+    private List<QuizEvent> QuizEvents = new ArrayList<>();
     
     public QuizGroup()
     {
@@ -111,23 +111,23 @@ public class QuizGroup implements Serializable
         return GroupDescription;
     }
 
-    public void setUserList(List<QuizUser> newUserList)
+    public void setUsers(List<QuizUser> newUserList)
     {
         UserList = newUserList;
     }
     
-    public List<QuizUser> getUserList()
+    public List<QuizUser> getUsers()
     {
         return UserList;
     }    
     
-    public void setConfigurationList(List<QuizEvent> newConfigList)
+    public void setQuizEvents(List<QuizEvent> newConfigList)
     {
-        QuizConfigurationList = newConfigList;
+        QuizEvents = newConfigList;
     }
     
-    public List<QuizEvent> getQuizConfiguration()
+    public List<QuizEvent> getQuizEvents()
     {
-        return QuizConfigurationList;
+        return QuizEvents;
     }
 }

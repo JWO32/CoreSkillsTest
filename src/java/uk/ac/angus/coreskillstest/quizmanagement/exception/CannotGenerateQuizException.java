@@ -14,7 +14,9 @@ public class CannotGenerateQuizException extends Exception {
      * Creates a new instance of
      * <code>CannotGenerateQuizException</code> without detail message.
      */
-    public CannotGenerateQuizException() {
+    public CannotGenerateQuizException() 
+    {
+        super();
     }
 
     /**

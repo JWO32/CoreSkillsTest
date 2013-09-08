@@ -2,7 +2,6 @@
 package uk.ac.angus.coreskillstest.datamanagement;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Implementation of a Servlet to manage global application settings.
  * 
- * Stub Only
+ * 
+ * Added in sprint 7 - will be required to set when expired QuizEvents should be deleted
+ * Stub Only - NOT IMPLEMENTED
+ * 
+ * 
  * @author JWO
  */
 @WebServlet(name = "ApplicationSettingsManager", urlPatterns = {"/Settings/*"})

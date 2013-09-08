@@ -1,6 +1,5 @@
 package uk.ac.angus.coreskillstest.entity.jsontypeadaptors;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -9,7 +8,6 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
@@ -24,13 +22,7 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
  */
 
 public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
-{
-    
-    public QuizEventFromJSONTypeAdapter()
-    {
-        
-    }
-    
+{  
     /**
      * 
      * @param json
@@ -40,19 +32,19 @@ public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
      * @throws JsonParseException 
      */
     @Override
-    public QuizEvent deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+    public QuizEvent deserialize(final JsonElement json,final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
     {
-        JsonObject obj = json.getAsJsonObject();
+        JsonObject jsonObject = json.getAsJsonObject();
         
-        QuizEvent qe = new QuizEvent();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        QuizEvent quizEvent = new QuizEvent();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Quiz linkedQuiz;
         QuizGroup linkedGroup;
         Date openDate;
         Date closeDate;
         
-        int quizId = obj.get("QuizId").getAsInt();
-        int groupId = obj.get("GroupId").getAsInt();
+        int quizId = jsonObject.get("QuizId").getAsInt();
+        int groupId = jsonObject.get("GroupId").getAsInt();
         
         linkedQuiz = getQuiz(quizId);
         linkedGroup = getGroup(groupId);
@@ -60,29 +52,31 @@ public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
         try
         {       
            if(linkedQuiz == null || linkedGroup == null)
+           {
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException("Quiz Event Error: cannot locate quiz resource indicated by QuizEvent");
-        
-            openDate = sdf.parse(obj.get("OpenDate").getAsString());
-            closeDate = sdf.parse(obj.get("CloseDate").getAsString());
-            qe.setLinkedQuiz(linkedQuiz);
-            qe.setLinkedGroup(linkedGroup);
-            qe.setQuizStartDate(openDate);
-            qe.setQuizCloseDate(closeDate);
-            qe.setNumberOfQuestions(obj.get("NumberOfQuestions").getAsInt());
-            qe.setRandomOrder(obj.get("RandomQuestions").getAsBoolean());
-            qe.setReturnResult(obj.get("Feedback").getAsBoolean());         
+           }
+           
+            openDate = simpleDateFormat.parse(jsonObject.get("OpenDate").getAsString());
+            closeDate = simpleDateFormat.parse(jsonObject.get("CloseDate").getAsString());
+            quizEvent.setLinkedQuiz(linkedQuiz);
+            quizEvent.setLinkedGroup(linkedGroup);
+            quizEvent.setQuizStartDate(openDate);
+            quizEvent.setQuizCloseDate(closeDate);
+            quizEvent.setNumberOfQuestions(jsonObject.get("NumberOfQuestions").getAsInt());
+            quizEvent.setRandomOrder(jsonObject.get("RandomQuestions").getAsBoolean());
+            quizEvent.setReturnResult(jsonObject.get("Feedback").getAsBoolean());         
         }catch (ParseException ex)
         {
             System.err.println("Quiz Event Error: cannot parse date");
             System.err.println(ex.getMessage());
-            qe = null;
+            quizEvent = null;
         }catch(uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundException ex)
         {
             System.err.println("Quiz Event Error: cannot locate resource indicated in Quiz Event");
-            qe = null;
+            quizEvent = null;
         }
         
-        return qe;
+        return quizEvent;
     }
     
     /**
@@ -108,8 +102,7 @@ public class QuizEventFromJSONTypeAdapter implements JsonDeserializer<QuizEvent>
     {
         GroupDataAccessObject gDAO = new GroupDataAccessObject();
         QuizGroup qg = gDAO.fetchGroupByIdObject(groupId);
-        
-        
+  
         return qg;
     }
 }

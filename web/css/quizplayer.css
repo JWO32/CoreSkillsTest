@@ -6,6 +6,7 @@
     margin: 0 auto;
     position: fixed;
     border: 1px solid #000000;
+    padding: 0.5em;
 }
 
 #info_dialogue_wrapper
@@ -16,6 +17,7 @@
     top: 25%;
     left: 35%;
     border: 1px solid #000000;
+    padding: 0.5em;
 }
 
 .display_question ul

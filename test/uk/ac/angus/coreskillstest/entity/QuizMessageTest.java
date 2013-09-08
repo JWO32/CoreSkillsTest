@@ -15,13 +15,12 @@ import static org.junit.Assert.*;
  *
  * @author JWO
  */
-public class QuizMessageTest {
-    
-    public QuizMessageTest() {
-    }
+public class QuizMessageTest 
+{
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
     }
     
     @AfterClass
@@ -158,14 +157,14 @@ public class QuizMessageTest {
     }
 
     /**
-     * Test of getIsStartMessage method, of class QuizMessage.
+     * Test of isStartMessage method, of class QuizMessage.
      */
     @Test
     public void testGetIsStartMessage() {
         System.out.println("getIsStartMessage");
         QuizMessage instance = new QuizMessage();
         boolean expResult = false;
-        boolean result = instance.getIsStartMessage();
+        boolean result = instance.isStartMessage();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

@@ -38,8 +38,13 @@ import uk.ac.angus.coreskillstest.datamanagement.GroupDataAccessObject;
  * /delete/group/<GROUPID>
  */
 
-// TODO: Refactor this class to use QuizEntityManager and Client JSON interface.
-//
+/*
+ * This servlet has been partially refactored - doDelete now uses setResponse.
+ * 
+ * TODO: edit the doGet method so that all requests use the setResponse method and pass
+ * data back to the client using the ServerClientResponse JSON object
+ * 
+ */
 
 public class UserController extends HttpServlet 
 {
@@ -161,6 +166,8 @@ public class UserController extends HttpServlet
                 return;
             }
             
+            //Add users and groups
+            //
             if(pathComponents[3].equals("add"))
             {
                   switch(pathComponents[4])
@@ -183,6 +190,9 @@ public class UserController extends HttpServlet
                   }
             }   
             
+            //Edit functionality is not required for version 1 - users are deleted
+            //and re-added if required.  This will be need when the system is needed
+            //to deal with large numbers of users
             if(pathComponents[3].equals("edit"))
             {
                 

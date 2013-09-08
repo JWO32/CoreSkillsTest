@@ -15,6 +15,7 @@ import uk.ac.angus.coreskillstest.entity.Question;
 
 /**
  *
+ * Not fully implemented - not required at this stage in the project.
  * @author JWO
  */
 public class QuestionFromJSONAdapter implements JsonDeserializer<Question>

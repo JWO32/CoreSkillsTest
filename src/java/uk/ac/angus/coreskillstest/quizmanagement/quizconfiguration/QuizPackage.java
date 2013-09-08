@@ -10,15 +10,32 @@ package uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration;
  */
 public class QuizPackage 
 {
-    
+    /**
+     * This is the JSON string that contains the quiz object.
+     */
     private String QuizJSON;
     
+    /**
+     * This contains the start message displayed on screen at the start of the quiz
+     */
     private String StartMessage;
     
+    /**
+     * This contains the end message displayed on screen at the end of the quiz
+     */
     private String EndMessage;
     
+    /**
+     * This is the database id of the user that is taking the quiz, this is necessary
+     * so the user can be identified when the response is set from the client to the server
+     */
     private int UserId;
     
+    /**
+     * This is quiz quiz event id, necessary when the response is sent back to the server
+     * after the student has completed the quiz -- the correct quiz options can be looked
+     * up for processing the result
+     */
     private int QuizEventId;
     
     public QuizPackage()
@@ -27,7 +44,7 @@ public class QuizPackage
     }
     
     /**
-     * Utility function to return a default message if none already exists
+     * Utility function to return a default message if none already exists - currently the default
      * @return 
      */
     public static String setDefaultStartMessage()
@@ -37,7 +54,7 @@ public class QuizPackage
     
     /**
      * 
-     * Utility function to return a default message if none already exists
+     * Utility function to return a default message if none already exists -- currently the default
      * @return 
      */
     public static String setDefaultEndMessage()
@@ -82,6 +99,11 @@ public class QuizPackage
         return EndMessage;
     }
     
+    /**
+     * Returns the user id as a JSON string - necessary for integration with the client
+     * 
+     * @return 
+     */
     public String getUserIdJSON()
     {
         return "{\"UserId\":"+UserId+"}";
@@ -97,6 +119,10 @@ public class QuizPackage
         return UserId;
     }
     
+    /**
+     * Returns the quiz event id as a JSON string, necessary for integration with the client
+     * @return 
+     */
     public String getEventIdJSON()
     {
         return "{\"QuizEventId\":"+QuizEventId+"}";

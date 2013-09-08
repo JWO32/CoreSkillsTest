@@ -7,16 +7,16 @@ import javax.persistence.metamodel.StaticMetamodel;
 import uk.ac.angus.coreskillstest.entity.Quiz;
 import uk.ac.angus.coreskillstest.entity.QuizGroup;
 
-@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-08-28T12:14:37")
+@Generated(value="EclipseLink-2.5.0.v20130507-rNA", date="2013-09-06T19:19:30")
 @StaticMetamodel(QuizEvent.class)
 public class QuizEvent_ { 
 
+    public static volatile SingularAttribute<QuizEvent, Boolean> RandomOrder;
     public static volatile SingularAttribute<QuizEvent, Date> QuizCloseDate;
     public static volatile SingularAttribute<QuizEvent, Integer> NumberOfQuestions;
     public static volatile SingularAttribute<QuizEvent, Quiz> LinkedQuiz;
     public static volatile SingularAttribute<QuizEvent, Date> QuizOpenDate;
     public static volatile SingularAttribute<QuizEvent, QuizGroup> LinkedGroup;
-    public static volatile SingularAttribute<QuizEvent, Boolean> SetRandomOrder;
     public static volatile SingularAttribute<QuizEvent, Boolean> ReturnResult;
     public static volatile SingularAttribute<QuizEvent, Integer> QuizConfigId;
 

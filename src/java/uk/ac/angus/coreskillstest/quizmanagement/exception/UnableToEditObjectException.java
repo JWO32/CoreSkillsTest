@@ -12,7 +12,7 @@ public class UnableToEditObjectException extends Exception
 {
     public UnableToEditObjectException()
     {
-        
+        super();
     }
     
     public UnableToEditObjectException(String msg)

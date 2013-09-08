@@ -32,8 +32,8 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectE
 
 public class UserDataAccessObject 
 {   
-    private EntityManagerFactory UserDataFactory;
-    private Gson gsn;
+    private final EntityManagerFactory UserDataFactory;
+    private final Gson gsn;
     
     public UserDataAccessObject()
     {
@@ -70,7 +70,9 @@ public class UserDataAccessObject
             group = GroupDataAccessObject.getDefaultGroup();
             
             if(group == null)
+            {
                 return response;
+            }
         }
         
         user.setGroup(group);
@@ -128,7 +130,9 @@ public class UserDataAccessObject
         }finally
         {
              if(em.isOpen())
+             {
                 em.close();
+             }
         }     
         return user;
     }
@@ -206,7 +210,7 @@ public class UserDataAccessObject
         String query = "Users.findUserById";
         HashMap queryParams = new HashMap();
         
-        queryParams.put("id", new Integer(userId));
+        queryParams.put("id", Integer.valueOf(userId));
         try 
         {
             qem.deleteObject(query, queryParams);

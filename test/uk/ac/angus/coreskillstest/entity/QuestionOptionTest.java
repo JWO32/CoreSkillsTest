@@ -16,10 +16,7 @@ import static org.junit.Assert.*;
  * @author JWO
  */
 public class QuestionOptionTest {
-    
-    public QuestionOptionTest() {
-    }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
@@ -91,14 +88,14 @@ public class QuestionOptionTest {
     }
 
     /**
-     * Test of getCorrectOption method, of class QuestionOption.
+     * Test of isCorrectOption method, of class QuestionOption.
      */
     @Test
     public void testGetCorrectOption() {
         System.out.println("getCorrectOption");
         QuestionOption instance = new QuestionOption();
         boolean expResult = false;
-        boolean result = instance.getCorrectOption();
+        boolean result = instance.isCorrectOption();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

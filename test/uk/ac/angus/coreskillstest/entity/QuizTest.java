@@ -20,9 +20,6 @@ import uk.ac.angus.coreskillstest.quizmanagement.quizconfiguration.QuizEvent;
  */
 public class QuizTest {
     
-    public QuizTest() {
-    }
-    
     @BeforeClass
     public static void setUpClass() {
     }
@@ -108,14 +105,14 @@ public class QuizTest {
     }
 
     /**
-     * Test of setQuizName method, of class Quiz.
+     * Test of setQuizTitle method, of class Quiz.
      */
     @Test
     public void testSetQuizName() {
         System.out.println("setQuizName");
         String newName = "";
         Quiz instance = new Quiz();
-        instance.setQuizName(newName);
+        instance.setQuizTitle(newName);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -322,27 +319,27 @@ public class QuizTest {
     }
 
     /**
-     * Test of setQuizConfiguration method, of class Quiz.
+     * Test of setQuizEvents method, of class Quiz.
      */
     @Test
     public void testSetQuizConfiguration() {
         System.out.println("setQuizConfiguration");
         List<QuizEvent> qcList = null;
         Quiz instance = new Quiz();
-        instance.setQuizConfiguration(qcList);
+        instance.setQuizEvents(qcList);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getQuizConfiguration method, of class Quiz.
+     * Test of getQuizEvents method, of class Quiz.
      */
     @Test
     public void testGetQuizConfiguration() {
         System.out.println("getQuizConfiguration");
         Quiz instance = new Quiz();
         List expResult = null;
-        List result = instance.getQuizConfiguration();
+        List result = instance.getQuizEvents();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

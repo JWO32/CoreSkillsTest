@@ -16,11 +16,6 @@ public class GlobalSettings implements Serializable
     private int DeleteQuizEventsAfter;
     
     
-    public GlobalSettings()
-    {
-        
-    }
-    
     public void setDeleteQuizEventsAfter(int newNumber)
     {
         DeleteQuizEventsAfter = newNumber;

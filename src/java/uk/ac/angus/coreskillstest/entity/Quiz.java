@@ -118,7 +118,7 @@ public class Quiz implements Serializable
         return QuizTitle;
     }
     
-    public void setQuizName(String newName)
+    public void setQuizTitle(String newName)
     {
         QuizTitle = newName;
     }
@@ -128,9 +128,9 @@ public class Quiz implements Serializable
         return QuizSubject;
     }
     
-    public void setQuizSubject(String newDescription)
+    public void setQuizSubject(String newSubject)
     {
-        QuizSubject = newDescription;
+        QuizSubject = newSubject;
     }
     
     public int getTotalMarks()
@@ -205,12 +205,12 @@ public class Quiz implements Serializable
         return ResultRules;
     }
     
-    public void setQuizConfiguration(List<QuizEvent> qcList)
+    public void setQuizEvents(List<QuizEvent> qcList)
     {
         QuizEvents = qcList;
     }
     
-    public List<QuizEvent> getQuizConfiguration()
+    public List<QuizEvent> getQuizEvents()
     {
         return QuizEvents;
     }   

@@ -16,6 +16,7 @@ public class UnableToCommitException extends Exception {
      */
     public UnableToCommitException() 
     {
+        super();
     }
 
     /**

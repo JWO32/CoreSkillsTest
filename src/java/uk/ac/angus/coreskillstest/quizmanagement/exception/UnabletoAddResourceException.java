@@ -16,6 +16,7 @@ public class UnabletoAddResourceException extends Exception {
      */
     public UnabletoAddResourceException() 
     {
+        super();
     }
 
     /**

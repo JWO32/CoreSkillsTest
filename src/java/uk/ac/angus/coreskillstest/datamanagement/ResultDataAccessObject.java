@@ -22,7 +22,7 @@ import uk.ac.angus.coreskillstest.entity.jsontypeadaptors.ResultToJSONTypeAdapte
  */
 public class ResultDataAccessObject implements JSONInterface<Result>
 {  
-    private EntityManagerFactory ResultManagerFactory;
+    private final EntityManagerFactory ResultManagerFactory;
     
     public ResultDataAccessObject()
     {

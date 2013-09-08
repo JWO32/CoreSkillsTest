@@ -14,12 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 
 import com.google.gson.annotations.Expose;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -62,12 +57,7 @@ public class StoredFeedback implements Serializable
     {
         
     }
-    
-    public StoredFeedback(String feedbackText)
-    {
-        FeedbackText = feedbackText;
-    }
-    
+
 //    public List<Result> getResults()
 //    {
 //        return LinkedResults;

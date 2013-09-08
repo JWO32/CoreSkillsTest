@@ -17,8 +17,6 @@ import static org.junit.Assert.*;
  */
 public class ResultFeedbackTest {
     
-    public ResultFeedbackTest() {
-    }
     
     @BeforeClass
     public static void setUpClass() {
@@ -145,27 +143,27 @@ public class ResultFeedbackTest {
     }
 
     /**
-     * Test of setPassOrFail method, of class ResultFeedback.
+     * Test of setIsPassOrFail method, of class ResultFeedback.
      */
     @Test
     public void testSetPassOrFail() {
         System.out.println("setPassOrFail");
         boolean newPassFail = false;
         ResultFeedback instance = new ResultFeedback();
-        instance.setPassOrFail(newPassFail);
+        instance.setIsPassOrFail(newPassFail);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getPassOrFail method, of class ResultFeedback.
+     * Test of isPassOrFail method, of class ResultFeedback.
      */
     @Test
     public void testGetPassOrFail() {
         System.out.println("getPassOrFail");
         ResultFeedback instance = new ResultFeedback();
         boolean expResult = false;
-        boolean result = instance.getPassOrFail();
+        boolean result = instance.isPassOrFail();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

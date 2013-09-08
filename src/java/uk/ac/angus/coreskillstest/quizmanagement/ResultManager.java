@@ -68,7 +68,7 @@ public class ResultManager
         
         quizFound = assignQuiz();
         userFound = assignUser();
-        configFound = assignQuizConfiguration();
+        configFound = assignQuizEvent();
                 
         if(quizFound == false)
         {
@@ -136,12 +136,12 @@ public class ResultManager
         }
     }
     
-    private boolean assignQuizConfiguration()
+    private boolean assignQuizEvent()
     {
         QuizEvent qc;
         QuizEventDataAccessObject qcDAO = new QuizEventDataAccessObject();
       
-        int quizConfigurationId = QuizResponse.getQuizConfigurationId();
+        int quizConfigurationId = QuizResponse.getQuizEventId();
         
         qc = qcDAO.getQuizEventByIdObject(quizConfigurationId);
         
@@ -200,7 +200,9 @@ public class ResultManager
             questionIsCorrect = checkResponseCorrect(correctOptionIds, userSelectionIds);
             
             if(questionIsCorrect)
+            {
                 Score++;
+            }
         }
         
 //        for(Question currentQuestion : questionList)
@@ -277,7 +279,7 @@ public class ResultManager
         // Score
         // Number of questions
         // Percentage
-        if(SelectedQuizConfiguration.getReturnResult())
+        if(SelectedQuizConfiguration.isReturnResult())
         {
             responseJson = ResultDataAccessObject.getResultObjectasJSON(QuizResult);
             QuizResult.setResultStatus(Result.SUCCESS_RESULT_AVAILABLE);
@@ -306,16 +308,18 @@ public class ResultManager
     {
         boolean responseCorrect = false;
         
-        if(correctQuestionOptions.size() != userResponses.size())
-        {
-            return responseCorrect;
-        }else
+        if(correctQuestionOptions.size() == userResponses.size())
         {
             java.util.Collections.sort(userResponses);
             java.util.Collections.sort(correctQuestionOptions);
             
             if(userResponses.equals(correctQuestionOptions))
+            {
                 responseCorrect = true;
+            }
+        }else
+        {
+            return responseCorrect;
         }
         
         return responseCorrect;
@@ -335,7 +339,7 @@ public class ResultManager
             if(currentRule.appliesTo(PercentScore))
             {
                 // If the Rule is pass or fail
-                if(currentRule.getPassFail() == true)
+                if(currentRule.isPassFail() == true)
                 {
                     ruleFeedback = "Pass";
                 }else
@@ -345,18 +349,22 @@ public class ResultManager
                 
                 //If the rule is not pass or fail then apply rule feedback
                 //This will overwrite the 'fail' feedback.
-                if(currentRule.getPassFail() == false)
+                if(currentRule.isPassFail() == false)
+                {
                     ruleFeedback = currentRule.getFeedback();
+                }
             }
             
         }
         
-        if(ruleFeedback != null)
-            QuizResult.setLinkedFeedback(ruleFeedback);
-        else
+        if(ruleFeedback == null)
         {
             //Set default feedback
-            QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback());
+            QuizResult.setLinkedFeedback(StoredFeedback.getDefaultFeedback()); 
+        }
+        else
+        {
+             QuizResult.setLinkedFeedback(ruleFeedback);
         }
     }
     

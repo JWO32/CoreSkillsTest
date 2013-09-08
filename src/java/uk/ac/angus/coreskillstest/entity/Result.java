@@ -53,7 +53,10 @@ public class Result implements Serializable
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="user_id")
     private QuizUser LinkedUser;
-        
+    
+    /**
+     * This will link to the resultfeedback class in future versions
+     */
     @Expose
     @Column(name="feedback_text")
     private String LinkedFeedback;
@@ -77,12 +80,7 @@ public class Result implements Serializable
     @Column(name="result_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar ResultDate;
-    
-    public Result()
-    {
-        
-    }
-    
+
     public int getResultId()
     {
         return ResultId;

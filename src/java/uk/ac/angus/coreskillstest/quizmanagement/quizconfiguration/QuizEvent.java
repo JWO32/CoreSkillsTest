@@ -23,6 +23,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 /**
+ * This class represents a quiz event set by a user so that a group of studnets can sit a defined quiz with
+ * set options between a particular set of dates.
+ * 
+ * Although this class is a part of the quiz configuration package, it is an entity class that is managed by 
+ * JPA.  It has been moved to this package for semantic separation.
  * 
  * @author JWO
  */
@@ -50,7 +55,7 @@ public class QuizEvent implements Serializable
     
     @Expose
     @Column(name="set_random_order")
-    private boolean SetRandomOrder;
+    private boolean RandomOrder;
     
     @Expose
     @Column(name="number_of_questions")
@@ -90,11 +95,6 @@ public class QuizEvent implements Serializable
     @JoinColumn(name="group_id", referencedColumnName="group_id")
     private QuizGroup LinkedGroup;
     
-    public QuizEvent()
-    {
-        
-    }
-    
     public String getQuizName()
     {
         return QuizName;
@@ -127,12 +127,12 @@ public class QuizEvent implements Serializable
     
     public void setRandomOrder(boolean newRandomOrder)
     {
-        SetRandomOrder = newRandomOrder;
+        RandomOrder = newRandomOrder;
     }
     
-    public boolean getRandomOrder()
+    public boolean isRandomOrder()
     {
-        return SetRandomOrder;
+        return RandomOrder;
     }
     
     public void setNumberOfQuestions(int newNumberOfQuestions)
@@ -190,7 +190,7 @@ public class QuizEvent implements Serializable
         ReturnResult = newReturnResult;
     }
     
-    public boolean getReturnResult()
+    public boolean isReturnResult()
     {
         return ReturnResult;
     }

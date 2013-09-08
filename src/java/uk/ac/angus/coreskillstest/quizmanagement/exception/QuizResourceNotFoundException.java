@@ -16,7 +16,7 @@ public class QuizResourceNotFoundException extends Exception {
      */
     public QuizResourceNotFoundException() 
     {
-    
+        super();
     }
 
     /**

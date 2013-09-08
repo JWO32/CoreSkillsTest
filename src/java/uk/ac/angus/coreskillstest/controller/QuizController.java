@@ -132,6 +132,7 @@ public class QuizController extends HttpServlet
                     output.write(returnMessage);
                     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
+                setResponse(response, resp);
                 break;
                 // Refactored -- now uses setResponse
             case "edit":

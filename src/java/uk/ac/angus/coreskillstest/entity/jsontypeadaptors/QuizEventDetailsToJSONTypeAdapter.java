@@ -32,10 +32,10 @@ public class QuizEventDetailsToJSONTypeAdapter implements JsonSerializer<QuizEve
        //
        jo.addProperty("QuizEventId", src.getQuizConfigId());
        jo.addProperty("NumberOfQuestions", src.getNumberOfQuestions());
-       jo.addProperty("RandomQuestions", src.getRandomOrder());
+       jo.addProperty("RandomQuestions", src.isRandomOrder());
        jo.addProperty("OpenDate", sdf.format(openDate));
        jo.addProperty("CloseDate", sdf.format(closeDate));
-       jo.addProperty("Feedback", src.getReturnResult());
+       jo.addProperty("Feedback", src.isReturnResult());
        jo.addProperty("QuizName", src.getLinkedQuiz().getQuizTitle());
        jo.addProperty("GroupName", src.getLinkedGroup().getGroupName());
        jo.addProperty("QuizId", src.getLinkedQuiz().getQuizId());

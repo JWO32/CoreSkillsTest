@@ -11,8 +11,6 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -28,7 +26,7 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.UnableToDeleteObjectE
  */
 public class GroupDataAccessObject
 {
-    private EntityManagerFactory GroupDataFactory;
+    private final EntityManagerFactory GroupDataFactory;
     
     // This should be moved out to suitable defaults file in due course.
     private static final int DEFAULT_GROUP_ID = 1;
@@ -54,11 +52,10 @@ public class GroupDataAccessObject
         ug = (QuizGroup) em.find(QuizGroup.class, GroupDataAccessObject.DEFAULT_GROUP_ID);
         
         em.close();
-        
-        if(ug == null)
-            return null;
-        else
-            return ug;
+
+        return ug;
+
+            
     }
     
     /**
@@ -134,7 +131,7 @@ public class GroupDataAccessObject
         String query = "Groups.findGroupById";
         HashMap parameters = new HashMap();
         
-        parameters.put("id", new Integer(groupId));
+        parameters.put("id", Integer.valueOf(groupId));
         try 
         {
             qem.deleteObject(query, parameters);

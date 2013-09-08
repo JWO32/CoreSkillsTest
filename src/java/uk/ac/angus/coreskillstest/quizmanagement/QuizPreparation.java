@@ -42,35 +42,50 @@ public class QuizPreparation
         SelectedQuizEvent = newQuizEvent;
     }
     
+    /**
+     * This method initiates the process of creating a quiz for a specific quiz event
+     * 
+     * @return
+     * @throws uk.ac.angus.coreskillstest.quizmanagement.exception.CannotGenerateQuizException 
+     */
     public Quiz processQuiz() throws uk.ac.angus.coreskillstest.quizmanagement.exception.CannotGenerateQuizException
     {
         if(SelectedQuiz == null || SelectedQuizEvent == null)
+        {
             throw new uk.ac.angus.coreskillstest.quizmanagement.exception.CannotGenerateQuizException("Process Quiz: Cannot generate quiz - ensure that Quiz and QuizEvent are set");
+        }
         
         processQuizByQuizEvent();
         
         return SelectedQuiz;
     }
     
+    /**
+     * This method determines where the quiz being prepared should be randomised
+     *  It also sets whether the feedback that should be returned to the user.
+     * 
+     */
     private void processQuizByQuizEvent()
     {
         List<Question> questionList;
         
-        if(SelectedQuizEvent.getRandomOrder() == true)
+        if(SelectedQuizEvent.isRandomOrder() == true)
         {
             questionList = randomiseQuestions(SelectedQuiz.getQuestions(), SelectedQuizEvent.getNumberOfQuestions());
             
             SelectedQuiz.setQuestions(questionList);
         }
         
-        if(SelectedQuizEvent.getReturnResult() == true)
+        if(SelectedQuizEvent.isReturnResult() == true)
         {
             setDefaultFeedback(SelectedQuiz.getResultRules());
         }
     }
     
     /**
-     * 
+     * Sets the feedback for the quiz.
+     * In this version of the software, either default feedback is provided or 
+     * a simple string describing a level (this can be set in the quiz creator)
      * @param results
      * @return 
      */
@@ -86,6 +101,8 @@ public class QuizPreparation
     
     
     /**
+     * This method performs randomisation on the list of questions, if the option has been set in the
+     * quiz event
      * 
      * @param questionList
      * @param numberOfQuestions 

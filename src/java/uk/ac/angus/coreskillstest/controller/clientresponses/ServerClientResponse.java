@@ -34,9 +34,13 @@ public class ServerClientResponse
     public void setResponse(int newResponse)
     {
         if(newResponse < 1 || newResponse > 3)
+        {
             ResponseType = ServerClientResponse.CLIENT_INTERNAL_ERROR;
+        }
         else
+        {
             ResponseType = newResponse;
+        }
     }
     
     public int getResponse()

@@ -9,10 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 /**
- *
+ * This class represent a result rule as defined in the Quiz Creator.
+ * The setting allow the user to set the mark boundaries at which the rule will apply
+ * 
+ * 
+ * Each quiz is intended to have multiple result rules, so it is possible for the 
+ * quiz designer to set appropriate boundaries for particular feedback
+ * 
  * @author JWO
 */
 
@@ -49,97 +54,166 @@ public class ResultRule implements Serializable
     @Column(name="feedback")
     private String LinkedFeedback;
     
-    public ResultRule()
-    {
-        
-    }
-    
+    /**
+     * Set whether or not this is a pass/fail rule
+     * @param passFail 
+     */
     public void setPassFail(boolean passFail)
     {
         PassFail = passFail;
     }
     
-    public boolean getPassFail()
+    /**
+     * Get whether or not this is a pass/fail rule
+     * @return 
+     */
+    public boolean isPassFail()
     {
         return PassFail;
     }
     
-    public void setResultId(int newId)
+    /**
+     * Set the id of this result rule - database
+     * @param newId 
+     */
+    public void setResultRuleId(int newId)
     {
         ResultRuleId = newId;
     }
     
+    /**
+     * Get the id of this result rule - database
+     * @return 
+     */
     public int getResultRuleId()
     {
         return ResultRuleId;
     }
     
+    /**
+     * set the name of this result rule
+     * @param newRuleName 
+     */
     public void setRuleName(String newRuleName)
     {
         RuleName = newRuleName;
     }
     
+    /**
+     * Get the name of this result rule
+     * @return 
+     */
     public String getRuleName()
     {
         return RuleName;
     }
     
+    /**
+     * Get the lower mark boundary of this result rule
+     * @return 
+     */
     public int getLowMarkBoundary()
     {
         return LowMarkBoundary;
     }
     
+    /**
+     * Set the lower mark boundary of this result rule
+     * @param newLowMarkBoundary 
+     */
     public void setLowMarkBoundary(int newLowMarkBoundary)
     {
         LowMarkBoundary = newLowMarkBoundary;
     }
     
+    /**
+     * get the high mark boundary of this result rule
+     * @return 
+     */
     public int getHighMarkBoundary()
     {
         return HighMarkBoundary;
     }
     
+    /**
+     * set the high mark boundary of this result rule
+     * @param newHighMarkBoundary 
+     */
     public void setHighMarkBoundary(int newHighMarkBoundary)
     {
         HighMarkBoundary = newHighMarkBoundary;
     }
     
+    /**
+     * Get the quiz that this result rule applies to
+     * @return 
+     */
     public Quiz getQuiz()
     {
         return LinkedQuiz;
     }
     
+    /**
+     * Set the quiz that this result rule applies to
+     * @param newQuiz 
+     */
     public void setQuiz(Quiz newQuiz)
     {
         LinkedQuiz = newQuiz;
     }
     
+    /**
+     * Get the feedback defined for this rule
+     * @return 
+     */
     public String getFeedback()
     {
         return LinkedFeedback;
     }
     
+    /**
+     * Set the feedback defined for this rule
+     * @param newFeedback 
+     */
     public void setFeedback(String newFeedback)
     {
         LinkedFeedback = newFeedback;
     }
     
+    /**
+     * Set whether the high mark boundary should be treated as >=
+     * otherwise it will be treated as > only
+     * @param highMarkGtEq 
+     */
     public void setHighMarkGtEq(boolean highMarkGtEq)
     {
         HighMarkGtEq = highMarkGtEq;
     }
     
-    public boolean getHighMarkGtEq()
+    /**
+     * Return whether the high mark boundary should be treated as >=
+     * @return 
+     */
+    public boolean isHighMarkGtEq()
     {
         return HighMarkGtEq;
     }
     
+    /**
+     * Set whether the low mark boundary should be treated as <=
+     * otherwise it should be treated as < only
+     * @param lowMarkGtEq 
+     */
     public void setLowMarkGtEq(boolean lowMarkGtEq)
     {
         LowMarkGtEq = lowMarkGtEq;
     }
     
-    public boolean getLowMarkGtEq()
+    /**
+     * Return whether the low mark boundary should be treated as <
+     * @return 
+     */
+    public boolean isLowMarkGtEq()
     {
         return LowMarkGtEq;
     }

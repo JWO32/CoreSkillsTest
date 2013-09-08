@@ -16,15 +16,21 @@ import uk.ac.angus.coreskillstest.datamanagement.ReportDataAccessObject;
 
 /**
  *
+ * Responsible for collecting data required for the reporting client to generate student reports
+ * 
+ * Only requires get interface because deleting/modifying results would be the responsibility of the
+ * Result controller
+ * 
  * @author JWO
  */
 @WebServlet(name = "ResultReportController", urlPatterns = {"/Report/*"})
 public class ResultReportController extends HttpServlet 
 {
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
-     *
+     * /Report/getgroupresults
+     * Initiates gathering of group results for the specified quiz.  the gorupId and the
+     * Quiz Id are both required
+     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -47,14 +53,20 @@ public class ResultReportController extends HttpServlet
                 int quizId = Integer.parseInt(quizParam);
                 
                 clientResponse = repDAO.getSingleItem(groupId, quizId);
-                
-                
+         
                 setResponse(clientResponse, resp);
                 
                 break;
         }    
     }
 
+    /**
+     * Sets the response from the server to the client
+     * 
+     * @param clientResponse
+     * @param resp
+     * @throws IOException 
+     */
     private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
         try (PrintWriter output = resp.getWriter()) {
@@ -71,26 +83,4 @@ public class ResultReportController extends HttpServlet
             }
         }
     }
-    
-    /**
-     * Handles the HTTP
-     * <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-
-    }
-    
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
-        
-    }
-
 }

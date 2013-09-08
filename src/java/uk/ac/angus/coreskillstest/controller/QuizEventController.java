@@ -16,6 +16,9 @@ import uk.ac.angus.coreskillstest.datamanagement.QuizEventDataAccessObject;
 
 /**
  *
+ * This class manages requests around quiz events.  These requests come from the setupquiz.jsp file
+ * 
+ * 
  * @author JWO
  */
 public class QuizEventController extends HttpServlet 
@@ -23,7 +26,7 @@ public class QuizEventController extends HttpServlet
     /**
      * 
      * /Event/eventlist
-     * Fetches all events
+     * Initiates get all quiz events.  Returns to web client.
      * 
      * @param req
      * @param resp
@@ -50,10 +53,13 @@ public class QuizEventController extends HttpServlet
     }
 
     /**
-     * 
+     * Allows quiz events to be added and edited.  Response (success) returned to client
      * 
      * Rest request /Event/addevent
      * Adds a new quiz event
+     * 
+     * Rest request /Event/editevent
+     * Edits selected quiz event
      * 
      * @param req
      * @param resp
@@ -86,6 +92,13 @@ public class QuizEventController extends HttpServlet
         }     
     }
      
+    /**
+     * Set the response from the server operations to the client may be success/fail message or data
+     * 
+     * @param clientResponse
+     * @param resp
+     * @throws IOException 
+     */
     private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
         try (PrintWriter output = resp.getWriter()) {

@@ -69,11 +69,23 @@ public class Question implements Serializable
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
     
+    /**
+     * Default constructor - set initial values
+     */
     public Question()
     {
-        
+        QuestionId = 0;
+        QuestionText = "Uninitialised Question";
+        QuestionLevel = "No Level - Not initialised";
+        QuestionScore = 0;
     }
     
+    /**
+     * Argument constructor - set common values
+     * @param questionText
+     * @param questionLevel
+     * @param questionScore 
+     */
     public Question(String questionText, String questionLevel, int questionScore)
     {
         QuestionText = questionText;
@@ -162,7 +174,7 @@ public class Question implements Serializable
         
         for(QuestionOption currentOption : QuestionOptions)
         {
-            if(currentOption.getCorrectOption())
+            if(currentOption.isCorrectOption())
             {
                 currentOptionId = currentOption.getOptionId();
                 

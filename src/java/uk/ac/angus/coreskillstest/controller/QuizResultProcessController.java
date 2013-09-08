@@ -18,6 +18,7 @@ import uk.ac.angus.coreskillstest.quizmanagement.exception.QuizResourceNotFoundE
  * @author JWO
  */
 
+// @WebServlet annotation is an alternative to adding Servet Configuration details in web.xml file
 @WebServlet(name = "QuizResultProcessController", urlPatterns = {"/ProcessResult/*"})
 public class QuizResultProcessController extends HttpServlet
 {
@@ -26,9 +27,19 @@ public class QuizResultProcessController extends HttpServlet
         super();
     }
     
-    
-    // TODO: Remove this method into a dedicate report generating servlet
-    // Currently unused.
+    /**
+     * Allows requests for results.  This method will be moved into a specific report controller.
+     * 
+     * /ProcessResult/getuserresult
+     * Get result/s for the specific user
+     * 
+     * /ProcessResult/getgroupresults
+     * Get result/s for the selected group
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
@@ -55,9 +66,6 @@ public class QuizResultProcessController extends HttpServlet
     }
     
     /**
-     * 
-     * TODO: Refactor to take ServerClientResponse object into account
-     * 
      * Process a new result with the 'add' command.
      * 
      * @param req
@@ -113,7 +121,13 @@ public class QuizResultProcessController extends HttpServlet
         }  
     }
     
-    
+    /**
+     * Set the response from the server to the servlet's output which is returned to the client
+     * 
+     * @param clientResponse
+     * @param resp
+     * @throws IOException 
+     */
     private void setResponse(ServerClientResponse clientResponse, HttpServletResponse resp) throws IOException
     {
         try (PrintWriter output = resp.getWriter()) {
@@ -136,6 +150,17 @@ public class QuizResultProcessController extends HttpServlet
         }
     }
     
+    /**
+     * This method allows results to be deleted from the database.
+     * 
+     * Not required and not implemented in this version of the software.  Placeholder
+     * left for further development.
+     * 
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {

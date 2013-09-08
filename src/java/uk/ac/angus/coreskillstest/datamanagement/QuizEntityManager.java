@@ -49,6 +49,8 @@ public class QuizEntityManager<T>
     }
     
     /**
+     * The persistence unit defines the connection between the web serve and the database
+     * This is defined in the persistence unit.xml file.
      * 
      * @param newPersistenceUnit 
      */

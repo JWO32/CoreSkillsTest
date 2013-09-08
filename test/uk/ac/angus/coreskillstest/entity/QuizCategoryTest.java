@@ -15,10 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author JWO
  */
-public class QuizCategoryTest {
+public class QuizCategoryTest 
+{
     
-    public QuizCategoryTest() {
-    }
     
     @BeforeClass
     public static void setUpClass() {

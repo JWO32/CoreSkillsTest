@@ -12,10 +12,6 @@ import uk.ac.angus.coreskillstest.entity.QuizGroup;
  */
 public class GroupToJSONTypeAdaptor implements JsonSerializer<QuizGroup>
 {
-    public GroupToJSONTypeAdaptor()
-    {
-        
-    }
 
     @Override
     public JsonElement serialize(QuizGroup src, Type typeOfSrc, JsonSerializationContext context) 

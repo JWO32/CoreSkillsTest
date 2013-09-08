@@ -4,6 +4,7 @@ QuizController = function(model, view)
         var QuizView = view;
         var SaveTimer = 60000;
         var Timerid = 0;// work timers into save procedure
+        var Saved = false;
 
         return {
                 init: function()
@@ -113,6 +114,12 @@ QuizController = function(model, view)
                         $.alert('No Subject', 'Please enter a subject for the quiz');
                     }
                     
+                    if(Saved === true)
+                    {
+                        $.alert('Quiz Already Saved', 'Please make some changes before saving again.');
+                        return;
+                    }
+                    
                     //Bit of a hack to make the JSON output a bit easier to manipulate on the server
                     //Copy all details into a new Quiz object but ensure that the Questions are an 
                     //array rather than a javascript object
@@ -135,7 +142,6 @@ QuizController = function(model, view)
                        jsonQuizModel.Questions[arrayIndex] = Question;
                     });
                     
-
                     var quiz_json = jsonQuizModel.generateJSON();
                     
                     if(editing === true)
@@ -156,12 +162,11 @@ QuizController = function(model, view)
                             success: function()
                             {
                                     // TODO: Replace with jQuery Dialogue
+                                    Saved = true;
                                     $.alert('Quiz Saved', 'Your quiz has been saved successfully');
                                     timerId = (backgroundSaveEvent, SaveTimer);
                             }
-                        });
-                        
-                        
+                        });     
                     }else
                     {
                         $.ajax({
@@ -172,14 +177,13 @@ QuizController = function(model, view)
                                 cache: false,
                                 error: function(data)
                                 {
-                                        // TODO: Replace with jQuery Dialogue
                                         $.alert('Server Error', 'Unable to save quiz');
                                 },
                                 success: function()
                                 {
-                                        // TODO: Replace with jQuery Dialogue
                                         $.alert('Quiz Saved', 'Your quiz has been saved successfully');
                                         timerId = (backgroundSaveEvent, SaveTimer);
+                                        Saved = true;
                                 }				
                         });
                     }

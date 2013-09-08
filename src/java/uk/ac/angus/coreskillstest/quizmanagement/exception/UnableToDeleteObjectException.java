@@ -16,6 +16,7 @@ public class UnableToDeleteObjectException extends Exception {
      */
     public UnableToDeleteObjectException() 
     {
+        super();
     }
 
     /**

@@ -76,87 +76,145 @@ public class QuizUser implements Serializable
     
     private static final long serialVersionUID = 1L;
 
-    public QuizUser()
-    {
-       
-    }
-
+    /**
+     * Set the current user id
+     * @param newID 
+     */
     public void setUserId(int newID)
     {
         UserId = newID;
     }
     
+    /**
+     * Return the current user id
+     * @return 
+     */
     public int getUserId()
     {
         return UserId;
     }
     
+    /**
+     * Set the user's first name
+     * @param newUserName 
+     */
     public void setFirstName(String newUserName)
     {
         FirstName = newUserName;
     }
     
+    /**
+     * Get the user's first name
+     * @return 
+     */
     public String getFirstName()
     {
         return FirstName;
     }
     
+    /**
+     * Set the users's last name
+     * @param newLastName 
+     */
     public void setLastName(String newLastName)
     {
         LastName = newLastName;
     }
     
+    /**
+     * Get the user's last name
+     * @return 
+     */
     public String getLastName()
     {
         return LastName;
     }
     
+    /**
+     * Set the user description
+     * @param newUserDescription 
+     */
     public void setUserDescription(String newUserDescription)
     {
         Description = newUserDescription;
     }
     
+    /**
+     * Get the user description
+     * @return 
+     */
     public String getUserDescription()
     {
         return Description;
     }
     
+    /**
+     * Set user e-mail address
+     * @param newUserEmail 
+     */
     public void setUserEmail(String newUserEmail)
     {
         Email = newUserEmail;
     }
     
+    /**
+     * get user e-mail address
+     * @return 
+     */
     public String getUserEmail()
     {
         return Email;
     }
     
 //    @XmlElement
+    /**
+     * set the date the user was added
+     * @param dateAdded 
+     */
     public void setUserDateAdded(Calendar dateAdded)
     {
         DateAdded = dateAdded;
     }
     
+    /**
+     * Get the date the user was added
+     * @return 
+     */
     public Calendar getUserDateAdded()
     {
         return DateAdded;
     }
     
+    /**
+     * set the User group id
+     * @param newUserGroupId 
+     */
     public void setUserGroup(int newUserGroupId)
     {
         GroupId = newUserGroupId;
     }
     
-    public int getUserGroup()
+    /**
+     * get the user group id
+     * @return 
+     */
+    public int getGroupId()
     {
         return GroupId;
     }
     
+    /**
+     * Set the group of which the user is a member
+     * @param newGroup 
+     */
     public void setGroup(QuizGroup newGroup)
     {
         Group = newGroup;
     }
-    
+    /**
+     * get the group of which the user is a member
+     * @return 
+     */
     public QuizGroup getGroup()
     {
         return Group;

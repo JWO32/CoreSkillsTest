@@ -40,18 +40,12 @@ public class QuizMessage implements Serializable
     private int PassMark;
     
     @Column(name="start_message")
-    private boolean IsStartMessage;
+    private boolean StartMessage;
     
     @ManyToOne
     @JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
     private Quiz LinkedQuiz;
-    
-    
-    public QuizMessage()
-    {
-        
-    }
-    
+     
     public void setMessageId(int newId)
     {
         MessageId = newId;
@@ -95,12 +89,12 @@ public class QuizMessage implements Serializable
     
     public void setIsStartMessage(boolean isStart)
     {
-        IsStartMessage = isStart;
+        StartMessage = isStart;
     }
     
-    public boolean getIsStartMessage()
+    public boolean isStartMessage()
     {
-        return IsStartMessage;
+        return StartMessage;
     }
     
     public void setLinkedQuiz(Quiz newQuiz)

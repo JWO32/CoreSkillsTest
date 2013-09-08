@@ -46,12 +46,12 @@ public class QuizUserResponse
         return UserId;
     }
     
-    public int getQuizConfigurationId()
+    public int getQuizEventId()
     {
         return QuizEventId;
     }
     
-    public void setQuizConfigurationId(int newConfigId)
+    public void setQuizEventId(int newConfigId)
     {
         QuizEventId = newConfigId;
     }

@@ -17,8 +17,6 @@ import static org.junit.Assert.*;
  */
 public class ResultRuleTest {
     
-    public ResultRuleTest() {
-    }
     
     @BeforeClass
     public static void setUpClass() {
@@ -50,28 +48,28 @@ public class ResultRuleTest {
     }
 
     /**
-     * Test of getPassFail method, of class ResultRule.
+     * Test of isPassFail method, of class ResultRule.
      */
     @Test
     public void testGetPassFail() {
         System.out.println("getPassFail");
         ResultRule instance = new ResultRule();
         boolean expResult = false;
-        boolean result = instance.getPassFail();
+        boolean result = instance.isPassFail();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setResultId method, of class ResultRule.
+     * Test of setResultRuleId method, of class ResultRule.
      */
     @Test
     public void testSetResultId() {
         System.out.println("setResultId");
         int newId = 0;
         ResultRule instance = new ResultRule();
-        instance.setResultId(newId);
+        instance.setResultRuleId(newId);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -239,14 +237,14 @@ public class ResultRuleTest {
     }
 
     /**
-     * Test of getHighMarkGtEq method, of class ResultRule.
+     * Test of isHighMarkGtEq method, of class ResultRule.
      */
     @Test
     public void testGetHighMarkGtEq() {
         System.out.println("getHighMarkGtEq");
         ResultRule instance = new ResultRule();
         boolean expResult = false;
-        boolean result = instance.getHighMarkGtEq();
+        boolean result = instance.isHighMarkGtEq();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -266,14 +264,14 @@ public class ResultRuleTest {
     }
 
     /**
-     * Test of getLowMarkGtEq method, of class ResultRule.
+     * Test of isLowMarkGtEq method, of class ResultRule.
      */
     @Test
     public void testGetLowMarkGtEq() {
         System.out.println("getLowMarkGtEq");
         ResultRule instance = new ResultRule();
         boolean expResult = false;
-        boolean result = instance.getLowMarkGtEq();
+        boolean result = instance.isLowMarkGtEq();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

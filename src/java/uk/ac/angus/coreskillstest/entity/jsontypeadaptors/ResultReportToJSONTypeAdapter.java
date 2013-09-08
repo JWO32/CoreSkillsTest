@@ -18,12 +18,7 @@ import uk.ac.angus.coreskillstest.entity.Result;
  */
 public class ResultReportToJSONTypeAdapter implements JsonSerializer<Result>
 {
-
-    public ResultReportToJSONTypeAdapter()
-    {
-        
-    }
-    
+  
     @Override
     public JsonElement serialize(Result src, Type typeOfSrc, JsonSerializationContext context) 
     {

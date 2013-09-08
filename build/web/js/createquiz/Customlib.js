@@ -176,9 +176,13 @@ var questionDialogue = function(callBack, edit, question)
                                 }
                                 
 	                        QuestionDetails.QuestionText = AllQuestionDetails[0].value;
-	                        QuestionDetails.QuestionLevel = AllQuestionDetails[1].value;
-	                        QuestionDetails.QuestionCategory = AllQuestionDetails[2].value;
-	                        QuestionDetails.QuestionScore = AllQuestionDetails[3].value;
+                                QuestionDetails.QuestionScore = AllQuestionDetails[1].value;
+                                
+                                // These two optoins are the Question Level and Category, which have been disabled in the current version
+                                // because they are not fully implemented.
+	                        //QuestionDetails.QuestionLevel = AllQuestionDetails[1].value;
+	                        //QuestionDetails.QuestionCategory = AllQuestionDetails[2].value;
+	                        
 
 	                        var Option1 = new QuestionOption();
 	                        Option1.OptionText = AllQuestionOptions[0].value;

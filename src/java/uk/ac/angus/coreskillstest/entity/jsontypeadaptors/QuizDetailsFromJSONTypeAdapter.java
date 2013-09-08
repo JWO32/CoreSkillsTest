@@ -37,7 +37,7 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
         }
             
         
-        q.setQuizName(QuizObject.get("QuizTitle").getAsString());
+        q.setQuizTitle(QuizObject.get("QuizTitle").getAsString());
         q.setQuizSubject(QuizObject.get("QuizSubject").getAsString());
         q.setQuizLevel(QuizObject.get("QuizLevel").getAsString());
         q.setDuration(QuizObject.get("QuizDuration").getAsInt());
@@ -59,7 +59,7 @@ public class QuizDetailsFromJSONTypeAdapter implements JsonDeserializer<Quiz>
             if(rule.has("QuizRuleId"))
             {
                 if(rule.get("QuizRuleId").getAsString().equals("") == false)
-                    r.setResultId(rule.get("QuizRuleId").getAsInt());
+                    r.setResultRuleId(rule.get("QuizRuleId").getAsInt());
             }
                 
             
